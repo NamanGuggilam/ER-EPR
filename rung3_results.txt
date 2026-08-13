@@ -1,0 +1,297 @@
+
+==============================================================================
+1. MAJORANA FERMIONS — Jordan-Wigner construction
+==============================================================================
+Built 8 Majorana operators for N=8 (Hilbert dim 16)
+Majorana algebra check: max |{chi_i,chi_j} - delta_ij*I}| = 2.220e-16
+Majorana algebra verified to machine precision.
+
+==============================================================================
+2. CORE PHYSICS FUNCTIONS
+==============================================================================
+Core functions defined: build_syk_hamiltonian, correlation_matrix,
+distance_from_correlation, jt_geodesic_distance_matrix, run_ph.
+JT slice sampling: M=20 points, r in [r_h+0.01, 5*r_h].
+SYK coupling: J=1.0, variance(J_ijkl) = 6*J^2/N^3.
+
+==============================================================================
+3. PRIMARY RESULT — N=8, beta=1.0, single disorder realization
+==============================================================================
+  ... building SYK Hamiltonian, N=8, seed=0
+Hilbert space dimension: 16
+Hermiticity check: max|H - H^dagger| = 0.000e+00
+  ... diagonalizing H
+Spectrum: E_min=-0.39463, E_max=0.36727, bandwidth=0.76190
+
+At beta=1.0: Z=16.37503, S(A)=2.74947  (max possible = log(dim) = 2.77259)
+  ... diagnosing single-sided correlator (documented finding, see docstring)
+
+Diagnostic: single-sided <TFD|chi_i^L chi_j^L|TFD> correlator check
+  (chi_0 chi_1, rotated into H's energy eigenbasis)
+  diagonal mass (sum|<n|M|n>|)     = 2.556e-15  <- would be the naive C_01
+  off-diagonal mass (sum|<n|M|m>|) = 1.779e+01
+  --> single-sided correlator is degenerate (~0); using the two-sided
+      chi_i^L chi_j^R correlator instead (see correlation_matrix docstring).
+  ... computing two-sided correlation matrix C_ij = <TFD|chi_i^L chi_j^R|TFD>
+  ... correlation matrix: rotated 8/8 Majoranas into eigenbasis
+  ... correlation matrix: 20/28 pairs done
+Correlation matrix imaginary-part residual (should be ~0): 1.664e-17
+Correlation matrix symmetry check: max|C-C^T| = 0.000e+00  (expected exactly symmetric, see docstring)
+C_ij range (off-diagonal): min|C|=0.00054, max|C|=0.05809
+
+EPR distance matrix D_ent built. 0 entries capped at 1e6 (|C_ij| < 1e-10).
+ER distance matrix D_geo built. r_h=6.28319, r range=[6.29319, 31.41593], D_geo diameter=2.23602
+  ... running persistent homology (maxdim=2) on EPR side (D_ent, 8 points)
+  ... running persistent homology (maxdim=2) on ER side (D_geo, 20 points)
+
+EPR side barcode (D_ent, from SYK correlations):
+  H0: 7 finite bar(s), 1 essential (infinite) bar(s)
+      birth=0.000000  death=17.213224
+      birth=0.000000  death=18.769518
+      birth=0.000000  death=20.399311
+      birth=0.000000  death=21.369442
+      birth=0.000000  death=22.821339
+      birth=0.000000  death=22.868124
+      birth=0.000000  death=28.592787
+      birth=0.000000  death=inf
+  H1: 2 finite bar(s), 0 essential (infinite) bar(s)
+      birth=38.018131  death=38.571060
+      birth=36.946968  death=69.753006
+  H2: 0 finite bar(s), 0 essential (infinite) bar(s)
+
+ER side barcode (D_geo, from JT geodesics):
+  H0: 19 finite bar(s), 1 essential (infinite) bar(s)
+      birth=0.000000  death=0.043927
+      birth=0.000000  death=0.045993
+      birth=0.000000  death=0.048269
+      birth=0.000000  death=0.050788
+      birth=0.000000  death=0.053593
+      birth=0.000000  death=0.056737
+      birth=0.000000  death=0.060289
+      birth=0.000000  death=0.064336
+      birth=0.000000  death=0.068994
+      birth=0.000000  death=0.074421
+      birth=0.000000  death=0.080838
+      birth=0.000000  death=0.088561
+      birth=0.000000  death=0.098070
+      birth=0.000000  death=0.110136
+      birth=0.000000  death=0.126088
+      birth=0.000000  death=0.148500
+      birth=0.000000  death=0.183302
+      birth=0.000000  death=0.249374
+      birth=0.000000  death=0.583804
+      birth=0.000000  death=inf
+  H1: 0 finite bar(s), 0 essential (infinite) bar(s)
+  H2: 0 finite bar(s), 0 essential (infinite) bar(s)
+
+--- KEY QUESTION: are there H1 (loop) features? ---
+EPR side H1 bar count: 2
+ER side  H1 bar count: 0
+EPR side H2 bar count: 0
+ER side  H2 bar count: 0
+Wasserstein distance, H0 barcodes (unnormalized): 109.08520
+Wasserstein distance, H1 barcodes (unnormalized): 23.58835
+
+==============================================================================
+4. TEMPERATURE SWEEP — N=8, seed=0, beta = [0.1, 0.5, 1.0, 2.0, 5.0]
+==============================================================================
+  ... beta=0.1: thermal weights, correlator, geometry, persistent homology
+  ... beta=0.5: thermal weights, correlator, geometry, persistent homology
+  ... beta=1.0: thermal weights, correlator, geometry, persistent homology
+  ... beta=2.0: thermal weights, correlator, geometry, persistent homology
+  ... beta=5.0: thermal weights, correlator, geometry, persistent homology
+
+beta  | S(A)   | throat | H1(EPR) | H1(ER) | H2(EPR) | H2(ER) | W_H0    | W_H1
+----------------------------------------------------------------------------------
+ 0.10 | 2.7724 | 2.2746 |       1 |      0 |       0 |      0 | 113.33266 | 13.01000
+ 0.50 | 2.7668 | 2.2525 |       1 |      0 |       0 |      0 | 111.13185 | 18.39714
+ 1.00 | 2.7495 | 2.2360 |       2 |      0 |       0 |      0 | 109.08520 | 23.58835
+ 2.00 | 2.6821 | 2.2127 |       4 |      0 |       0 |      0 | 107.26765 | 47.24037
+ 5.00 | 2.2936 | 2.1664 |       3 |      0 |       0 |      0 | 109.00976 | 64.88264
+
+==============================================================================
+5. PLOTTING — rung3_plots.png (2x3 grid)
+==============================================================================
+Saved 2x3 diagnostic figure to: rung3_plots.png
+
+==============================================================================
+6. CRITICAL COMPARISON — do H1 bars appear on both sides together?
+==============================================================================
+ER-side H1 count is zero at every swept beta: True
+EPR-side H1 count is nonzero at at least one beta: True
+H1 bar counts match exactly (EPR == ER) at every beta: False
+Saved explicit H1 comparison figure to: rung3_h1_comparison.png
+
+==============================================================================
+7. DISORDER AVERAGING — N=8, beta=1.0, 10 independent J realizations
+==============================================================================
+  ... disorder realization 1/10 (seed=0)
+  ... disorder realization 2/10 (seed=1)
+  ... disorder realization 3/10 (seed=2)
+  ... disorder realization 4/10 (seed=3)
+  ... disorder realization 5/10 (seed=4)
+  ... disorder realization 6/10 (seed=5)
+  ... disorder realization 7/10 (seed=6)
+  ... disorder realization 8/10 (seed=7)
+  ... disorder realization 9/10 (seed=8)
+  ... disorder realization 10/10 (seed=9)
+
+Disorder-averaged results over 10 realizations (N=8, beta=1.0):
+quantity                     |       mean |        std
+-------------------------------------------------------
+# H1 bars (EPR side)         |    2.80000 |    1.16619
+# H1 bars (ER side)          |    0.00000 |    0.00000
+H0 Wasserstein distance      |   90.32282 |   18.34783
+H1 Wasserstein distance      |   42.83153 |   42.81485
+S(A)                         |    2.74851 |    0.00368
+
+Max Hermiticity error across realizations: 0.000e+00
+Max correlator imaginary residual across realizations: 2.797e-17
+
+==============================================================================
+8. SECONDARY CHECK — N=12, beta=1.0, single realization (time permitting)
+==============================================================================
+  ... building SYK Hamiltonian, N=12, seed=0 (Hilbert dim 64)
+  ... SYK Hamiltonian: 100/495 quartic terms added
+  ... SYK Hamiltonian: 200/495 quartic terms added
+  ... SYK Hamiltonian: 300/495 quartic terms added
+  ... SYK Hamiltonian: 400/495 quartic terms added
+  ... correlation matrix: rotated 8/12 Majoranas into eigenbasis
+  ... correlation matrix: 20/66 pairs done
+  ... correlation matrix: 40/66 pairs done
+  ... correlation matrix: 60/66 pairs done
+  ... running persistent homology for N=12
+N=12 (Hilbert dim 64), beta=1.0:
+  S(A) = 4.10583  (N=8 comparison: 2.74947)
+  H1 bars EPR = 7  (N=8 comparison: 2)
+  H1 bars ER  = 0  (N=8 comparison: 0)
+  Wasserstein H0 = 393.26209  (N=8 comparison: 109.08520)
+  Wasserstein H1 = 268.93925  (N=8 comparison: 23.58835)
+
+==============================================================================
+9. SUMMARY
+==============================================================================
+
+Primary result (N=8, beta=1.0, single realization, seed=0)
+----------------------------------------------------------------------------
+S(A) = 2.74947
+EPR side: H0=7 finite bars, H1=2 bars, H2=0 bars
+ER  side: H0=19 finite bars, H1=0 bars, H2=0 bars
+Wasserstein(H0) = 109.08520,  Wasserstein(H1) = 23.58835
+
+Temperature sweep (N=8, seed=0)
+----------------------------------------------------------------------------
+beta values: [np.float64(0.1), np.float64(0.5), np.float64(1.0), np.float64(2.0), np.float64(5.0)]
+H1 bars, EPR side: [np.int64(1), np.int64(1), np.int64(2), np.int64(4), np.int64(3)]
+H1 bars, ER  side: [np.int64(0), np.int64(0), np.int64(0), np.int64(0), np.int64(0)]
+ER-side H1 count is zero at every swept beta: True
+
+Disorder averaging (N=8, beta=1.0, 10 realizations)
+----------------------------------------------------------------------------
+H1 bars, EPR side: mean=2.80, std=1.17
+H1 bars, ER  side: mean=0.00, std=0.00  (fixed geometry -> std=0 by construction)
+H0 Wasserstein:    mean=90.32282, std=18.34783
+H1 Wasserstein:    mean=42.83153, std=42.81485
+
+N=12 secondary check
+----------------------------------------------------------------------------
+H1 bars EPR: 7 (vs 2 at N=8)
+H1 bars ER:  0 (vs 0 at N=8, geometry is N-independent)
+
+Whether the topological isomorphism holds at the H1 level
+------------------------------------------------------------
+NO, not in this construction, and the reason is structural rather than
+(necessarily) a statement about SYK/JT physics itself: pure JT gravity is a
+theory of 1+1-dimensional gravity, so every constant-time spatial slice of
+the eternal black hole is intrinsically 1-DIMENSIONAL. The geodesic
+distance matrix D_geo built here is an isometric sampling of points on a
+line (d_geo(r_i,r_j) is a genuine metric that satisfies the betweenness
+property exactly: for r_i<r_k<r_j, d(r_i,r_j)=d(r_i,r_k)+d(r_k,r_j)). Any
+three "collinear" points like this have their connecting triangle filled
+in by a 2-simplex the moment all three edges appear in the Vietoris-Rips
+filtration, so H1 is trivial at every filtration scale -- not approximately
+zero, but exactly and unavoidably zero, for any 1-dimensional point cloud,
+regardless of how many points M are sampled. Our computed result confirms
+this exactly: ER-side H1 = 0 at every beta tested and every M_GEO=20-point sample, as predicted.
+The EPR side has no such restriction (it is an abstract N-point metric space
+with no built-in dimensionality), so whenever it shows H1 > 0, that reflects
+either genuine higher-dimensional correlation structure in the SYK model or
+finite-N sampling noise (see below) -- but it can NEVER be matched by the ER
+side as constructed here, no matter how good the underlying physics is.
+
+Finite-N effects
+------------------
+At N=8 there are only 8 points feeding the EPR-side persistent homology
+computation -- a very small point cloud for Vietoris-Rips topology, whose
+Betti numbers are known to be dominated by sampling noise rather than
+converged structure at this scale. The disorder-averaging result makes
+this concrete: the EPR-side H1 count varies realization-to-realization
+with mean 2.80 and standard deviation 1.17 across just 10 draws of
+J_ijkl -- a relative spread too large to treat any single realization's H1
+count as a robust physical signal. The N=12 check (64 more terms in H,
+still only 12 points on the EPR side) shows H1=7 bars, differing from
+the N=8 realization -- again just one data point, not a trend one can
+extrapolate from. A meaningful large-N statement about SYK topology would
+need many more Majoranas (N ~ tens to hundreds) and a much larger disorder
+ensemble than is computationally reasonable to diagonalize densely here.
+
+Physical interpretation
+--------------------------
+The Wasserstein H0 distance between the EPR and ER barcodes is nonzero
+(unlike Rungs 1-2, there is no reason for these two very differently
+constructed distance matrices to numerically coincide, and they do not)
+but both sides do show the same qualitative H0 structure expected of any
+finite point cloud: one essential class and (N-1) or (M-1) finite bars.
+The interesting result is at H1: the EPR side occasionally exhibits loop
+structure (nonzero H1) while the ER side, by the 1-dimensional argument
+above, never can. This is not evidence against ER=EPR -- it is evidence
+that a literal, naive Rips-complex comparison between an N-point SYK
+correlation cloud and a 1-dimensional JT time-slice is the wrong
+experiment to run if you want to see matching higher homology. The real
+holographic duality lives in the boundary two-point (and higher) functions
+matching bulk geodesic lengths in a much richer, higher-dimensional bulk
+geometry (or, in the SYK/JT case specifically, in the Schwarzian sector of
+the boundary reparametrization mode) -- not in a bare Vietoris-Rips
+complex of a single radial slice.
+
+Honest assessment: what is proven vs conjectured
+-----------------------------------------------------
+PROVEN (by direct computation here): the SYK Hamiltonian and Majorana
+correlator machinery is implemented correctly (algebra check passed to
+machine precision, Hermiticity and correlator-reality checks passed);
+persistent homology on the resulting EPR-side distance matrix does show
+nonzero H1 features in at least one realization, i.e. genuine loop
+structure exists in the SYK correlation "shape" that was absent in Rungs
+1-2's two-point systems; and the ER-side JT geodesic slice, exactly as
+constructed from the given metric and sampling prescription, provably
+cannot show H1 features, for dimensional reasons that hold independent of
+any specific numerical run.
+CONJECTURED / NOT TESTED HERE: that a richer (higher-dimensional, or
+disorder-ensemble-averaged rather than per-realization) construction of
+the ER-side bulk geometry would reproduce the EPR-side H1 statistics; that
+the EPR-side H1 features seen at N=8/N=12 survive the large-N limit rather
+than washing out as sampling noise; and, more broadly, that persistent
+homology of a bare correlation-distance matrix is even the right
+topological invariant to probe the SYK/JT duality with, as opposed to (for
+instance) spectral form factor statistics, out-of-time-order correlators,
+or the Schwarzian effective action, all of which are the quantities
+normally used to establish the duality in the literature.
+
+What this means for ER=EPR
+------------------------------
+Rung 3 is the first rung with genuine topology available on the
+entanglement side, and it also exposes the first genuine limitation of the
+persistent-homology approach used across Rungs 1-3: comparing an abstract
+N-point correlation cloud against a literal 1-dimensional gravitational
+time-slice is structurally lopsided, since the gravity side can never
+develop the loop structure the entanglement side sometimes shows, no
+matter what the underlying physics does. This does not falsify ER=EPR --
+if anything it clarifies what a fair topological test would require: a
+bulk geometric object with enough dimensions (or enough independent
+geodesic probes) to have nontrivial H1 in the first place. Establishing
+that fair comparison, and checking whether SYK's occasional H1 loops are
+real large-N physics or finite-size noise, are the concrete next steps
+this rung's honest null result points to.
+
+Results written to: rung3_results.txt
+Plots written to: rung3_plots.png and rung3_h1_comparison.png

@@ -1,0 +1,132 @@
+
+========================================================================
+1. ENTANGLEMENT (EPR) SIDE  —  Bell state |Phi+>
+========================================================================
+Bell state |Phi+>            = [0.70710678 0.         0.         0.70710678]
+Reduced density matrix rho_A:
+[[0.5 0. ]
+ [0.  0.5]]
+
+von Neumann entropy S(A)     = 0.6931471806   (expected log(2) = 0.6931471806)
+Mutual information I(A:B)   = 1.3862943611   (expected 2*log(2) = 1.3862943611)
+Entanglement distance d(A,B) = 1/I(A:B) = 0.7213475204
+
+Distance matrix D_ent:
+[[0.         0.72134752]
+ [0.72134752 0.        ]]
+
+Persistence diagrams (EPR side):
+  H0: [[0.0, 0.7213475108146667], [0.0, inf]]
+  H1: []
+
+========================================================================
+2. GEOMETRY (ER) SIDE  —  Ryu-Takayanagi wormhole throat
+========================================================================
+Ryu-Takayanagi formula:  S = Area(gamma) / (4 G hbar)
+Natural units chosen so that 4*G*hbar = 1  =>  S = Area = throat length
+
+Wormhole throat length ell_throat = S(A) = 0.6931471806
+
+Distance matrix D_geo:
+[[0.         0.69314718]
+ [0.69314718 0.        ]]
+
+Persistence diagrams (ER side):
+  H0: [[0.0, 0.6931471824645996], [0.0, inf]]
+  H1: []
+
+========================================================================
+3. PLOTTING BARCODES
+========================================================================
+Saved side-by-side barcode plot to: rung1_barcodes.png
+
+========================================================================
+4. EXPLICIT MAP phi
+========================================================================
+phi is the linear rescaling map sending the EPR distance to the ER throat length:
+    phi(d_ent) = scale_factor * d_ent = ell_throat
+
+scale_factor = ell_throat / d_ent = 0.9609060278
+
+In terms of known quantities:
+    scale_factor = ell_throat / d_ent
+                 = S(A) / (1 / I(A:B))
+                 = S(A) * I(A:B)
+                 = log(2) * 2*log(2)
+                 = 2 * (log 2)^2
+    numeric check: 2*(log 2)^2 = 0.9609060278
+    (equivalently, since 4*G*hbar = 1: scale_factor = S(A) * I(A:B) * 4*G*hbar)
+
+========================================================================
+5. WASSERSTEIN DISTANCE — H0 barcode comparison
+========================================================================
+H0 (EPR side) finite bars, as reported by ripser : [[0.0, 0.7213475108146667]]
+H0 (ER side)  finite bars, as reported by ripser : [[0.0, 0.6931471824645996]]
+NOTE: ripser's C++ backend computes in float32, so the values above are
+      rounded to ~7 significant digits relative to the exact inputs.
+      For a 2-point metric space this rounding is the ONLY source of
+      error: the true finite H0 bar is exactly [0, distance] by
+      construction, so the isomorphism check below uses the exact
+      double-precision distances (d_ent, ell_throat) rather than the
+      float32-rounded values, to avoid reporting a false negative that
+      is purely a ripser precision artifact rather than a physics result.
+
+H0 (EPR side) finite bars, exact               : [[0.0, 0.7213475204444817]]
+H0 (ER side)  finite bars, exact, raw           : [[0.0, 0.6931471805599453]]
+H0 (ER side)  finite bars, exact, normalized by phi : [[0.0, 0.7213475204444817]]
+
+Wasserstein distance W(H0_ent, H0_geo / scale_factor) = 0.000000000000000
+Barcodes isomorphic up to phi (distance < 1e-10)? True
+
+========================================================================
+6. SUMMARY
+========================================================================
+
+Computed values
+----------------
+S(A)  (von Neumann entropy)        = 0.693147   (= log 2)
+I(A:B) (mutual information)        = 1.386294   (= 2 log 2)
+d_ent = 1 / I(A:B)                 = 0.721348
+ell_throat = S(A)  (RT throat)     = 0.693147
+scale_factor = ell_throat / d_ent  = 0.960906   (= 2*(log 2)^2 = S(A)*I(A:B))
+Wasserstein distance (normalized)  = 0.000000e+00
+Isomorphic up to phi?              = True
+
+The explicit map phi
+---------------------
+phi : d_ent -> ell_throat
+phi(d_ent) = scale_factor * d_ent,  where scale_factor = S(A) * I(A:B) = 2*(log 2)^2
+
+What the Wasserstein distance tells us
+----------------------------------------
+The Wasserstein distance is the minimum-cost way to match the points of one
+persistence diagram to the points of another (including matching to the
+diagonal, i.e. to "no feature"). A value of 0.00e+00 — effectively zero,
+well under the 1e-10 tolerance — means that once the ER-side (geometry)
+barcode is rescaled by phi, its birth/death coordinates land exactly on top
+of the EPR-side (entanglement) barcode's coordinates. There is no leftover
+mismatch to explain away: the two topological fingerprints coincide after
+the rescaling.
+
+Interpretation
+---------------
+At Rung 1, the topological "fingerprint" of two qubits in a Bell state
+(one finite H0 bar recording how far apart the two subsystems are, plus one
+essential class recording that they eventually form a single connected
+component) matches, up to a single positive rescaling constant phi, the
+topological fingerprint of the Ryu-Takayanagi wormhole throat that
+entanglement is dual to. This is the simplest possible instance of an
+ER=EPR correspondence stated in the language of persistent homology: with
+only two points on each side, both distance matrices are 2x2 and produce
+exactly one finite bar, so an isomorphism up to rescaling is close to
+inevitable rather than a deep result. What Rung 1 establishes is the full
+machinery — entropy, mutual information, entanglement distance, RT throat
+length, persistence diagrams, an explicit rescaling map, and a Wasserstein
+comparison — working end to end and agreeing to numerical precision. Later
+rungs, using more qubits and richer entangled/geometric structures (so that
+the persistence diagrams contain multiple bars and nontrivial H1 features),
+are where the correspondence becomes a nontrivial, falsifiable claim rather
+than a two-point tautology.
+
+Results written to: rung1_results.txt
+Barcode plot written to: rung1_barcodes.png
