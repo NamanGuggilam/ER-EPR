@@ -328,12 +328,72 @@ def check_D():
 
 
 # ======================================================================
+# CHECK E — small-C scope validation (mandatory before the comparison)
+# ======================================================================
+def check_E():
+    section("CHECK E — small-C validation: dense-grid cross-check at C ~ 0.1-0.2")
+    print("""Every prior validation (Checks A-D, the C=80 sanity gate) lived at
+C in [25, 200]. The physically matched SYK comparison lives at
+C_fit ~ 0.1-0.2, where the integrand geometry is different (saddle
+s* = 4 pi C/beta moves toward the origin; the Gaussian width and the
+O(1) Gamma structure in d become comparable). This check validates that
+regime exactly like the C=80 check: independent dense-grid quadrature
+vs compute_G, agreement required to < 1e-6, conv_err < 1e-6.""")
+
+    from schwarzian import log_g_integrand, log_z_integrand, s_star
+
+    beta = 1.0
+    points = [(0.1, 0.10), (0.1, 0.25), (0.2, 0.10), (0.2, 0.25)]
+
+    def dense_logG(tau, C, ns, nd):
+        # window: at small C the Gaussian s-width sqrt(2C/beta) is O(0.5),
+        # so s* + 30 widths + 8 covers the peak with e^-{huge} edge margin
+        # (verified by the printed edge suppression); rho ~ k growth is
+        # polynomial and cannot beat the Gaussian decay.
+        w = np.sqrt(2.0 * C / beta)
+        s_hi = s_star(beta, C) + 30.0 * w + 8.0
+        s = np.linspace(1e-9, s_hi, ns)
+        u = np.linspace(-1.0 + 1e-12, 1.0 - 1e-12, nd)
+        logf = log_g_integrand(s[:, None], s[:, None] * u[None, :],
+                               tau, beta, C, DELTA_SYK)
+        ref = logf.max()
+        edge = max(logf[-1, :].max(), logf[:, 0].max(), logf[:, -1].max()) - ref
+        inner = np.trapezoid(np.exp(logf - ref), u, axis=1) * s  # dd = s du
+        lognum = np.log(np.trapezoid(inner, s)) + ref
+        k = np.linspace(1e-9, s_hi, 400001)
+        lz = log_z_integrand(k, beta, C)
+        refz = lz.max()
+        logZ = np.log(np.trapezoid(np.exp(lz - refz), k)) + refz
+        return lognum - logZ, edge
+
+    ok = True
+    print(f"\n{'C':>5} | {'tau/beta':>8} | {'G (quad)':>18} | {'G (dense grid)':>18} | "
+          f"{'rel diff':>9} | {'conv_err':>9} | {'edge sup.':>9}")
+    print("-" * 92)
+    for C, f in points:
+        res = compute_G(f * beta, beta, C)
+        lg1, edge1 = dense_logG(f * beta, C, 4001, 4001)
+        lg2, _ = dense_logG(f * beta, C, 6001, 6001)  # grid-convergence guard
+        grid_conv = abs(np.exp(lg1 - lg2) - 1.0)
+        rel = abs(res["G"] / np.exp(lg2) - 1.0)
+        this_ok = rel < 1e-6 and res["conv_err"] < 1e-6 and grid_conv < 1e-7
+        ok = ok and this_ok
+        print(f"{C:5.2f} | {f:8.2f} | {res['G']:18.12e} | {np.exp(lg2):18.12e} | "
+              f"{rel:9.2e} | {res['conv_err']:9.2e} | e^{edge1:+.0f}")
+        if grid_conv >= 1e-7:
+            print(f"      (dense grid not self-converged: {grid_conv:.1e})")
+    print(f"\nCHECK E PASS (quad vs dense grid < 1e-6 at C in [0.1, 0.2]): {ok}")
+    return ok
+
+
+# ======================================================================
 if __name__ == "__main__":
     requested = [a.upper() for a in sys.argv[1:]] or ["A", "B"]
-    checks = {"A": check_A, "B": check_B, "C": check_C, "D": check_D}
+    checks = {"A": check_A, "B": check_B, "C": check_C, "D": check_D,
+              "E": check_E}
     unknown = [a for a in requested if a not in checks]
     if unknown:
-        sys.exit(f"unknown check(s): {unknown}; choose from A B C D")
+        sys.exit(f"unknown check(s): {unknown}; choose from A B C D E")
 
     log_file = open(RESULTS_PATH, "a")
     _real_stdout = sys.stdout
