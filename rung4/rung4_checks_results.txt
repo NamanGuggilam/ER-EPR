@@ -1,0 +1,107 @@
+
+############ rung4_checks run: A B (2026-08-21 20:02:25) ############
+
+==============================================================================
+CHECK A — free-energy calibration: ln Z vs Schwarzian asymptotic
+==============================================================================
+C = 100.0, beta sweep = [4.0, 2.0, 1.0, 0.5, 0.25, 0.125]  (C/beta from 25 to 800)
+residual R(beta) = lnZ_num - [2 pi^2 C/beta + 1.5 log(2 pi C/beta)]
+PASS = R settles toward a constant as C/beta grows; the wrong-power
+controls (rho = k^0 sinh, k^2 sinh) drift instead.
+
+  beta |     lnZ (fine) | R (rho=k sinh) | R (k^0 ctrl) | R (k^2 ctrl) |  conv_err
+------------------------------------------------------------------------------------
+ 4.000 |      500.37220 |      -0.693147 |    -5.749900 |     4.364618 |  0.00e+00
+ 2.000 |      994.89214 |      -0.693147 |    -6.443047 |     5.057259 |  0.00e+00
+ 1.000 |     1982.89230 |      -0.693147 |    -7.136194 |     5.750153 |  0.00e+00
+ 0.500 |     3957.85290 |      -0.693147 |    -7.829342 |     6.443174 |  0.00e+00
+ 0.250 |     7906.73439 |      -0.693147 |    -8.522489 |     7.136258 |  0.00e+00
+ 0.125 |    15803.45763 |      -0.693147 |    -9.215636 |     7.829373 |  1.82e-12
+
+Successive |Delta R|, true rho: 5.68e-14  1.14e-13  0.00e+00  0.00e+00  0.00e+00
+Total drift over sweep, k^0 control: -3.4657 (true rho: -0.000000)
+Total drift over sweep, k^2 control: +3.4648 (true rho: -0.000000)
+
+CHECK A PASS (residual settles, controls drift): False
+
+==============================================================================
+CHECK B — conformal reduction: shape of G vs tree level as C grows
+==============================================================================
+beta = 1.0, C sweep = [25.0, 50.0, 100.0, 200.0], tau/beta grid = [0.05, 0.1, 0.2, 0.3, 0.4], tau_ref/beta = 0.5
+deviation(C) = max_tau | [G(tau)/G(tau_ref)] / [G_conf(tau)/G_conf(tau_ref)] - 1 |
+PASS = deviation shrinks as O(beta/C): ratio ~0.5 per C doubling.
+
+  C=  25.0  tau/beta=0.05: shape_Sch=  2.52880638  shape_conf=  2.52833013  |ratio-1|=1.884e-04  conv_err=5.7e-14
+  C=  25.0  tau/beta=0.10: shape_Sch=  1.79916304  shape_conf=  1.79890744  |ratio-1|=1.421e-04  conv_err=0.0e+00
+  C=  25.0  tau/beta=0.20: shape_Sch=  1.30443616  shape_conf=  1.30433953  |ratio-1|=7.408e-05  conv_err=0.0e+00
+  C=  25.0  tau/beta=0.30: shape_Sch=  1.11182062  shape_conf=  1.11178594  |ratio-1|=3.119e-05  conv_err=0.0e+00
+  C=  25.0  tau/beta=0.40: shape_Sch=  1.02541606  shape_conf=  1.02540832  |ratio-1|=7.550e-06  conv_err=0.0e+00
+  C=  25.0: deviation = 1.8837e-04, max conv_err = 5.7e-14  [117s]
+  C=  50.0  tau/beta=0.05: shape_Sch=  2.52856828  shape_conf=  2.52833013  |ratio-1|=9.419e-05  conv_err=0.0e+00
+  C=  50.0  tau/beta=0.10: shape_Sch=  1.79903526  shape_conf=  1.79890744  |ratio-1|=7.105e-05  conv_err=0.0e+00
+  C=  50.0  tau/beta=0.20: shape_Sch=  1.30438785  shape_conf=  1.30433953  |ratio-1|=3.705e-05  conv_err=0.0e+00
+  C=  50.0  tau/beta=0.30: shape_Sch=  1.11180328  shape_conf=  1.11178594  |ratio-1|=1.560e-05  conv_err=0.0e+00
+  C=  50.0  tau/beta=0.40: shape_Sch=  1.02541219  shape_conf=  1.02540832  |ratio-1|=3.776e-06  conv_err=0.0e+00
+  C=  50.0: deviation = 9.4194e-05, max conv_err = 0.0e+00  [131s]
+  C= 100.0  tau/beta=0.05: shape_Sch=  2.52844921  shape_conf=  2.52833013  |ratio-1|=4.710e-05  conv_err=0.0e+00
+  C= 100.0  tau/beta=0.10: shape_Sch=  1.79897135  shape_conf=  1.79890744  |ratio-1|=3.553e-05  conv_err=0.0e+00
+  C= 100.0  tau/beta=0.20: shape_Sch=  1.30436369  shape_conf=  1.30433953  |ratio-1|=1.852e-05  conv_err=0.0e+00
+  C= 100.0  tau/beta=0.30: shape_Sch=  1.11179461  shape_conf=  1.11178594  |ratio-1|=7.801e-06  conv_err=0.0e+00
+  C= 100.0  tau/beta=0.40: shape_Sch=  1.02541026  shape_conf=  1.02540832  |ratio-1|=1.888e-06  conv_err=0.0e+00
+  C= 100.0: deviation = 4.7100e-05, max conv_err = 2.3e-13  [146s]
+  C= 200.0  tau/beta=0.05: shape_Sch=  2.52838967  shape_conf=  2.52833013  |ratio-1|=2.355e-05  conv_err=0.0e+00
+  C= 200.0  tau/beta=0.10: shape_Sch=  1.79893940  shape_conf=  1.79890744  |ratio-1|=1.777e-05  conv_err=0.0e+00
+  C= 200.0  tau/beta=0.20: shape_Sch=  1.30435161  shape_conf=  1.30433953  |ratio-1|=9.263e-06  conv_err=0.0e+00
+  C= 200.0  tau/beta=0.30: shape_Sch=  1.11179028  shape_conf=  1.11178594  |ratio-1|=3.900e-06  conv_err=4.5e-13
+  C= 200.0  tau/beta=0.40: shape_Sch=  1.02540929  shape_conf=  1.02540832  |ratio-1|=9.441e-07  conv_err=0.0e+00
+  C= 200.0: deviation = 2.3550e-05, max conv_err = 4.5e-13  [161s]
+
+     C |   deviation | ratio to prev | C*deviation | max conv_err
+------------------------------------------------------------------
+  25.0 |  1.8837e-04 |           nan |  4.7092e-03 |      5.7e-14
+  50.0 |  9.4194e-05 |         0.500 |  4.7097e-03 |      0.0e+00
+ 100.0 |  4.7100e-05 |         0.500 |  4.7100e-03 |      2.3e-13
+ 200.0 |  2.3550e-05 |         0.500 |  4.7101e-03 |      4.5e-13
+
+log-log slope of deviation vs beta/C: 1.000  (O(beta/C) prediction: 1; per-doubling ratios: 0.500, 0.500, 0.500)
+CHECK B PASS (monotone shrink at O(beta/C) rate, converged): True
+
+==============================================================================
+OUTCOMES
+==============================================================================
+  Check A: FAIL
+  Check B: PASS
+Total time: 555s
+Results appended to: /Users/naman/projects/ER-EPR/rung4/rung4_checks_results.txt
+
+############ rung4_checks run: A (2026-08-21 20:12:35) ############
+
+==============================================================================
+CHECK A — free-energy calibration: ln Z vs Schwarzian asymptotic
+==============================================================================
+C = 100.0, beta sweep = [4.0, 2.0, 1.0, 0.5, 0.25, 0.125]  (C/beta from 25 to 800)
+residual R(beta) = lnZ_num - [2 pi^2 C/beta + 1.5 log(2 pi C/beta)]
+PASS = R settles toward a constant as C/beta grows; the wrong-power
+controls (rho = k^0 sinh, k^2 sinh) drift instead.
+
+  beta |     lnZ (fine) | R (rho=k sinh) | R (k^0 ctrl) | R (k^2 ctrl) |  conv_err
+------------------------------------------------------------------------------------
+ 4.000 |      500.37220 |      -0.693147 |    -5.749900 |     4.364618 |  0.00e+00
+ 2.000 |      994.89214 |      -0.693147 |    -6.443047 |     5.057259 |  0.00e+00
+ 1.000 |     1982.89230 |      -0.693147 |    -7.136194 |     5.750153 |  0.00e+00
+ 0.500 |     3957.85290 |      -0.693147 |    -7.829342 |     6.443174 |  0.00e+00
+ 0.250 |     7906.73439 |      -0.693147 |    -8.522489 |     7.136258 |  0.00e+00
+ 0.125 |    15803.45763 |      -0.693147 |    -9.215636 |     7.829373 |  1.82e-12
+
+Successive |Delta R|, true rho: 5.68e-14  1.14e-13  0.00e+00  0.00e+00  0.00e+00
+Total drift over sweep, k^0 control: -3.4657 (true rho: -0.000000)
+Total drift over sweep, k^2 control: +3.4648 (true rho: -0.000000)
+
+CHECK A PASS (residual settles at a constant, controls drift): True  [true-rho drift 1.7e-13 vs control drift 3.46]
+
+==============================================================================
+OUTCOMES
+==============================================================================
+  Check A: PASS
+Total time: 0s
+Results appended to: /Users/naman/projects/ER-EPR/rung4/rung4_checks_results.txt
