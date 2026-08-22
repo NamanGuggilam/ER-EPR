@@ -105,3 +105,41 @@ OUTCOMES
   Check A: PASS
 Total time: 0s
 Results appended to: /Users/naman/projects/ER-EPR/rung4/rung4_checks_results.txt
+
+############ rung4_checks run: C D (2026-08-21 20:15:39) ############
+
+==============================================================================
+CHECK C — barcode collapse onto the tree-level frozen circle
+==============================================================================
+beta = 1.0, C sweep = [25.0, 50.0, 100.0, 200.0], 16 points on the thermal circle
+d_ij = log(G_max / G(|tau_i - tau_j|_circle))  [shape-normalized, same prescription both sides]
+tree-level frozen-circle H1 barcode: [[0.0, 0.7775595188140869]]
+  C=  25.0: H1 bars=1, Wasserstein to tree = 1.640320e-04, max conv_err = 5.7e-14
+  C=  50.0: H1 bars=1, Wasserstein to tree = 8.201599e-05, max conv_err = 2.3e-13
+  C= 100.0: H1 bars=1, Wasserstein to tree = 4.100800e-05, max conv_err = 2.3e-13
+  C= 200.0: H1 bars=1, Wasserstein to tree = 2.050400e-05, max conv_err = 4.5e-13
+CHECK C PASS (Wasserstein shrinks monotonically toward 0): True
+
+==============================================================================
+CHECK D — is beta/C a real independent knob?
+==============================================================================
+Test 1 — same beta/C = 0.02, tau/beta = 0.2, different (beta, C):
+  (beta=1.0, C=50.0): G = 2.281540715429e+02  conv_err = 0.0e+00
+  (beta=2.0, C=100.0): G = 2.281540715429e+02  conv_err = 0.0e+00
+  (beta=4.0, C=200.0): G = 2.281540715429e+02  conv_err = 0.0e+00
+  max relative spread = 0.00e+00  (equal: True)
+
+Test 2 — same tau/beta = 0.2, different beta/C:
+  (beta=1.0, C=50.0, beta/C=0.020): G = 2.281540715429e+02  conv_err = 0.0e+00
+  (beta=1.0, C=100.0, beta/C=0.010): G = 3.226723694195e+02  conv_err = 0.0e+00
+  (beta=1.0, C=200.0, beta/C=0.005): G = 4.563373910491e+02  conv_err = 0.0e+00
+  min relative difference vs first = 4.14e-01  (differ: True)
+CHECK D PASS (test 1 equal, test 2 different): True
+
+==============================================================================
+OUTCOMES
+==============================================================================
+  Check C: PASS
+  Check D: PASS
+Total time: 913s
+Results appended to: /Users/naman/projects/ER-EPR/rung4/rung4_checks_results.txt
