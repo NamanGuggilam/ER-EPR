@@ -1,0 +1,243 @@
+
+############ rung4 extract (2026-08-21 22:00:58) ############
+
+==============================================================================
+1. MACHINERY VERIFICATION — imported, not rebuilt
+==============================================================================
+syk_model.generate_majoranas(12): max |{chi_i,chi_j} - delta_ij I| = 2.220e-16 (dim 64)
+syk_model algebra verified to machine precision.
+Coupling convention: variance(J_ijkl) = 6 J^2/N^3, J = 1.0
+schwarzian.compute_G standing gate: G(0.1,1,80) = 3.980425717581e+02 (expected 3.980425717581e+02), conv_err = 0.0e+00
+
+==============================================================================
+2. SYK DISORDER ENSEMBLES + GOE CONTROLS
+==============================================================================
+N values: [12, 14, 16, 18]; realizations: [50, 50, 30, 20]; seeds 1000*N + r
+  ... N=12: 0/50 already cached raw; building 50 more
+  ... N=12: realization 3 done [1s]
+  ... N=12: realization 2 done [1s]
+  ... N=12: realization 0 done [1s]
+  ... N=12: realization 1 done [1s]
+  ... N=12: realization 4 done [1s]
+  ... N=12: realization 5 done [1s]
+  ... N=12: realization 6 done [1s]
+  ... N=12: realization 7 done [1s]
+  ... N=12: realization 8 done [1s]
+  ... N=12: realization 9 done [1s]
+  ... N=12: realization 11 done [1s]
+  ... N=12: realization 10 done [1s]
+  ... N=12: realization 12 done [1s]
+  ... N=12: realization 13 done [1s]
+  ... N=12: realization 15 done [1s]
+  ... N=12: realization 14 done [1s]
+  ... N=12: realization 16 done [2s]
+  ... N=12: realization 19 done [2s]
+  ... N=12: realization 18 done [2s]
+  ... N=12: realization 17 done [2s]
+  ... N=12: realization 20 done [2s]
+  ... N=12: realization 21 done [2s]
+  ... N=12: realization 22 done [2s]
+  ... N=12: realization 23 done [2s]
+  ... N=12: realization 24 done [2s]
+  ... N=12: realization 27 done [2s]
+  ... N=12: realization 26 done [2s]
+  ... N=12: realization 25 done [2s]
+  ... N=12: realization 29 done [2s]
+  ... N=12: realization 28 done [2s]
+  ... N=12: realization 30 done [2s]
+  ... N=12: realization 31 done [2s]
+  ... N=12: realization 32 done [2s]
+  ... N=12: realization 34 done [2s]
+  ... N=12: realization 33 done [2s]
+  ... N=12: realization 35 done [2s]
+  ... N=12: realization 36 done [2s]
+  ... N=12: realization 37 done [2s]
+  ... N=12: realization 38 done [2s]
+  ... N=12: realization 39 done [2s]
+  ... N=12: realization 40 done [3s]
+  ... N=12: realization 43 done [3s]
+  ... N=12: realization 42 done [3s]
+  ... N=12: realization 41 done [3s]
+  ... N=12: realization 44 done [3s]
+  ... N=12: realization 45 done [3s]
+  ... N=12: realization 46 done [3s]
+  ... N=12: realization 47 done [3s]
+  ... N=12: realization 49 done [3s]
+  ... N=12: realization 48 done [3s]
+  ... N=12: consolidated 50 realizations to spectra_N12_R50.npz
+  N=12 (dim   64): E_0 = -0.5789 +- 0.0278, bandwidth = 1.1482, exact-degenerate adjacent pairs: 50.8% (N mod 8 = 4)
+  ... N=14: 0/50 already cached raw; building 50 more
+  ... N=14: realization 2 done [3s]
+  ... N=14: realization 0 done [3s]
+  ... N=14: realization 1 done [3s]
+  ... N=14: realization 3 done [3s]
+  ... N=14: realization 7 done [5s]
+  ... N=14: realization 5 done [5s]
+  ... N=14: realization 4 done [5s]
+  ... N=14: realization 6 done [5s]
+  ... N=14: realization 9 done [7s]
+  ... N=14: realization 8 done [7s]
+  ... N=14: realization 10 done [7s]
+  ... N=14: realization 11 done [7s]
+  ... N=14: realization 12 done [9s]
+  ... N=14: realization 13 done [9s]
+  ... N=14: realization 14 done [9s]
+  ... N=14: realization 15 done [9s]
+  ... N=14: realization 16 done [11s]
+  ... N=14: realization 18 done [11s]
+  ... N=14: realization 19 done [11s]
+  ... N=14: realization 17 done [11s]
+  ... N=14: realization 20 done [1493s]
+  ... N=14: realization 22 done [1493s]
+  ... N=14: realization 23 done [1493s]
+  ... N=14: realization 21 done [1493s]
+  ... N=14: realization 24 done [1496s]
+  ... N=14: realization 27 done [1496s]
+  ... N=14: realization 25 done [1496s]
+  ... N=14: realization 26 done [1497s]
+  ... N=14: realization 28 done [1500s]
+  ... N=14: realization 29 done [1501s]
+  ... N=14: realization 30 done [1502s]
+  ... N=14: realization 31 done [1502s]
+  ... N=14: realization 32 done [1504s]
+  ... N=14: realization 33 done [1505s]
+  ... N=14: realization 34 done [1505s]
+  ... N=14: realization 35 done [1506s]
+  ... N=14: realization 36 done [1509s]
+  ... N=14: realization 37 done [1509s]
+  ... N=14: realization 39 done [1509s]
+  ... N=14: realization 38 done [1509s]
+  ... N=14: realization 40 done [1512s]
+  ... N=14: realization 41 done [1512s]
+  ... N=14: realization 42 done [1512s]
+  ... N=14: realization 43 done [1512s]
+  ... N=14: realization 45 done [1515s]
+  ... N=14: realization 46 done [1515s]
+  ... N=14: realization 44 done [1515s]
+  ... N=14: realization 47 done [1515s]
+  ... N=14: realization 48 done [1519s]
+  ... N=14: realization 49 done [1519s]
+  ... N=14: consolidated 50 realizations to spectra_N14_R50.npz
+  N=14 (dim  128): E_0 = -0.6790 +- 0.0288, bandwidth = 1.3601, exact-degenerate adjacent pairs: 50.4% (N mod 8 = 6)
+  ... N=16: 0/30 already cached raw; building 30 more
+  ... N=16: realization 2 done [61s]
+  ... N=16: realization 0 done [61s]
+  ... N=16: realization 1 done [61s]
+  ... N=16: realization 3 done [62s]
+
+############ rung4 extract (2026-08-21 22:29:52) ############
+
+==============================================================================
+1. MACHINERY VERIFICATION — imported, not rebuilt
+==============================================================================
+syk_model.generate_majoranas(12): max |{chi_i,chi_j} - delta_ij I| = 2.220e-16 (dim 64)
+syk_model algebra verified to machine precision.
+Coupling convention: variance(J_ijkl) = 6 J^2/N^3, J = 1.0
+schwarzian.compute_G standing gate: G(0.1,1,80) = 3.980425717581e+02 (expected 3.980425717581e+02), conv_err = 0.0e+00
+
+==============================================================================
+2. SYK DISORDER ENSEMBLES + GOE CONTROLS
+==============================================================================
+N values: [12, 14, 16, 18]; realizations: [50, 50, 30, 20]; seeds 1000*N + r
+  ... N=12: loaded 50 cached spectra from spectra_N12_R50.npz
+  N=12 (dim   64): E_0 = -0.5789 +- 0.0278, bandwidth = 1.1482, exact-degenerate adjacent pairs: 50.8% (N mod 8 = 4)
+  ... N=14: loaded 50 cached spectra from spectra_N14_R50.npz
+  N=14 (dim  128): E_0 = -0.6790 +- 0.0288, bandwidth = 1.3601, exact-degenerate adjacent pairs: 50.4% (N mod 8 = 6)
+  ... N=16: 4/30 already cached raw; building 26 more
+  ... N=16: realization 6 done [16s]
+  ... N=16: realization 7 done [16s]
+  ... N=16: realization 5 done [16s]
+  ... N=16: realization 4 done [17s]
+  ... N=16: realization 8 done [31s]
+  ... N=16: realization 9 done [32s]
+  ... N=16: realization 10 done [32s]
+  ... N=16: realization 11 done [32s]
+  ... N=16: realization 13 done [47s]
+  ... N=16: realization 12 done [47s]
+  ... N=16: realization 14 done [47s]
+  ... N=16: realization 15 done [47s]
+  ... N=16: realization 16 done [68s]
+  ... N=16: realization 18 done [68s]
+  ... N=16: realization 17 done [68s]
+  ... N=16: realization 19 done [69s]
+  ... N=16: realization 21 done [89s]
+  ... N=16: realization 22 done [89s]
+  ... N=16: realization 20 done [89s]
+  ... N=16: realization 23 done [89s]
+  ... N=16: realization 26 done [103s]
+  ... N=16: realization 25 done [103s]
+  ... N=16: realization 24 done [103s]
+  ... N=16: realization 27 done [103s]
+  ... N=16: realization 28 done [111s]
+  ... N=16: realization 29 done [111s]
+  ... N=16: consolidated 30 realizations to spectra_N16_R30.npz
+  N=16 (dim  256): E_0 = -0.7861 +- 0.0222, bandwidth = 1.5698, exact-degenerate adjacent pairs: 0.0% (N mod 8 = 0)
+  ... N=18: loaded 20 cached spectra from spectra_N18_R20.npz
+  N=18 (dim  512): E_0 = -0.8779 +- 0.0165, bandwidth = 1.7468, exact-degenerate adjacent pairs: 50.1% (N mod 8 = 2)
+
+==============================================================================
+3. ROUTES 1 AND 2 — SYK, then the GOE control
+==============================================================================
+
+--- SYK ---
+  N=12  Route1 C=0.2299+-0.0114  plateau max/min=1.55 (NO PLATEAU — not a measurement)
+        bands: 0.02-0.10:0.172  0.05-0.15:0.236  0.10-0.25:0.230  0.15-0.35:0.188  0.25-0.45:0.152
+  N=12  Route2 C=-0.0846+-0.0034  (free-log a=+1.34; Schwarzian & RMT edge both predict 1.5)
+        windows: beta 3-8:-0.0640  beta 6-15:-0.0846  beta 10-25:-0.2035
+  N=14  Route1 C=0.2545+-0.0053  plateau max/min=3.48 (NO PLATEAU — not a measurement)
+        bands: 0.02-0.10:0.510  0.05-0.15:0.398  0.10-0.25:0.254  0.15-0.35:0.197  0.25-0.45:0.147
+  N=14  Route2 C=-0.0611+-0.0026  (free-log a=+1.47; Schwarzian & RMT edge both predict 1.5)
+        windows: beta 3-8:-0.0560  beta 6-15:-0.0611  beta 10-25:-0.1072
+  N=16  Route1 C=0.2624+-0.0044  plateau max/min=4.24 (NO PLATEAU — not a measurement)
+        bands: 0.02-0.10:0.594  0.05-0.15:0.397  0.10-0.25:0.262  0.15-0.35:0.197  0.25-0.45:0.140
+  N=16  Route2 C=-0.0383+-0.0030  (free-log a=+1.57; Schwarzian & RMT edge both predict 1.5)
+        windows: beta 3-8:-0.0452  beta 6-15:-0.0383  beta 10-25:-0.0465
+  N=18  Route1 C=0.2503+-0.0028  plateau max/min=3.90 (NO PLATEAU — not a measurement)
+        bands: 0.02-0.10:0.537  0.05-0.15:0.386  0.10-0.25:0.250  0.15-0.35:0.188  0.25-0.45:0.138
+  N=18  Route2 C=-0.0180+-0.0016  (free-log a=+1.66; Schwarzian & RMT edge both predict 1.5)
+        windows: beta 3-8:-0.0345  beta 6-15:-0.0180  beta 10-25:-0.0163
+
+--- GOE control (same dim/R, bandwidth-matched) ---
+  N=12  Route1 C=0.3531+-0.0107  plateau max/min=2.95 (NO PLATEAU — not a measurement)
+        bands: 0.02-0.10:0.566  0.05-0.15:0.481  0.10-0.25:0.353  0.15-0.35:0.260  0.25-0.45:0.192
+  N=12  Route2 C=-0.0396+-0.0040  (free-log a=+1.72; Schwarzian & RMT edge both predict 1.5)
+        windows: beta 3-8:-0.0645  beta 6-15:-0.0396  beta 10-25:-0.0466
+  N=14  Route1 C=0.3106+-0.0057  plateau max/min=3.68 (NO PLATEAU — not a measurement)
+        bands: 0.02-0.10:0.613  0.05-0.15:0.445  0.10-0.25:0.311  0.15-0.35:0.232  0.25-0.45:0.166
+  N=14  Route2 C=-0.0309+-0.0030  (free-log a=+1.69; Schwarzian & RMT edge both predict 1.5)
+        windows: beta 3-8:-0.0519  beta 6-15:-0.0309  beta 10-25:-0.0257
+  N=16  Route1 C=0.2749+-0.0030  plateau max/min=4.08 (NO PLATEAU — not a measurement)
+        bands: 0.02-0.10:0.612  0.05-0.15:0.422  0.10-0.25:0.275  0.15-0.35:0.207  0.25-0.45:0.150
+  N=16  Route2 C=-0.0285+-0.0022  (free-log a=+1.64; Schwarzian & RMT edge both predict 1.5)
+        windows: beta 3-8:-0.0433  beta 6-15:-0.0285  beta 10-25:-0.0220
+  N=18  Route1 C=0.2539+-0.0020  plateau max/min=4.27 (NO PLATEAU — not a measurement)
+        bands: 0.02-0.10:0.585  0.05-0.15:0.393  0.10-0.25:0.254  0.15-0.35:0.190  0.25-0.45:0.137
+  N=18  Route2 C=-0.0242+-0.0011  (free-log a=+1.62; Schwarzian & RMT edge both predict 1.5)
+        windows: beta 3-8:-0.0371  beta 6-15:-0.0242  beta 10-25:-0.0182
+
+==============================================================================
+4. THE C(N) GATE
+==============================================================================
+  N |        SYK C_DOS |     SYK C_thermo | disagree | agree | GOE C_DOS | GOE C_th
+------------------------------------------------------------------------------------
+ 12 |  0.2299*+-0.0114 | -0.0846 +-0.0034 |   433.0% | False |    0.3531 |  -0.0396
+ 14 |  0.2545*+-0.0053 | -0.0611 +-0.0026 |   326.3% | False |    0.3106 |  -0.0309
+ 16 |  0.2624*+-0.0044 | -0.0383 +-0.0030 |   268.4% | False |    0.2749 |  -0.0285
+ 18 |  0.2503*+-0.0028 | -0.0180 +-0.0016 |   230.9% | False |    0.2539 |  -0.0242
+(* = Route 1 slope has no plateau across bands: not a measurement.
+ 'agree' requires: plateau exists, Route 2 C positive, and the
+ two routes within 15% — the pre-registered gate conditions.)
+
+Routes agree (pre-registered criteria) at 0/4 N values.
+
+VERDICT (reported straight, per the gate conditions):
+Matched parameters could NOT be established at N <= 20. No averaged or
+fudged C will be produced. See the GOE control rows: if SYK's fit
+pattern (drifting DOS slope, non-positive entropy coefficient) tracks
+the GOE control, the accessible spectral edges are generic
+random-matrix behavior and the Schwarzian coupling has not emerged at
+these sizes. The barcode comparison is not justified with this
+dictionary.
+
+Total time: 135s
+Results appended to: /Users/naman/projects/ER-EPR/rung4/rung4_results.txt
