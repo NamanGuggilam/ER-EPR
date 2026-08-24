@@ -65,7 +65,21 @@ size N uses np.random.seed(1000*N + r).
 
 Usage:
     python rung4/rung4.py extract [--smoke]
-    (the 'compare' stage is gated on user review of the C(N) results)
+    python rung4/rung4.py compare [--smoke]
+
+COMPARE STAGE (unblocked 2026-08-24). The extract stage ran the
+pre-registered gate and FAILED it 0/4: no Route-1 plateau at any N,
+negative Route-2 C, and a fit pattern tracking the GOE control — the
+Schwarzian coupling has not emerged from SYK spectra at N <= 18. The
+user reviewed that verdict and chose the DECLARED-LITERATURE-C
+dictionary: C is not extracted from our data but taken from the
+large-N result of Maldacena-Stanford (PRD 94, 106002; 1604.07818),
+C(N) = alpha_S N / script-J with script-J = J/sqrt(2) for q=4 (MS eq
+2.16) and alpha_S = 0.00709 (MS numerical kernel solution; quoted as
+~0.007, and 4 pi^2 alpha_S sqrt(2) = 0.396 reproduces the accepted
+q=4 specific-heat coefficient in J=1 units). The comparison below is
+therefore a test of the large-N dictionary applied at small N, and is
+labeled as such — not a measurement of C.
 """
 
 import sys
@@ -445,6 +459,298 @@ dictionary.""")
 
 
 # ======================================================================
+# COMPARE STAGE — declared-literature-C dictionary (approved 2026-08-24)
+# ======================================================================
+# --- compare design ---------------------------------------------------
+ALPHA_S = 0.00709                    # MS q=4 Schwarzian coefficient (declared)
+SCRIPT_J = J / np.sqrt(2.0)          # MS eq (2.16): sqrt(q) J / 2^{(q-1)/2}, q=4
+BETA_SWEEP = [5.0, 10.0, 20.0, 40.0]
+N_TAU = 24                           # tau-grid points on the thermal circle
+R_CORR = 10                          # realizations used for G(tau) per N
+C_CONTROL_FACTORS = [5.0, 0.2]       # mismatched-dictionary controls
+DELTA = 0.25                         # SYK4 fermion dimension (= schwarzian.DELTA_SYK)
+
+
+def declared_C(N):
+    """C(N) = alpha_S N / script-J. Matching is via thermodynamics, which
+    is action-convention-proof: MS specific heat c = 4 pi^2 alpha_S N T /
+    script-J equals our validated Schwarzian entropy term 4 pi^2 C T."""
+    return ALPHA_S * N / SCRIPT_J
+
+
+def _one_corr_realization(args):
+    """Worker: rebuild seeded realization WITH eigenvectors, form
+    W_nm = (1/N) sum_i |<n|chi_i|m>|^2, and return the Euclidean
+    autocorrelator G(tau) = Tr[e^{-(beta-tau)H} chi e^{-tau H} chi]/Z
+    (per-fermion average) at the distinct circle separations
+    tau = m beta / N_TAU, m = 1..N_TAU/2, for every beta in the sweep."""
+    N, r, betas, n_tau = args
+    np.random.seed(1000 * N + r)
+    H = syk_model.build_syk_hamiltonian(N, J=J)
+    E, V = np.linalg.eigh(H)
+    W = np.zeros((E.size, E.size))
+    for chi in syk_model.generate_majoranas(N):
+        M = V.conj().T @ chi @ V
+        W += M.real ** 2 + M.imag ** 2
+    W /= N
+    # sum_m W_nm = <n| sum_i chi_i^2 |n> / N = 1/2 exactly — standing check
+    rowsum_err = float(np.max(np.abs(W.sum(axis=1) - 0.5)))
+    x = E - E[0]
+    n_sep = n_tau // 2
+    G = np.zeros((len(betas), n_sep))
+    for bi, beta in enumerate(betas):
+        Z = float(np.exp(-beta * x).sum())
+        for m in range(1, n_sep + 1):
+            tau = m * beta / n_tau
+            a = np.exp(-(beta - tau) * x)
+            b = np.exp(-tau * x)
+            G[bi, m - 1] = float(a @ W @ b) / Z
+    return r, E, G, rowsum_err
+
+
+def schwarzian_G_profile(beta, C, n_tau):
+    """Exact MTV G at the distinct circle separations; every value's
+    self-reported conv_err is checked by the caller."""
+    n_sep = n_tau // 2
+    G = np.zeros(n_sep)
+    worst = 0.0
+    for m in range(1, n_sep + 1):
+        res = compute_G(m * beta / n_tau, beta, C)
+        G[m - 1] = res["G"]
+        worst = max(worst, res["conv_err"])
+    return G, worst
+
+
+def conformal_G_profile(beta, n_tau):
+    """C -> infinity conformal-limit shape control:
+    G_c(tau) ~ [sin(pi tau/beta)]^{-2 Delta} (normalization dropped by
+    the phi gauge below)."""
+    m = np.arange(1, n_tau // 2 + 1)
+    return np.sin(np.pi * m / n_tau) ** (-2.0 * DELTA)
+
+
+def circle_distance_matrix(G_prof, n_tau):
+    """d(tau_i, tau_j) = 1 / Ghat(sep), Ghat = G / G(beta/2) — the
+    declared phi gauge: both sides' distances are 1 at maximal circle
+    separation, so barcodes compare correlation-decay SHAPE, in the
+    d = 1/|correlation| convention of rungs 1-3."""
+    Ghat = G_prof / G_prof[-1]
+    i = np.arange(n_tau)
+    m = np.abs(i[:, None] - i[None, :])
+    m = np.minimum(m, n_tau - m)
+    D = np.zeros((n_tau, n_tau))
+    nz = m > 0
+    D[nz] = 1.0 / Ghat[m[nz] - 1]
+    return D
+
+
+def stage_compare(smoke=False):
+    from ripser import ripser
+    from persim import wasserstein
+
+    betas = list(BETA_SWEEP)
+    n_values = list(N_VALUES)
+    n_values = [N for N in n_values if N <= 18]
+    n_tau, r_corr = N_TAU, R_CORR
+    if smoke:
+        n_values, betas, n_tau, r_corr = [12], [5.0, 20.0], 8, 3
+
+    def run_ph(D):
+        return ripser(D, distance_matrix=True, maxdim=1)["dgms"]
+
+    def finite_part(dgm):
+        return dgm[np.isfinite(dgm).all(axis=1)] if dgm.size else dgm
+
+    def w_dist(dg1, dg2):
+        return (float(wasserstein(finite_part(dg1[0]), finite_part(dg2[0]))),
+                float(wasserstein(finite_part(dg1[1]), finite_part(dg2[1]))))
+
+    section("1. MACHINERY VERIFICATION — imported, not rebuilt")
+    err, dim = verify_syk_model()
+    print(f"syk_model.generate_majoranas(12): max |{{chi_i,chi_j}} - "
+          f"delta_ij I| = {err:.3e} (dim {dim})")
+    assert err < 1e-12, "imported Majorana construction failed algebra check"
+    res = compute_G(0.1, 1.0, 80.0)
+    print(f"schwarzian.compute_G standing gate: G(0.1,1,80) = "
+          f"{res['G']:.12e} (expected 3.980425717581e+02), "
+          f"conv_err = {res['conv_err']:.1e}")
+    assert abs(res["G"] / 3.980425717581e+02 - 1.0) < 1e-9
+
+    section("2. THE DECLARED DICTIONARY (not extracted — literature)")
+    print("Extraction gate failed 0/4 (see extract runs above): C could not")
+    print("be measured from our spectra. Per user decision (2026-08-24) C is")
+    print("DECLARED from Maldacena-Stanford large-N results instead:")
+    print(f"  variance(J_ijkl) = 6 J^2/N^3  (ours; = MS eq 2.3 at q=4)")
+    print(f"  script-J = sqrt(q) J / 2^((q-1)/2) = J/sqrt(2)   (MS eq 2.16)")
+    print(f"  MS: c = 4 pi^2 alpha_S N / script-J;  ours: S ⊃ 4 pi^2 C / beta")
+    print(f"  =>  C(N) = alpha_S N / script-J = sqrt(2) alpha_S N,  J = {J}")
+    print(f"  alpha_S(q=4) = {ALPHA_S} (MS numerical kernel; ~0.007).")
+    print(f"  Cross-check: 4 pi^2 alpha_S sqrt(2) = "
+          f"{4*np.pi**2*ALPHA_S*np.sqrt(2):.4f} — matches the accepted q=4")
+    print(f"  specific-heat coefficient 0.396/J. (~1-2% uncertainty in")
+    print(f"  alpha_S is negligible vs the x5 mismatch controls.)")
+    for N in n_values:
+        C = declared_C(N)
+        assert C < 200.0, "outside schwarzian.py validated scope"
+        print(f"  N={N:>2}:  C = {C:.4f}   (validated scope C <= 200: OK)")
+    print(f"\nDesign: tau circle with {n_tau} points; distances d = 1/Ghat,")
+    print(f"Ghat = G/G(beta/2) on BOTH sides (the declared phi gauge);")
+    print(f"beta sweep {betas}; SYK G(tau) averaged over {r_corr}")
+    print(f"realizations/N (same seeds as extract); ripser maxdim=1;")
+    print(f"Wasserstein on H0 and H1. Controls: C x5, C/5 (mismatched")
+    print(f"dictionary) and the conformal C->inf shape. PRE-DECLARED")
+    print(f"criterion: the dictionary is 'favored' at (N, beta) iff")
+    print(f"W_H0+W_H1 (declared) < both mismatched controls.")
+
+    section("3. EPR SIDE — SYK Euclidean autocorrelator G(tau)")
+    syk_G = {}      # N -> (R, nbeta, nsep) array
+    for N in n_values:
+        cache = DATA_DIR / f"spectra_N{N}_R{N_REALIZATIONS[N]}.npz"
+        cached = np.load(cache)["spectra"] if cache.exists() else None
+        results = [None] * r_corr
+        with ProcessPoolExecutor(max_workers=MAX_WORKERS) as pool:
+            from concurrent.futures import as_completed
+            futs = {pool.submit(_one_corr_realization,
+                                (N, r, betas, n_tau)): r
+                    for r in range(r_corr)}
+            for fut in as_completed(futs):
+                r, E, G, rowsum_err = fut.result()
+                assert rowsum_err < 1e-10, \
+                    f"sum_i chi_i^2 = N/2 identity violated: {rowsum_err:.2e}"
+                if cached is not None and r < cached.shape[0]:
+                    repro = float(np.max(np.abs(E - cached[r])))
+                    assert repro < 1e-8, \
+                        f"seeded rebuild does not reproduce cached spectrum " \
+                        f"(N={N}, r={r}, max dev {repro:.2e})"
+                results[r] = G
+                progress(f"N={N}: realization {r} G(tau) done "
+                         f"(rowsum_err {rowsum_err:.1e})")
+        syk_G[N] = np.array(results)
+        Gm = syk_G[N].mean(axis=0)
+        print(f"  N={N:>2}: G(beta/2) across beta sweep: "
+              + "  ".join(f"b={b:g}:{Gm[bi, -1]:.3e}"
+                          for bi, b in enumerate(betas))
+              + f"   (seeded rebuilds reproduce cached spectra to <1e-8)")
+
+    section("4. ER SIDE — exact Schwarzian G(tau) at declared C + controls")
+    er_G = {}       # (N, beta, tag) -> profile
+    tags = ["declared"] + [f"x{f:g}" for f in C_CONTROL_FACTORS] + ["conformal"]
+    for N in n_values:
+        C0 = declared_C(N)
+        for bi, beta in enumerate(betas):
+            for tag, C in ([("declared", C0)]
+                           + [(f"x{f:g}", C0 * f) for f in C_CONTROL_FACTORS]):
+                prof, conv = schwarzian_G_profile(beta, C, n_tau)
+                assert conv < 1e-6, f"conv_err {conv:.1e} at N={N} beta={beta}"
+                er_G[(N, beta, tag)] = prof
+            er_G[(N, beta, "conformal")] = conformal_G_profile(beta, n_tau)
+            progress(f"N={N} beta={beta:g}: Schwarzian profiles done "
+                     f"(worst conv_err {conv:.1e})")
+
+    section("5. BARCODE COMPARISON (H0 + H1, Wasserstein)")
+    print(f"{'N':>3} {'beta':>5} | {'W declared':>21} | {'W x5':>8} "
+          f"{'W /5':>8} {'W conf':>8} | {'RMSlog':>7} | favored?")
+    print("-" * 84)
+    favored_count, cells = 0, 0
+    table = {}
+    for N in n_values:
+        for bi, beta in enumerate(betas):
+            dgms_er = {t: run_ph(circle_distance_matrix(er_G[(N, beta, t)],
+                                                        n_tau))
+                       for t in tags}
+            # per-realization SYK barcodes -> spread of W against declared
+            Wtot = {t: [] for t in tags}
+            for r in range(r_corr):
+                dg_syk = run_ph(circle_distance_matrix(syk_G[N][r, bi],
+                                                       n_tau))
+                for t in tags:
+                    w0, w1 = w_dist(dg_syk, dgms_er[t])
+                    Wtot[t].append(w0 + w1)
+            mean = {t: float(np.mean(Wtot[t])) for t in tags}
+            std = {t: float(np.std(Wtot[t])) for t in tags}
+            Ghat_s = syk_G[N][:, bi, :].mean(axis=0)
+            Ghat_s = Ghat_s / Ghat_s[-1]
+            Ghat_e = er_G[(N, beta, "declared")]
+            Ghat_e = Ghat_e / Ghat_e[-1]
+            rmslog = float(np.sqrt(np.mean(
+                (np.log(Ghat_s) - np.log(Ghat_e)) ** 2)))
+            fav = (mean["declared"] < mean["x5"]
+                   and mean["declared"] < mean["x0.2"])
+            favored_count += fav
+            cells += 1
+            table[(N, beta)] = (mean, std, rmslog, fav)
+            print(f"{N:>3} {beta:>5g} | {mean['declared']:8.4f} "
+                  f"+- {std['declared']:7.4f}   | {mean['x5']:8.4f} "
+                  f"{mean['x0.2']:8.4f} {mean['conformal']:8.4f} | "
+                  f"{rmslog:7.4f} | {'YES' if fav else 'no'}")
+    print("(W = Wasserstein(H0) + Wasserstein(H1), SYK per-realization")
+    print(" barcodes vs the fixed ER barcode; mean +- std over realizations.")
+    print(" RMSlog = rms deviation of log Ghat, a non-topological shape")
+    print(" metric reported for transparency.)")
+
+    section("6. VERDICT (reported straight)")
+    print(f"Declared dictionary favored over BOTH x5 and /5 mismatched")
+    print(f"controls at {favored_count}/{cells} (N, beta) cells.")
+    print("Interpretation limits, stated up front: the extract stage showed")
+    print("these spectra's edges are GOE-like, so agreement here tests the")
+    print("large-N dictionary's G(tau) SHAPE at small N, not an emergent")
+    print("Schwarzian; and the phi gauge compares decay shape only, not")
+    print("absolute normalization.")
+
+    _plot_compare(syk_G, er_G, table, n_values, betas, n_tau, tags, smoke)
+    return table
+
+
+def _plot_compare(syk_G, er_G, table, n_values, betas, n_tau, tags, smoke):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    b_show = betas[min(2, len(betas) - 1)]
+    bi = betas.index(b_show)
+    x = np.arange(1, n_tau // 2 + 1) / n_tau     # tau/beta in (0, 1/2]
+    ncol = len(n_values)
+    fig, axes = plt.subplots(2, max(ncol, 2), figsize=(4.2 * max(ncol, 2), 8))
+    for k, N in enumerate(n_values):
+        ax = axes[0, k]
+        Gs = syk_G[N][:, bi, :] / syk_G[N][:, bi, -1:]
+        ax.errorbar(x, Gs.mean(axis=0), yerr=Gs.std(axis=0), fmt="o",
+                    ms=3, capsize=2, label="SYK (mean +- std)", zorder=5)
+        styles = {"declared": ("-", 1.8), "x5": ("--", 1.0),
+                  "x0.2": (":", 1.0), "conformal": ("-.", 1.0)}
+        for t in tags:
+            prof = er_G[(N, b_show, t)]
+            ls, lw = styles[t]
+            ax.plot(x, prof / prof[-1], ls, lw=lw, label=f"Schw {t}")
+        ax.set_yscale("log")
+        ax.set_title(f"N={N}, beta={b_show:g}, C={declared_C(N):.3f}")
+        ax.set_xlabel("tau/beta")
+        ax.set_ylabel("Ghat = G/G(beta/2)")
+        if k == 0:
+            ax.legend(fontsize=7)
+    width = 0.2
+    for k, N in enumerate(n_values):
+        ax = axes[1, k]
+        for ti, t in enumerate(tags):
+            vals = [table[(N, b)][0][t] for b in betas]
+            ax.bar(np.arange(len(betas)) + (ti - 1.5) * width, vals, width,
+                   label=f"{t}")
+        ax.set_xticks(range(len(betas)))
+        ax.set_xticklabels([f"{b:g}" for b in betas])
+        ax.set_xlabel("beta")
+        ax.set_ylabel("W_H0 + W_H1 vs SYK")
+        ax.set_title(f"N={N}")
+        if k == 0:
+            ax.legend(fontsize=7)
+    fig.suptitle("Rung 4 compare: SYK vs exact Schwarzian at DECLARED "
+                 "literature C(N) — thermal-circle barcodes")
+    fig.tight_layout()
+    out = HERE / f"rung4_compare{'_smoke' if smoke else ''}.png"
+    fig.savefig(out, dpi=130)
+    print(f"\nPlot written to: {out}")
+
+
+# ======================================================================
 if __name__ == "__main__":
     args = list(sys.argv[1:])
     smoke = "--smoke" in args
@@ -452,9 +758,9 @@ if __name__ == "__main__":
         if a.startswith("--N="):  # e.g. --N=12,14,16,18
             N_VALUES = [int(x) for x in a.split("=", 1)[1].split(",")]
     stage = next((a for a in args if not a.startswith("--")), "extract")
-    if stage != "extract":
-        sys.exit("only the 'extract' stage exists; 'compare' is gated on "
-                 "user review of the C(N) results")
+    if stage not in ("extract", "compare"):
+        sys.exit("stages: 'extract' | 'compare' (compare unblocked "
+                 "2026-08-24 by user decision: declared-literature-C)")
 
     tag = "_smoke" if smoke else ""
     results_path = HERE / f"rung4_results{tag}.txt"
@@ -464,7 +770,10 @@ if __name__ == "__main__":
     print(f"\n############ rung4 {stage}{tag} "
           f"({time.strftime('%Y-%m-%d %H:%M:%S')}) ############")
     t0 = time.time()
-    stage_extract(smoke=smoke)
+    if stage == "extract":
+        stage_extract(smoke=smoke)
+    else:
+        stage_compare(smoke=smoke)
     print(f"\nTotal time: {time.time()-t0:.0f}s")
     print(f"Results appended to: {results_path}")
     sys.stdout = _stdout

@@ -241,3 +241,149 @@ dictionary.
 
 Total time: 135s
 Results appended to: /Users/naman/projects/ER-EPR/rung4/rung4_results.txt
+
+############ rung4 compare (2026-08-24 08:26:58) ############
+
+==============================================================================
+1. MACHINERY VERIFICATION — imported, not rebuilt
+==============================================================================
+syk_model.generate_majoranas(12): max |{chi_i,chi_j} - delta_ij I| = 2.220e-16 (dim 64)
+schwarzian.compute_G standing gate: G(0.1,1,80) = 3.980425717581e+02 (expected 3.980425717581e+02), conv_err = 0.0e+00
+
+==============================================================================
+2. THE DECLARED DICTIONARY (not extracted — literature)
+==============================================================================
+Extraction gate failed 0/4 (see extract runs above): C could not
+be measured from our spectra. Per user decision (2026-08-24) C is
+DECLARED from Maldacena-Stanford large-N results instead:
+  variance(J_ijkl) = 6 J^2/N^3  (ours; = MS eq 2.3 at q=4)
+  script-J = sqrt(q) J / 2^((q-1)/2) = J/sqrt(2)   (MS eq 2.16)
+  MS: c = 4 pi^2 alpha_S N / script-J;  ours: S ⊃ 4 pi^2 C / beta
+  =>  C(N) = alpha_S N / script-J = sqrt(2) alpha_S N,  J = 1.0
+  alpha_S(q=4) = 0.00709 (MS numerical kernel; ~0.007).
+  Cross-check: 4 pi^2 alpha_S sqrt(2) = 0.3958 — matches the accepted q=4
+  specific-heat coefficient 0.396/J. (~1-2% uncertainty in
+  alpha_S is negligible vs the x5 mismatch controls.)
+  N=12:  C = 0.1203   (validated scope C <= 200: OK)
+  N=14:  C = 0.1404   (validated scope C <= 200: OK)
+  N=16:  C = 0.1604   (validated scope C <= 200: OK)
+  N=18:  C = 0.1805   (validated scope C <= 200: OK)
+
+Design: tau circle with 24 points; distances d = 1/Ghat,
+Ghat = G/G(beta/2) on BOTH sides (the declared phi gauge);
+beta sweep [5.0, 10.0, 20.0, 40.0]; SYK G(tau) averaged over 10
+realizations/N (same seeds as extract); ripser maxdim=1;
+Wasserstein on H0 and H1. Controls: C x5, C/5 (mismatched
+dictionary) and the conformal C->inf shape. PRE-DECLARED
+criterion: the dictionary is 'favored' at (N, beta) iff
+W_H0+W_H1 (declared) < both mismatched controls.
+
+==============================================================================
+3. EPR SIDE — SYK Euclidean autocorrelator G(tau)
+==============================================================================
+  ... N=12: realization 0 G(tau) done (rowsum_err 8.9e-16)
+  ... N=12: realization 2 G(tau) done (rowsum_err 1.1e-15)
+  ... N=12: realization 1 G(tau) done (rowsum_err 1.3e-15)
+  ... N=12: realization 3 G(tau) done (rowsum_err 1.1e-15)
+  ... N=12: realization 4 G(tau) done (rowsum_err 1.1e-15)
+  ... N=12: realization 6 G(tau) done (rowsum_err 1.1e-15)
+  ... N=12: realization 5 G(tau) done (rowsum_err 1.4e-15)
+  ... N=12: realization 7 G(tau) done (rowsum_err 1.3e-15)
+  ... N=12: realization 8 G(tau) done (rowsum_err 1.2e-15)
+  ... N=12: realization 9 G(tau) done (rowsum_err 1.6e-15)
+  N=12: G(beta/2) across beta sweep: b=5:3.685e-01  b=10:2.505e-01  b=20:1.552e-01  b=40:9.657e-02   (seeded rebuilds reproduce cached spectra to <1e-8)
+  ... N=14: realization 0 G(tau) done (rowsum_err 1.1e-15)
+  ... N=14: realization 1 G(tau) done (rowsum_err 1.0e-15)
+  ... N=14: realization 2 G(tau) done (rowsum_err 1.1e-15)
+  ... N=14: realization 3 G(tau) done (rowsum_err 1.2e-15)
+  ... N=14: realization 4 G(tau) done (rowsum_err 1.0e-15)
+  ... N=14: realization 6 G(tau) done (rowsum_err 8.9e-16)
+  ... N=14: realization 5 G(tau) done (rowsum_err 1.1e-15)
+  ... N=14: realization 7 G(tau) done (rowsum_err 1.3e-15)
+  ... N=14: realization 8 G(tau) done (rowsum_err 1.3e-15)
+  ... N=14: realization 9 G(tau) done (rowsum_err 1.0e-15)
+  N=14: G(beta/2) across beta sweep: b=5:3.634e-01  b=10:2.487e-01  b=20:1.447e-01  b=40:6.670e-02   (seeded rebuilds reproduce cached spectra to <1e-8)
+  ... N=16: realization 1 G(tau) done (rowsum_err 8.9e-16)
+  ... N=16: realization 3 G(tau) done (rowsum_err 1.1e-15)
+  ... N=16: realization 0 G(tau) done (rowsum_err 1.4e-15)
+  ... N=16: realization 2 G(tau) done (rowsum_err 1.2e-15)
+  ... N=16: realization 5 G(tau) done (rowsum_err 1.0e-15)
+  ... N=16: realization 4 G(tau) done (rowsum_err 1.4e-15)
+  ... N=16: realization 6 G(tau) done (rowsum_err 1.1e-15)
+  ... N=16: realization 7 G(tau) done (rowsum_err 1.4e-15)
+  ... N=16: realization 8 G(tau) done (rowsum_err 1.0e-15)
+  ... N=16: realization 9 G(tau) done (rowsum_err 1.0e-15)
+  N=16: G(beta/2) across beta sweep: b=5:3.643e-01  b=10:2.514e-01  b=20:1.456e-01  b=40:7.091e-02   (seeded rebuilds reproduce cached spectra to <1e-8)
+  ... N=18: realization 1 G(tau) done (rowsum_err 1.6e-15)
+  ... N=18: realization 3 G(tau) done (rowsum_err 1.6e-15)
+  ... N=18: realization 0 G(tau) done (rowsum_err 1.3e-15)
+  ... N=18: realization 2 G(tau) done (rowsum_err 1.8e-15)
+  ... N=18: realization 5 G(tau) done (rowsum_err 1.6e-15)
+  ... N=18: realization 4 G(tau) done (rowsum_err 1.1e-15)
+  ... N=18: realization 7 G(tau) done (rowsum_err 1.9e-15)
+  ... N=18: realization 6 G(tau) done (rowsum_err 1.4e-15)
+  ... N=18: realization 8 G(tau) done (rowsum_err 1.4e-15)
+  ... N=18: realization 9 G(tau) done (rowsum_err 1.7e-15)
+  N=18: G(beta/2) across beta sweep: b=5:3.635e-01  b=10:2.545e-01  b=20:1.548e-01  b=40:8.516e-02   (seeded rebuilds reproduce cached spectra to <1e-8)
+
+==============================================================================
+4. ER SIDE — exact Schwarzian G(tau) at declared C + controls
+==============================================================================
+  ... N=12 beta=5: Schwarzian profiles done (worst conv_err 8.9e-16)
+  ... N=12 beta=10: Schwarzian profiles done (worst conv_err 8.9e-16)
+  ... N=12 beta=20: Schwarzian profiles done (worst conv_err 1.8e-15)
+  ... N=12 beta=40: Schwarzian profiles done (worst conv_err 0.0e+00)
+  ... N=14 beta=5: Schwarzian profiles done (worst conv_err 8.9e-16)
+  ... N=14 beta=10: Schwarzian profiles done (worst conv_err 1.8e-15)
+  ... N=14 beta=20: Schwarzian profiles done (worst conv_err 0.0e+00)
+  ... N=14 beta=40: Schwarzian profiles done (worst conv_err 1.8e-15)
+  ... N=16 beta=5: Schwarzian profiles done (worst conv_err 0.0e+00)
+  ... N=16 beta=10: Schwarzian profiles done (worst conv_err 1.8e-15)
+  ... N=16 beta=20: Schwarzian profiles done (worst conv_err 0.0e+00)
+  ... N=16 beta=40: Schwarzian profiles done (worst conv_err 1.8e-15)
+  ... N=18 beta=5: Schwarzian profiles done (worst conv_err 8.9e-16)
+  ... N=18 beta=10: Schwarzian profiles done (worst conv_err 8.9e-16)
+  ... N=18 beta=20: Schwarzian profiles done (worst conv_err 0.0e+00)
+  ... N=18 beta=40: Schwarzian profiles done (worst conv_err 1.8e-15)
+
+==============================================================================
+5. BARCODE COMPARISON (H0 + H1, Wasserstein)
+==============================================================================
+  N  beta |            W declared |     W x5     W /5   W conf |  RMSlog | favored?
+------------------------------------------------------------------------------------
+ 12     5 |  11.2241 +-  0.2283   |  10.2582  13.3563   9.9296 |  0.3564 | no
+ 12    10 |   7.0658 +-  0.3536   |   5.5892   9.4458   4.9758 |  0.2681 | no
+ 12    20 |   4.1478 +-  0.5527   |   2.1545   6.4368   1.0686 |  0.2014 | no
+ 12    40 |   3.1152 +-  0.9692   |   1.0104   5.0270   1.2540 |  0.2069 | no
+ 14     5 |  10.8774 +-  0.1447   |  10.0111  12.9166   9.7265 |  0.3433 | no
+ 14    10 |   6.8214 +-  0.2261   |   5.4644   9.1742   4.9287 |  0.2547 | no
+ 14    20 |   3.3265 +-  0.4608   |   1.4440   5.6639   0.6148 |  0.1538 | no
+ 14    40 |   0.9412 +-  0.3456   |   1.6668   2.6472   3.2919 |  0.0541 | YES
+ 16     5 |  10.8084 +-  0.1073   |  10.0229  12.7589   9.7718 |  0.3380 | no
+ 16    10 |   6.7863 +-  0.2394   |   5.5311   9.1017   5.0555 |  0.2488 | no
+ 16    20 |   3.1543 +-  0.5310   |   1.3701   5.5215   0.6308 |  0.1412 | no
+ 16    40 |   0.8569 +-  0.6404   |   1.4872   2.8405   2.9667 |  0.0449 | YES
+ 18     5 |  10.6893 +-  0.0738   |   9.9707  12.5566   9.7461 |  0.3322 | no
+ 18    10 |   6.8092 +-  0.0988   |   5.6416   9.0818   5.2139 |  0.2462 | no
+ 18    20 |   3.5143 +-  0.1475   |   1.8154   5.8981   1.0343 |  0.1552 | no
+ 18    40 |   1.6177 +-  0.2927   |   0.5786   3.7768   1.9117 |  0.0930 | no
+(W = Wasserstein(H0) + Wasserstein(H1), SYK per-realization
+ barcodes vs the fixed ER barcode; mean +- std over realizations.
+ RMSlog = rms deviation of log Ghat, a non-topological shape
+ metric reported for transparency.)
+
+==============================================================================
+6. VERDICT (reported straight)
+==============================================================================
+Declared dictionary favored over BOTH x5 and /5 mismatched
+controls at 2/16 (N, beta) cells.
+Interpretation limits, stated up front: the extract stage showed
+these spectra's edges are GOE-like, so agreement here tests the
+large-N dictionary's G(tau) SHAPE at small N, not an emergent
+Schwarzian; and the phi gauge compares decay shape only, not
+absolute normalization.
+
+Plot written to: /Users/naman/projects/ER-EPR/rung4/rung4_compare.png
+
+Total time: 3159s
+Results appended to: /Users/naman/projects/ER-EPR/rung4/rung4_results.txt
