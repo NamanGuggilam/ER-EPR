@@ -1,0 +1,111 @@
+=== 2. Ghat_SYK(1) and Ghat_SYK(8), all 16 cells (mean +- std over 10 realizations) ===
+conformal references: Ghat(1) = 2.767905, Ghat(8) = 1.074570
+  N=12 beta=   5: Ghat(1) = 1.2906 +- 0.0159   Ghat(8) = 1.0334 +- 0.0016
+  N=12 beta=  10: Ghat(1) = 1.7599 +- 0.0455   Ghat(8) = 1.0670 +- 0.0032
+  N=12 beta=  20: Ghat(1) = 2.4732 +- 0.1406   Ghat(8) = 1.0883 +- 0.0094
+  N=12 beta=  40: Ghat(1) = 3.1914 +- 0.4103   Ghat(8) = 1.0936 +- 0.0182
+  N=14 beta=   5: Ghat(1) = 1.3047 +- 0.0102   Ghat(8) = 1.0344 +- 0.0010
+  N=14 beta=  10: Ghat(1) = 1.7653 +- 0.0295   Ghat(8) = 1.0669 +- 0.0023
+  N=14 beta=  20: Ghat(1) = 2.6308 +- 0.1411   Ghat(8) = 1.1044 +- 0.0094
+  N=14 beta=  40: Ghat(1) = 4.5501 +- 0.7444   Ghat(8) = 1.1702 +- 0.0345
+  N=16 beta=   5: Ghat(1) = 1.3015 +- 0.0076   Ghat(8) = 1.0339 +- 0.0008
+  N=16 beta=  10: Ghat(1) = 1.7490 +- 0.0306   Ghat(8) = 1.0661 +- 0.0026
+  N=16 beta=  20: Ghat(1) = 2.6255 +- 0.1543   Ghat(8) = 1.1045 +- 0.0100
+  N=16 beta=  40: Ghat(1) = 4.2741 +- 0.5729   Ghat(8) = 1.1453 +- 0.0221
+  N=18 beta=   5: Ghat(1) = 1.3033 +- 0.0052   Ghat(8) = 1.0338 +- 0.0005
+  N=18 beta=  10: Ghat(1) = 1.7286 +- 0.0124   Ghat(8) = 1.0640 +- 0.0009
+  N=18 beta=  20: Ghat(1) = 2.4743 +- 0.0371   Ghat(8) = 1.0939 +- 0.0025
+  N=18 beta=  40: Ghat(1) = 3.5538 +- 0.1493   Ghat(8) = 1.1134 +- 0.0072
+
+user reconstruction check (N=18): 1.303, 1.729, 2.474, 3.554  (claimed 1.303, 1.729, 2.474, 3.548)
+
+crossing of conformal Ghat(1) = 2.76790, per N (linear in ln beta between bracketing betas):
+  N=12: crosses between beta=20 (2.473) and beta=40 (3.191); interpolated beta_cross ~= 26.6
+  N=14: crosses between beta=20 (2.631) and beta=40 (4.550); interpolated beta_cross ~= 21.0
+  N=16: crosses between beta=20 (2.625) and beta=40 (4.274); interpolated beta_cross ~= 21.2
+  N=18: crosses between beta=20 (2.474) and beta=40 (3.554); interpolated beta_cross ~= 24.1
+
+=== 1. Ghat_Schwarzian(1) vs beta/C at beta = 5, 10, 20, 40 ===
+  beta=   5 beta/C=   0.05 (C=100): Ghat(1) = 2.768587
+  beta=   5 beta/C=   0.25 (C=20): Ghat(1) = 2.771310
+  beta=   5 beta/C=      1 (C=5): Ghat(1) = 2.781472
+  beta=   5 beta/C=      5 (C=1): Ghat(1) = 2.834426
+  beta=   5 beta/C=     25 (C=0.2): Ghat(1) = 3.075196
+  beta=   5 beta/C=    100 (C=0.05): Ghat(1) = 3.790014
+  beta=   5 beta/C=    300 (C=0.01667): Ghat(1) = 5.121537
+  beta=   5 beta/C=   1000 (C=0.005): Ghat(1) = 7.742572
+  beta=  10 beta/C=   0.05 (C=200): Ghat(1) = 2.768587
+  beta=  10 beta/C=   0.25 (C=40): Ghat(1) = 2.771310
+  beta=  10 beta/C=      1 (C=10): Ghat(1) = 2.781472
+  beta=  10 beta/C=      5 (C=2): Ghat(1) = 2.834426
+  beta=  10 beta/C=     25 (C=0.4): Ghat(1) = 3.075196
+  beta=  10 beta/C=    100 (C=0.1): Ghat(1) = 3.790014
+  beta=  10 beta/C=    300 (C=0.03333): Ghat(1) = 5.121537
+  beta=  10 beta/C=   1000 (C=0.01): Ghat(1) = 7.742572
+  beta=  20 beta/C=   0.25 (C=80): Ghat(1) = 2.771310
+  beta=  20 beta/C=      1 (C=20): Ghat(1) = 2.781472
+  beta=  20 beta/C=      5 (C=4): Ghat(1) = 2.834426
+  beta=  20 beta/C=     25 (C=0.8): Ghat(1) = 3.075196
+  beta=  20 beta/C=    100 (C=0.2): Ghat(1) = 3.790014
+  beta=  20 beta/C=    300 (C=0.06667): Ghat(1) = 5.121537
+  beta=  20 beta/C=   1000 (C=0.02): Ghat(1) = 7.742572
+  beta=  40 beta/C=   0.25 (C=160): Ghat(1) = 2.771310
+  beta=  40 beta/C=      1 (C=40): Ghat(1) = 2.781472
+  beta=  40 beta/C=      5 (C=8): Ghat(1) = 2.834426
+  beta=  40 beta/C=     25 (C=1.6): Ghat(1) = 3.075196
+  beta=  40 beta/C=    100 (C=0.4): Ghat(1) = 3.790014
+  beta=  40 beta/C=    300 (C=0.1333): Ghat(1) = 5.121537
+  beta=  40 beta/C=   1000 (C=0.04): Ghat(1) = 7.742572
+  beta/C | beta=  5 | beta= 10 | beta= 20 | beta= 40
+    0.05 |  2.76859 |  2.76859 |      out |      out
+    0.25 |  2.77131 |  2.77131 |  2.77131 |  2.77131
+       1 |  2.78147 |  2.78147 |  2.78147 |  2.78147
+       5 |  2.83443 |  2.83443 |  2.83443 |  2.83443
+      25 |  3.07520 |  3.07520 |  3.07520 |  3.07520
+     100 |  3.79001 |  3.79001 |  3.79001 |  3.79001
+     300 |  5.12154 |  5.12154 |  5.12154 |  5.12154
+    1000 |  7.74257 |  7.74257 |  7.74257 |  7.74257
+collapse check: max spread across beta at equal beta/C = 0.00e+00
+monotone increasing in beta/C at every beta: True; min over sweep = 2.768587 (conformal 2.767905)
+per-cell reachability (target = SYK mean Ghat(1); family range at each beta = (conformal, Ghat at C -> 0)):
+  N=12 beta=   5: SYK 1.291 BELOW conformal infimum (unreachable)
+  N=12 beta=  10: SYK 1.760 BELOW conformal infimum (unreachable)
+  N=12 beta=  20: SYK 2.473 BELOW conformal infimum (unreachable)
+  N=12 beta=  40: SYK 3.191 INSIDE family range (fit possible)
+  N=14 beta=   5: SYK 1.305 BELOW conformal infimum (unreachable)
+  N=14 beta=  10: SYK 1.765 BELOW conformal infimum (unreachable)
+  N=14 beta=  20: SYK 2.631 BELOW conformal infimum (unreachable)
+  N=14 beta=  40: SYK 4.550 INSIDE family range (fit possible)
+  N=16 beta=   5: SYK 1.301 BELOW conformal infimum (unreachable)
+  N=16 beta=  10: SYK 1.749 BELOW conformal infimum (unreachable)
+  N=16 beta=  20: SYK 2.625 BELOW conformal infimum (unreachable)
+  N=16 beta=  40: SYK 4.274 INSIDE family range (fit possible)
+  N=18 beta=   5: SYK 1.303 BELOW conformal infimum (unreachable)
+  N=18 beta=  10: SYK 1.729 BELOW conformal infimum (unreachable)
+  N=18 beta=  20: SYK 2.474 BELOW conformal infimum (unreachable)
+  N=18 beta=  40: SYK 3.554 INSIDE family range (fit possible)
+
+=== 3. C_fit = argmin_C W_H0, C in (0, 200] ===
+  N=12 beta=   5: C_fit[Ghat1] = NO FIT (monotone toward C=200 boundary)
+                C_fit[Ghat8] = NO FIT (monotone toward C=200 boundary)
+  N=12 beta=  10: C_fit[Ghat1] = NO FIT (monotone toward C=200 boundary)
+                C_fit[Ghat8] = NO FIT (monotone toward C=200 boundary)
+  N=12 beta=  20: C_fit[Ghat1] = NO FIT (monotone toward C=200 boundary)
+                C_fit[Ghat8] = 0.6607 (resid W_H0 2.29e-08, crossed)
+Traceback (most recent call last):
+  File "/private/tmp/claude-501/-Users-naman/d2153a54-68ef-4744-a61e-58afea02c44d/scratchpad/cfit_battery.py", line 160, in <module>
+    C1, kind1 = fit_C(beta, f1m, 1)
+                ~~~~~^^^^^^^^^^^^^^
+  File "/private/tmp/claude-501/-Users-naman/d2153a54-68ef-4744-a61e-58afea02c44d/scratchpad/cfit_battery.py", line 140, in fit_C
+    glo, ghi = g(np.log(C_LO)), g(np.log(C_HI))
+               ~^^^^^^^^^^^^^^
+  File "/private/tmp/claude-501/-Users-naman/d2153a54-68ef-4744-a61e-58afea02c44d/scratchpad/cfit_battery.py", line 139, in g
+    return 1.0 / sch_ghat(m, beta, float(np.exp(lnC))) - target_f
+                 ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/claude-501/-Users-naman/d2153a54-68ef-4744-a61e-58afea02c44d/scratchpad/cfit_battery.py", line 55, in sch_ghat
+    return sch_G(m * beta / N_TAU, beta, C) / sch_G(beta / 2, beta, C)
+                                              ~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/claude-501/-Users-naman/d2153a54-68ef-4744-a61e-58afea02c44d/scratchpad/cfit_battery.py", line 49, in sch_G
+    assert res["conv_err"] < 1e-6
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,56 @@
+[1/3] SYK G(tau) profiles
+  N=12 done
+  N=14 done
+  N=16 done
+  N=18 done
+[2/3] Schwarzian profiles
+  N=12 beta=5 done
+  N=12 beta=10 done
+  N=12 beta=20 done
+  N=12 beta=40 done
+  N=14 beta=5 done
+  N=14 beta=10 done
+  N=14 beta=20 done
+  N=14 beta=40 done
+  N=16 beta=5 done
+  N=16 beta=10 done
+  N=16 beta=20 done
+  N=16 beta=40 done
+  N=18 beta=5 done
+  N=18 beta=10 done
+  N=18 beta=20 done
+  N=18 beta=40 done
+profiles cached to /private/tmp/claude-501/-Users-naman/d2153a54-68ef-4744-a61e-58afea02c44d/scratchpad/profiles_cache.pkl
+[3/3] split scoring + structure checks
+
+MONOTONICITY (G strictly decreasing in separation m):
+  min forward step, SYK profiles (160): 4.459e-04
+  min forward step, ER profiles (64):   7.123e-04
+  violations: 0
+
+SPLIT TABLE (means over realizations; H1 counts: syk = counts over 10 realizations, er = declared/x5/x0.2/conf)
+  N  beta    b/C |   W0 dec   W1 dec |    W0 x5    W1 x5 |    W0 /5    W1 /5 |  W0 conf  W1 conf | H1 syk | H1 er | reg
+-----------------------------------------------------------------------------------------------------------------------
+ 12     5   41.6 |  10.7537   0.4704 |   9.8289   0.4293 |  12.7946   0.5617 |   9.5143   0.4153 |      1 | 1/1/1/1 | 4.0e-05
+ 12    10   83.1 |   6.7699   0.2960 |   5.3559   0.2333 |   9.0477   0.3981 |   4.7684   0.2074 |      1 | 1/1/1/1 | 4.6e-05
+ 12    20  166.2 |   3.9732   0.1746 |   2.0643   0.0902 |   6.1631   0.2736 |   1.0200   0.0486 |      1 | 1/1/1/1 | 3.8e-05
+ 12    40  332.4 |   2.9810   0.1342 |   0.9661   0.0443 |   4.8092   0.2178 |   1.1986   0.0554 |      1 | 1/1/1/1 | 1.2e-05
+ 14     5   35.6 |  10.4216   0.4558 |   9.5922   0.4189 |  12.3736   0.5430 |   9.3196   0.4068 |      1 | 1/1/1/1 | 4.0e-05
+ 14    10   71.2 |   6.5358   0.2856 |   5.2364   0.2280 |   8.7877   0.3865 |   4.7233   0.2055 |      1 | 1/1/1/1 | 4.9e-05
+ 14    20  142.5 |   3.1875   0.1390 |   1.3805   0.0635 |   5.4248   0.2392 |   0.5774   0.0374 |      1 | 1/1/1/1 | 1.9e-05
+ 14    40  285.0 |   0.8876   0.0536 |   1.5778   0.0890 |   2.5330   0.1142 |   3.1360   0.1559 |      1 | 1/1/1/1 | 4.1e-05
+ 16     5   31.2 |  10.3555   0.4529 |   9.6035   0.4194 |  12.2227   0.5363 |   9.3631   0.4087 |      1 | 1/1/1/1 | 4.9e-05
+ 16    10   62.3 |   6.5023   0.2840 |   5.3003   0.2308 |   8.7185   0.3832 |   4.8448   0.2108 |      1 | 1/1/1/1 | 4.5e-05
+ 16    20  124.7 |   3.0226   0.1318 |   1.3092   0.0609 |   5.2886   0.2329 |   0.5912   0.0396 |      1 | 1/1/1/1 | 4.9e-05
+ 16    40  249.3 |   0.8113   0.0456 |   1.4136   0.0735 |   2.7204   0.1201 |   2.8310   0.1357 |      1 | 1/1/1/1 | 3.5e-05
+ 18     5   27.7 |  10.2415   0.4478 |   9.5535   0.4172 |  12.0290   0.5276 |   9.3385   0.4077 |      1 | 1/1/1/1 | 4.2e-05
+ 18    10   55.4 |   6.5242   0.2850 |   5.4061   0.2355 |   8.6995   0.3823 |   4.9965   0.2174 |      1 | 1/1/1/1 | 3.4e-05
+ 18    20  110.8 |   3.3673   0.1470 |   1.7393   0.0760 |   5.6487   0.2494 |   0.9881   0.0462 |      1 | 1/1/1/1 | 3.7e-05
+ 18    40  221.6 |   1.5495   0.0682 |   0.5494   0.0292 |   3.6148   0.1620 |   1.8259   0.0858 |      1 | 1/1/1/1 | 3.8e-05
+
+regression: worst |(W0+W1) - committed| over all cells/tags: 4.94e-05  (committed table rounded to 4 dp)
+H1 diagrams that are EMPTY: 0
+H1 diagrams with MORE than one bar: 0
+one-bar prediction [1/Ghat(1), 1/Ghat(8)]: max |actual - predicted| coordinate = 2.967e-08
+worst Schwarzian conv_err across all profiles: 7.306e-12
+diagrams cached.

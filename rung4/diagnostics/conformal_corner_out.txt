@@ -1,0 +1,24 @@
+Cell: N=18, beta=5.0, declared C = 0.180482, beta/C = 27.70, n_tau = 24, R = 10
+
+ER side: schwarzian_G_profile worst conv_err = 6.661e-15 (gate in stage_compare: < 1e-6)
+  Schwarzian (declared C): H1 bar count = 1
+    bar: birth = 0.322024, death = 0.919705, persistence = 0.597681
+  conformal C->inf control (exact by construction, no quadrature): H1 bar count = 1
+    bar: birth = 0.361284, death = 0.930605, persistence = 0.569321
+
+SYK side (10 realizations, seeds 1000*18+r):
+  r=0: H1 count = 1, bars (birth, death) = [0.759809, 0.966143]  (rowsum_err 1.3e-15)
+  r=1: H1 count = 1, bars (birth, death) = [0.771462, 0.967873]  (rowsum_err 1.6e-15)
+  r=2: H1 count = 1, bars (birth, death) = [0.769177, 0.967510]  (rowsum_err 1.8e-15)
+  r=3: H1 count = 1, bars (birth, death) = [0.769670, 0.967625]  (rowsum_err 1.6e-15)
+  r=4: H1 count = 1, bars (birth, death) = [0.766642, 0.967149]  (rowsum_err 1.1e-15)
+  r=5: H1 count = 1, bars (birth, death) = [0.766531, 0.967145]  (rowsum_err 1.6e-15)
+  r=6: H1 count = 1, bars (birth, death) = [0.764614, 0.966905]  (rowsum_err 1.4e-15)
+  r=7: H1 count = 1, bars (birth, death) = [0.767997, 0.967325]  (rowsum_err 1.9e-15)
+  r=8: H1 count = 1, bars (birth, death) = [0.768661, 0.967519]  (rowsum_err 1.4e-15)
+  r=9: H1 count = 1, bars (birth, death) = [0.768482, 0.967471]  (rowsum_err 1.7e-15)
+
+H1-only Wasserstein, SYK per-realization vs fixed ER barcode:
+  vs Schwarzian (declared): 0.447813 +- 0.003106
+  vs conformal control:     0.407672 +- 0.003103
+SYK H1 bar counts across realizations: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
