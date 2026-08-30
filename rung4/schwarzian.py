@@ -20,6 +20,17 @@ Euclidean two-point function computed from the exact Schwarzian theory
 
 with k1, k2 integrated over (0, inf). C is the Schwarzian coupling.
 
+NORMALIZATION SCOPE (stated honestly): the tau-dependence above is
+MTV's exact result (their eqs 1.15-1.16 at C = 1/2, generalized by
+E = k^2/2C), but the OVERALL tau-independent constant is convention-
+dependent (MTV's measure is dk^2 sinh(2 pi k) = 2 k sinh(2 pi k) dk
+vs rho = k sinh(2 pi k) here, and bilocal-operator normalizations
+vary across the literature). Every rung-4 use of G is shape-gauged
+(Ghat = G/G(beta/2), log-differences, or ratios), so only the shape
+is load-bearing; absolute G values (e.g. the standing regression
+gate 3.980e+02) are anchors of THIS implementation, not
+literature-normalized numbers.
+
 Implementation notes — every one of these was a real failure mode:
 
   * LOG SPACE THROUGHOUT. Individual factors (sinh(2 pi k) at the

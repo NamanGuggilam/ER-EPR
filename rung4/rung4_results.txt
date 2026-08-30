@@ -387,3 +387,201 @@ Plot written to: /Users/naman/projects/ER-EPR/rung4/rung4_compare.png
 
 Total time: 3159s
 Results appended to: /Users/naman/projects/ER-EPR/rung4/rung4_results.txt
+
+############ rung4 rescore (2026-08-29) ############
+# Two-convention rescore, run 2026-08-29 via rung4/rung4_rescore.py
+# (.venv/bin/python rung4/rung4_rescore.py). Output below is VERBATIM
+# (captured from the run's stdout; the script was added to the repo in
+# this commit with file-relative paths, otherwise identical).
+Rescore: N=[12, 14, 16, 18], betas=[5.0, 10.0, 20.0, 40.0], n_tau=24, R=10, tags=['declared', 'x5', 'x0.2', 'conformal']
+
+[1/3] SYK G(tau) profiles (seeded rebuild, identical to compare run)
+  N=12 done
+  N=14 done
+  N=16 done
+  N=18 done
+
+[2/3] Schwarzian G(tau) profiles at declared C + controls
+  N=12 beta=5 done
+  N=12 beta=10 done
+  N=12 beta=20 done
+  N=12 beta=40 done
+  N=14 beta=5 done
+  N=14 beta=10 done
+  N=14 beta=20 done
+  N=14 beta=40 done
+  N=16 beta=5 done
+  N=16 beta=10 done
+  N=16 beta=20 done
+  N=16 beta=40 done
+  N=18 beta=5 done
+  N=18 beta=10 done
+  N=18 beta=20 done
+  N=18 beta=40 done
+
+[3/3] Scoring both conventions
+  N=12 beta=5 scored
+  N=12 beta=10 scored
+  N=12 beta=20 scored
+  N=12 beta=40 scored
+  N=14 beta=5 scored
+  N=14 beta=10 scored
+  N=14 beta=20 scored
+  N=14 beta=40 scored
+  N=16 beta=5 scored
+  N=16 beta=10 scored
+  N=16 beta=20 scored
+  N=16 beta=40 scored
+  N=18 beta=5 scored
+  N=18 beta=10 scored
+  N=18 beta=20 scored
+  N=18 beta=40 scored
+
+=== REGRESSION CHECK: 1/Ghat rescore vs committed table ===
+max |mean W - committed| over all cells/tags: 4.9383e-05 (table printed to 4 dp, so <= 5e-5 = exact)
+favored flags identical to committed run: True
+
+=== PER-CELL COMPARISON (criterion: declared < x5 AND < /5) ===
+  N  beta | 1/Ghat: Wd      Wx5      W/5  fav |  log: Wd      Wx5      W/5  fav | flip?
+----------------------------------------------------------------------------------------------------
+ 12     5 |    11.2241  10.2582  13.3563   no |   0.8693   0.7584   1.1496   no | 
+ 12    10 |     7.0658   5.5892   9.4458   no |   0.6952   0.5118   1.1095   no | 
+ 12    20 |     4.1478   2.1545   6.4368   no |   0.5261   0.2475   1.0170   no | 
+ 12    40 |     3.1152   1.0104   5.0270   no |   0.4768   0.1221   0.9922   no | 
+ 14     5 |    10.8774  10.0111  12.9166   no |   0.8419   0.7438   1.1239   no | 
+ 14    10 |     6.8214   5.4644   9.1742   no |   0.6649   0.4998   1.0576   no | 
+ 14    20 |     3.3265   1.4440   5.6639   no |   0.4412   0.1853   0.9189   no | 
+ 14    40 |     0.9412   1.6668   2.6472  YES |   0.1788   0.2129   0.6624  YES | 
+ 16     5 |    10.8084  10.0229  12.7589   no |   0.8302   0.7422   1.0970   no | 
+ 16    10 |     6.7863   5.5311   9.1017   no |   0.6520   0.5017   1.0252   no | 
+ 16    20 |     3.1543   1.3701   5.5215   no |   0.4131   0.1762   0.8772   no | 
+ 16    40 |     0.8569   1.4872   2.8405  YES |   0.1506   0.1935   0.6591  YES | 
+ 18     5 |    10.6893   9.9707  12.5566   no |   0.8178   0.7380   1.0697   no | 
+ 18    10 |     6.8092   5.6416   9.0818   no |   0.6440   0.5061   0.9997   no | 
+ 18    20 |     3.5143   1.8154   5.8981   no |   0.4357   0.2151   0.8866   no | 
+ 18    40 |     1.6177   0.5786   3.7768   no |   0.2615   0.0648   0.7701   no | 
+
+favored count: 1/Ghat 2/16   log 2/16
+  no cells flip: identical favored set under both conventions
+
+log-convention declared W mean +- std (per-realization spread):
+  N=12 beta=5: 0.8693 +- 0.0107
+  N=12 beta=10: 0.6952 +- 0.0230
+  N=12 beta=20: 0.5261 +- 0.0486
+  N=12 beta=40: 0.4768 +- 0.1105
+  N=14 beta=5: 0.8419 +- 0.0069
+  N=14 beta=10: 0.6649 +- 0.0146
+  N=14 beta=20: 0.4412 +- 0.0436
+  N=14 beta=40: 0.1788 +- 0.0707   [FAVORED]
+  N=16 beta=5: 0.8302 +- 0.0051
+  N=16 beta=10: 0.6520 +- 0.0151
+  N=16 beta=20: 0.4131 +- 0.0493
+  N=16 beta=40: 0.1506 +- 0.1095   [FAVORED]
+  N=18 beta=5: 0.8178 +- 0.0035
+  N=18 beta=10: 0.6440 +- 0.0063
+  N=18 beta=20: 0.4357 +- 0.0129
+  N=18 beta=40: 0.2615 +- 0.0363
+
+##############################################################################
+############ RUNG 4 CLOSURE (2026-08-29) — authored summary ############
+##############################################################################
+This section is a hand-written closing verdict, NOT a teed run. Every teed
+run it summarizes appears verbatim above (the extract runs, the compare run
+of 2026-08-24, and the two-convention rescore of 2026-08-29 appended
+immediately above this section).
+
+VERDICT (stated plainly)
+------------------------
+Rung 4 closes as an HONEST NEGATIVE result: the Schwarzian regime has not
+emerged in SYK at N <= 18. Two independent lines of evidence agree:
+
+1. Extraction gate: FAILED 0/4. Route 1 (DOS sinh-edge slope) shows no
+   plateau at any N; Route 2 (entropy linear-in-T) yields negative C at
+   every N; the routes disagree by 230-433%; the SYK fit pattern tracks
+   the GOE control.
+
+2. Declared-dictionary barcode comparison (C(N) = sqrt(2) alpha_S N from
+   Maldacena-Stanford, matched via thermodynamics — NOTE: alpha_S =
+   0.00709 is a SINGLE-SOURCE constant: MS never print it directly, and
+   every published q=4 value, including Kitaev-Suh's analytic form with
+   its fitted a0, traces back to MS's numerical kernel solution via
+   their stated c ~= 0.396 N/J. A declared input may be single-source,
+   but its independence is limited and is stated as such here and in
+   any writeup): favored at only 2/16 (N, beta) cells against a
+   best-of-three chance rate of ~1/3 (expected ~5.3/16). The 14 misses
+   are systematic, not near-misses: at beta <= 20 the SYK decay shape
+   sits between the x5 control and the conformal limit in EVERY cell —
+   fluctuations WEAKER than the dictionary implies, in the conformal
+   direction, which is what small-N SYK without a developed
+   reparametrization soft mode should look like. The two hits (N=14, 16
+   at beta=40) carry no supporting N-trend — N=18 at beta=40 reverts to
+   preferring x5 in both conventions — and in the validated log
+   convention they beat the x5 control by only ~0.5 sigma (N=14:
+   0.179+-0.071 vs 0.213) and ~0.4 sigma (N=16: 0.151+-0.110 vs 0.194)
+   of the per-realization spread. This is signal AGAINST the dictionary
+   at these N, with the at-or-below-chance count as the supporting
+   clause — not a weak positive.
+
+Convention robustness (rescore of 2026-08-29, appended above): the
+compare stage's d = 1/Ghat convention and Check C's validated
+d = log(Gmax/G) convention give the IDENTICAL favored set (the same
+2/16 cells, zero flips), the same x5 < declared < /5 ordering in every
+beta <= 20 cell, and the same N=18 reversal at beta=40. The 2/16 result
+is not a convention artifact. The rescore's 1/Ghat half reproduced the
+committed 2026-08-24 table to the table's recorded precision (max
+deviation 4.9e-5 over all 16 cells x 4 tags, <= the 4-decimal rounding
+bound of 5e-5) with all 16 favored flags identical — the rescore
+machinery is faithful to the committed run.
+
+WHAT IS PROVEN (machine-checked, teed above)
+--------------------------------------------
+- schwarzian.py computes the MTV Euclidean two-point function's
+  tau-dependence to quadrature precision within its validated scope
+  C <= 200: Checks A-E all PASS (free-energy calibration, conformal
+  reduction, barcode collapse, beta/C independence, small-C dense-grid
+  cross-check), with the (s,d) Jacobian -log 2 included (A/B-verified
+  2026-08-29: log G shifts by log 2 to 5.5e-14 when the factor is
+  toggled; Ghat and both conventions' barcodes are bit-for-bit
+  unchanged). Absolute normalization of G is implementation-anchored,
+  not literature-normalized; every rung-4 use is shape-gauged.
+- The declared dictionary's constants were source-verified 2026-08-29
+  against the papers (not memory): variance 6 J^2/N^3 = MS eq (2.3) at
+  q=4; script-J = J/sqrt(2) = MS eq (2.16); c = 4 pi^2 alpha_S N /
+  script-J = MS eq (5.181) (independently implied by Kitaev-Suh eq
+  (17)); alpha_S = 0.396/(4 sqrt(2) pi^2) ~= 0.00709 from MS's
+  "c ~= 0.396 N/J", where the J-vs-script-J distinction (a silent
+  factor sqrt(2) in C) was resolved at the PDF font level: eq (5.181)
+  sets its J in CMSY (script), the 0.396 sentence in CMMI (plain).
+  rho(k) = k sinh(2 pi k) was verified against MTV's closed-form
+  Z(beta) = (pi/beta)^{3/2} e^{pi^2/beta} (eq 1.8), which the k-less
+  measure fails to reproduce.
+- The SYK side is reproducible: seeded rebuilds match cached spectra to
+  <1e-8; sum_i chi_i^2 = N/2 holds to ~1e-15 per realization.
+- G(tau) is strictly positive and strictly decreasing on (0, beta/2]
+  on both sides (verified numerically on real compare inputs;
+  guaranteed by the spectral representation), so d = 1/Ghat lies in
+  (0, 1] — positive and bounded, no edge pathology at tau -> 0+.
+- The extraction gate failed 0/4, and the pre-declared compare
+  criterion favored the declared dictionary at 2/16 cells under BOTH
+  distance conventions, as recorded verbatim above.
+
+WHAT IS CONJECTURED (not established here)
+------------------------------------------
+- That the Schwarzian regime DOES emerge at larger N (the standard
+  large-N expectation). Nothing in rung 4 tests it.
+- That the conformal-ward misses at beta <= 20 are fully explained by
+  the missing soft mode; alternative small-N artifacts (spectrum
+  discreteness at beta = 40, finite-size edge effects) were not
+  disentangled.
+- Any statement about ER=EPR itself: rung 4 tested a specific
+  SYK <-> Schwarzian dictionary at small N and found it not yet
+  applicable there. It neither supports nor undermines the conjecture.
+
+FUTURE WORK (noted only — explicitly NOT pursued in rung 4)
+-----------------------------------------------------------
+- Larger N (20-24) via parity-block diagonalization; the pipeline
+  supports it (N_VALUES already lists 20) but the decision of
+  2026-08-29 is to close rung 4 without it.
+- A best-fit-C-by-barcode variant (would need pre-registration to
+  avoid fudging a failed gate into a usable C).
+##############################################################################

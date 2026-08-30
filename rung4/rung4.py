@@ -75,9 +75,13 @@ user reviewed that verdict and chose the DECLARED-LITERATURE-C
 dictionary: C is not extracted from our data but taken from the
 large-N result of Maldacena-Stanford (PRD 94, 106002; 1604.07818),
 C(N) = alpha_S N / script-J with script-J = J/sqrt(2) for q=4 (MS eq
-2.16) and alpha_S = 0.00709 (MS numerical kernel solution; quoted as
-~0.007, and 4 pi^2 alpha_S sqrt(2) = 0.396 reproduces the accepted
-q=4 specific-heat coefficient in J=1 units). The comparison below is
+2.16) and alpha_S = 0.00709. PROVENANCE (verified against the paper
+2026-08-29): MS never print alpha_S numerically (their fig 12 is a
+plot); the number is DERIVED from MS's stated q=4 specific heat,
+"c ~= 0.396 N/J" (plain J, after eq 5.181), combined with
+c = 4 pi^2 alpha_S N / script-J (eq 5.181, script-J):
+alpha_S = 0.396/(4 sqrt(2) pi^2) ~= 0.00709. So 0.396 is the SOURCE
+of alpha_S here, not an independent cross-check. The comparison below is
 therefore a test of the large-N dictionary applied at small N, and is
 labeled as such — not a measurement of C.
 """
@@ -532,8 +536,12 @@ def conformal_G_profile(beta, n_tau):
 def circle_distance_matrix(G_prof, n_tau):
     """d(tau_i, tau_j) = 1 / Ghat(sep), Ghat = G / G(beta/2) — the
     declared phi gauge: both sides' distances are 1 at maximal circle
-    separation, so barcodes compare correlation-decay SHAPE, in the
-    d = 1/|correlation| convention of rungs 1-3."""
+    separation, so barcodes compare correlation-decay SHAPE. This is
+    rung 3's d = 1/|C_ij| reciprocal-correlation convention; rungs 1-2
+    used the analogous reciprocal-similarity d = 1/I(A:B) on mutual
+    information, not on a correlator. (Check C validated barcode
+    collapse under the different d = log(Gmax/G) convention; see
+    rung4_rescore.py for the convention-robustness rescore.)"""
     Ghat = G_prof / G_prof[-1]
     i = np.arange(n_tau)
     m = np.abs(i[:, None] - i[None, :])
@@ -584,11 +592,13 @@ def stage_compare(smoke=False):
     print(f"  script-J = sqrt(q) J / 2^((q-1)/2) = J/sqrt(2)   (MS eq 2.16)")
     print(f"  MS: c = 4 pi^2 alpha_S N / script-J;  ours: S ⊃ 4 pi^2 C / beta")
     print(f"  =>  C(N) = alpha_S N / script-J = sqrt(2) alpha_S N,  J = {J}")
-    print(f"  alpha_S(q=4) = {ALPHA_S} (MS numerical kernel; ~0.007).")
-    print(f"  Cross-check: 4 pi^2 alpha_S sqrt(2) = "
-          f"{4*np.pi**2*ALPHA_S*np.sqrt(2):.4f} — matches the accepted q=4")
-    print(f"  specific-heat coefficient 0.396/J. (~1-2% uncertainty in")
-    print(f"  alpha_S is negligible vs the x5 mismatch controls.)")
+    print(f"  alpha_S(q=4) = {ALPHA_S}, DERIVED from MS's stated specific")
+    print(f"  heat c ~= 0.396 N/J (plain J; sentence after MS eq 5.181) via")
+    print(f"  c = 4 pi^2 alpha_S N/script-J (eq 5.181): alpha_S =")
+    print(f"  0.396/(4 sqrt(2) pi^2) = {0.396/(4*np.sqrt(2)*np.pi**2):.5f}.")
+    print(f"  MS print no direct numerical alpha_S, so 0.396 is the source,")
+    print(f"  not an independent cross-check. (~1-2% uncertainty is")
+    print(f"  negligible vs the x5 mismatch controls.)")
     for N in n_values:
         C = declared_C(N)
         assert C < 200.0, "outside schwarzian.py validated scope"
