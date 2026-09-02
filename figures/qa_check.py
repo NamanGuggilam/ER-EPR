@@ -102,6 +102,37 @@ def check(path):
             if (bb.x0 < fb.x0 - 1 or bb.y0 < fb.y0 - 1
                     or bb.x1 > fb.x1 + 1 or bb.y1 > fb.y1 + 1):
                 issues.append(f"CLIP  {s[:42]!r}")
+        # text vs the box it sits in: a label whose centre is inside a patch
+        # must also fit inside that patch
+        from matplotlib.patches import FancyBboxPatch, Rectangle
+        # background patches (the figure's and each axes') contain everything
+        # and must be excluded, or every label looks safely contained
+        skip = {id(fig.patch)} | {id(ax.patch) for ax in fig.axes}
+        boxes = []
+        # only real container boxes (style.box draws FancyBboxPatch);
+        # plain Rectangles are bars, hist patches and axvspans, over which
+        # a label is allowed to extend
+        for p in fig.findobj(lambda o: isinstance(o, FancyBboxPatch)):
+            if not p.get_visible() or id(p) in skip:
+                continue
+            try:
+                pb = p.get_window_extent(fig.canvas.get_renderer())
+            except Exception:
+                continue
+            if pb.width > 4 and pb.height > 4:
+                boxes.append(pb)
+        for s, bb, t in ts:
+            cx, cy = (bb.x0 + bb.x1) / 2, (bb.y0 + bb.y1) / 2
+            holding = [pb for pb in boxes
+                       if pb.x0 <= cx <= pb.x1 and pb.y0 <= cy <= pb.y1]
+            if not holding:
+                continue
+            pb = min(holding, key=lambda b: b.width * b.height)  # tightest box
+            dx = max(pb.x0 - bb.x0, bb.x1 - pb.x1)
+            dy = max(pb.y0 - bb.y0, bb.y1 - pb.y1)
+            if dx > 2 or dy > 2:
+                issues.append(f"BOX   {s[:38]!r} overflows by "
+                              f"{max(dx, 0):.0f}×{max(dy, 0):.0f} px")
         for (s1, b1, _), (s2, b2, _) in combinations(ts, 2):
             ix = max(0, min(b1.x1, b2.x1) - max(b1.x0, b2.x0))
             iy = max(0, min(b1.y1, b2.y1) - max(b1.y0, b2.y0))

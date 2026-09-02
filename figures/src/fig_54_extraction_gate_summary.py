@@ -49,9 +49,11 @@ def build():
         N = int(N)
         ax.text(j + 0.5, 4.25, f"N = {N}", ha="center", fontsize=11.5,
                 color=INK)
+        # the row label already says "SYK separates from GOE", so the cell
+        # only needs the two numbers — spelling both names out overruns it
         vals = [f"max/min = {plateau[N]:.2f}", f"C = {float(c_th):+.4f}",
                 f"differ {float(dis):.0f}%",
-                f"SYK {float(c_dos):.3f} vs GOE {float(goe_dos):.3f}"]
+                f"{float(c_dos):.3f} vs {float(goe_dos):.3f}"]
         for i, v in enumerate(vals):
             y = 3.2 - i * 1.05
             box(ax, (j + 0.05, y), 0.9, 0.88, "", fc="#F5DEDA", ec=CLAY,

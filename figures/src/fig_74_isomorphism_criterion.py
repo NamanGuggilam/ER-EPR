@@ -23,17 +23,19 @@ def build():
               for N in data.N_VALUES
               if tab[(N, 40.0)]["C1"] and tab[(N, 40.0)]["C8"]}
 
-    fig, ax = new_fig("full", figsize=(11.5, 4.8))
+    fig, ax = new_fig("full", figsize=(11.5, 4.4))
     blank_axes(ax)
     ax.set_aspect("auto")
-    ax.set_xlim(0, 20); ax.set_ylim(-0.5, 6.4)
+    ax.set_xlim(0, 20); ax.set_ylim(1.25, 6.15)
 
     box(ax, (0.6, 4.15), 8.4, 1.7, "", fc=CARD, ec=NAVY, lw=1.5)
-    ax.text(4.8, 5.42, "the criterion", ha="center", fontsize=11, color=MUTED,
+    ax.text(4.8, 5.55, "the criterion", ha="center", fontsize=11, color=MUTED,
             zorder=4)
-    ax.text(4.8, 4.78, "barcodes agree   ⇔   Ĝ_SYK(1) = Ĝ_ER(1)   and   "
-            "Ĝ_SYK(8) = Ĝ_ER(8)", ha="center", fontsize=11.5, color=INK,
-            zorder=4)
+    # split over two lines: on one line this runs wider than the box
+    ax.text(4.8, 5.02, "barcodes agree   ⇔", ha="center", fontsize=11.5,
+            color=INK, zorder=4)
+    ax.text(4.8, 4.50, "Ĝ_SYK(1) = Ĝ_ER(1)    and    Ĝ_SYK(8) = Ĝ_ER(8)",
+            ha="center", fontsize=10.5, color=INK, zorder=4)
 
     box(ax, (0.6, 1.45), 8.4, 2.1, "", fc="#F7E7E4", ec=CLAY, lw=1.8)
     ax.text(4.8, 3.10, "what the data says", ha="center", fontsize=11,
