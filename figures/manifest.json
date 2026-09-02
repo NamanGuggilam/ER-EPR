@@ -1,0 +1,110 @@
+[
+  {
+    "figure_id": 1,
+    "filename": "fig_01_bell_state_correlation.png",
+    "pdf": "fig_01_bell_state_correlation.pdf",
+    "slide_number": 5,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "The Bell state |\u03a6\u207a\u27e9: each qubit is individually indefinite, yet the two outcomes always agree."
+  },
+  {
+    "figure_id": 2,
+    "filename": "fig_02_tensor_product_dimensions.png",
+    "pdf": "fig_02_tensor_product_dimensions.pdf",
+    "slide_number": 6,
+    "type": "schematic",
+    "data_source": "analytic 2^N, N=1..10",
+    "caption": "Hilbert-space dimension grows as 2\u1d3a, while product states occupy a vanishing fraction of it."
+  },
+  {
+    "figure_id": 3,
+    "filename": "fig_03_partial_trace.png",
+    "pdf": "fig_03_partial_trace.pdf",
+    "slide_number": 7,
+    "type": "schematic",
+    "data_source": "exact |\u03a6\u207a\u27e9\u27e8\u03a6\u207a| and its partial trace (computed)",
+    "caption": "Tracing out B sends the pure Bell density matrix to the maximally mixed \u03c1_A = I/2."
+  },
+  {
+    "figure_id": 4,
+    "filename": "fig_04_binary_entropy.png",
+    "pdf": "fig_04_binary_entropy.pdf",
+    "slide_number": 8,
+    "type": "data",
+    "data_source": "analytic S(p) = -p ln p - (1-p) ln(1-p), computed",
+    "caption": "Binary entropy, maximised at p = \u00bd where S = log 2."
+  },
+  {
+    "figure_id": 5,
+    "filename": "fig_05_tfd_construction.png",
+    "pdf": "fig_05_tfd_construction.pdf",
+    "slide_number": 10,
+    "type": "schematic",
+    "data_source": "link opacities = e^(-\u03b2E\u2099/2), \u03b2=1, E\u2099=0..4 (computed)",
+    "caption": "The thermofield double pairs level n on the left with level n on the right; tracing out R leaves a thermal state."
+  },
+  {
+    "figure_id": 6,
+    "filename": "fig_06_tfd_entropy_vs_beta.png",
+    "pdf": "fig_06_tfd_entropy_vs_beta.pdf",
+    "slide_number": 11,
+    "type": "data",
+    "data_source": "rung2 two-level TFD recomputed; checked against rung2_results.txt table",
+    "caption": "Entanglement entropy of the two-level thermofield double across temperature: a smooth crossover, not a transition."
+  },
+  {
+    "figure_id": 7,
+    "filename": "fig_07_area_vs_volume_scaling.png",
+    "pdf": "fig_07_area_vs_volume_scaling.pdf",
+    "slide_number": 12,
+    "type": "schematic",
+    "data_source": "illustrative power laws L\u00b2 and L\u00b3",
+    "caption": "Black-hole entropy scales with area, not volume \u2014 the first sign that gravity stores information holographically."
+  },
+  {
+    "figure_id": 8,
+    "filename": "fig_08_holography_bulk_boundary.png",
+    "pdf": "fig_08_holography_bulk_boundary.pdf",
+    "slide_number": 13,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "Holography: a gravitational bulk in d+1 dimensions is encoded by a quantum theory on its d-dimensional boundary."
+  },
+  {
+    "figure_id": 9,
+    "filename": "fig_09_rt_minimal_surface.png",
+    "pdf": "fig_09_rt_minimal_surface.pdf",
+    "slide_number": 14,
+    "type": "schematic",
+    "data_source": "exact Poincar\u00e9-disc geodesic (computed)",
+    "caption": "The Ryu\u2013Takayanagi prescription: the entropy of a boundary region is the area of the bulk geodesic that hangs from its endpoints."
+  },
+  {
+    "figure_id": 10,
+    "filename": "fig_10_einstein_rosen_bridge.png",
+    "pdf": "fig_10_einstein_rosen_bridge.pdf",
+    "slide_number": 15,
+    "type": "data",
+    "data_source": "Flamm paraboloid z = \u00b12\u221a(r_s(r\u2212r_s)), r_s=1 (computed)",
+    "caption": "The Einstein\u2013Rosen bridge: two asymptotically flat sheets joined at a throat that pinches off too fast to cross."
+  },
+  {
+    "figure_id": 11,
+    "filename": "fig_11_er_epr_correspondence.png",
+    "pdf": "fig_11_er_epr_correspondence.pdf",
+    "slide_number": 16,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "ER = EPR: two entangled many-body systems (left) and two boundaries joined by a wormhole (right) are proposed to be the same object described two ways."
+  },
+  {
+    "figure_id": 12,
+    "filename": "fig_12_what_counts_as_evidence.png",
+    "pdf": "fig_12_what_counts_as_evidence.pdf",
+    "slide_number": 18,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "A scalar comparison can only agree or disagree one way; a barcode comparison has many independent ways to fail."
+  }
+]
