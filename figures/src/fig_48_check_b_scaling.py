@@ -28,20 +28,27 @@ def build():
     x = beta / C
 
     fig, ax = new_fig("half")
-    ax.plot(x, dev, "o-", color=NAVY, zorder=4, label="measured")
+    # The measured points lie ON the O(β/C) line (that is the result), so the
+    # reference is drawn as a wide halo underneath — otherwise the legend
+    # promises two lines and only one is visible.
     ref = dev[0] * (x / x[0])
-    ax.plot(x, ref, ls=(0, (6, 3)), color=AMBER, zorder=3,
-            label="O(β/C) reference")
+    ax.plot(x, ref, color=AMBER, lw=7, alpha=0.40, zorder=3,
+            solid_capstyle="round", label="O(β/C) reference")
+    ax.plot(x, dev, "o-", color=NAVY, zorder=4, label="measured")
     ax.set_xscale("log"); ax.set_yscale("log")
     ax.set_xlabel("β / C")
     ax.set_ylabel("max deviation from conformal shape")
+    ax.set_xticks(beta / C)
+    ax.set_xticklabels([f"{beta / c:.3g}" for c in C])
     ax.legend(loc="upper left")
     ax.text(0.97, 0.06, f"fitted log–log slope = {slope:.3f}",
             transform=ax.transAxes, ha="right", fontsize=11, color=AMBER,
             weight="bold")
     for cc, dd in zip(C, dev):
-        ax.annotate(f"C={cc:.0f}", xy=(beta / cc, dd), xytext=(4, -11),
-                    textcoords="offset points", fontsize=9, color=MUTED)
+        ax.annotate(f"C={cc:.0f}", xy=(beta / cc, dd), xytext=(0, -15),
+                    textcoords="offset points", fontsize=9, color=MUTED,
+                    ha="center")
+    ax.margins(x=0.10, y=0.12)
 
     provenance(META["id"],
                f"Check B (β={beta}): C={list(C)}, deviation={list(dev)}, "

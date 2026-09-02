@@ -49,12 +49,7 @@ def build():
     provenance(META["id"],
                f"Flamm paraboloid computed on a {R.shape[0]}×{R.shape[1]} grid, "
                f"r ∈ [{rs}, 6], r_s = {rs}; throat circumference radius = {rs}")
-    fig.savefig(OUT / f"fig_{META['id']:02d}_{META['name']}.pdf",
-                facecolor="white")
-    fig.savefig(OUT / f"fig_{META['id']:02d}_{META['name']}.png",
-                transparent=True, dpi=300)
-    plt.close(fig)
-    return f"fig_{META['id']:02d}_{META['name']}"
+    return finish(fig, META["id"], META["name"])
 
 
 if __name__ == "__main__":

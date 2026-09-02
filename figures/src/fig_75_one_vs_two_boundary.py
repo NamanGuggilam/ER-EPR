@@ -45,45 +45,53 @@ def build():
         np.linspace(-1, 1, n), np.linspace(1, -1, n))) / 2
     D2 = np.block([[blk, cross], [cross.T, blk]])
 
-    fig, axes = new_fig("full", ncols=2, figsize=(11.5, 5.0))
+    # Two rows: matrices on top, commentary in its own axes below, so every
+    # label is inside a real axes and constrained_layout reserves space for
+    # it (text hung below an axes gets clipped at save time).
+    fig = plt.figure(figsize=(11.5, 6.4), constrained_layout=True)
+    gs = fig.add_gridspec(2, 2, height_ratios=[3.0, 1.35])
+    axes = [fig.add_subplot(gs[0, i]) for i in range(2)]
+    notes_ax = [fig.add_subplot(gs[1, i]) for i in range(2)]
+
     titles = ["what we did  —  one boundary",
               "what should be done  —  two boundaries"]
-    mats = [D1, D2]
-    for ax, M, t in zip(axes, mats, titles):
+    for ax, M, t in zip(axes, (D1, D2), titles):
         style_axes(ax, grid_axis=None)
         ax.imshow(M, cmap=cmap, aspect="equal", zorder=2)
         ax.set_xticks([]); ax.set_yticks([])
-        ax.text(0.5, 1.14, t, transform=ax.transAxes, ha="center",
-                fontsize=12, color=INK, weight="bold")
+        ax.text(0.5, 1.06, t, transform=ax.transAxes, ha="center",
+                fontsize=12.5, color=INK, weight="bold")
 
-    axes[1].axhline(11.5, color=AMBER, lw=2.0)
-    axes[1].axvline(11.5, color=AMBER, lw=2.0)
-    for xy, lab in (((0.25, 0.75), "L–L"), ((0.75, 0.25), "R–R"),
-                    ((0.75, 0.75), "L–R"), ((0.25, 0.25), "L–R")):
+    axes[1].axhline(11.5, color=AMBER, lw=2.2)
+    axes[1].axvline(11.5, color=AMBER, lw=2.2)
+    # labels in block corners, clear of the bright diagonal
+    for xy, lab in (((0.06, 0.94), "L–L"), ((0.94, 0.06), "R–R"),
+                    ((0.94, 0.94), "L–R"), ((0.06, 0.06), "L–R")):
         axes[1].text(xy[0], xy[1], lab, transform=axes[1].transAxes,
-                     ha="center", va="center", fontsize=11, color="white",
-                     weight="bold", zorder=5)
+                     ha="center", va="center", fontsize=11, color=INK,
+                     weight="bold", zorder=6,
+                     bbox=dict(boxstyle="round,pad=0.22", fc="white",
+                               ec="none", alpha=0.88))
 
-    notes_l = ["circulant — depends only on separation",
-               "filtration forced through C₂₄(1..k)",
-               "theorem applies ⇒ one H₁ bar, two scalars",
-               "H₁ cannot carry information"]
-    notes_r = ["block structure — L–L, R–R, and L–R",
-               "not circulant: no forced nesting",
-               "theorem does NOT apply",
-               "H₁ could carry information"]
-    for ax, ns, col in ((axes[0], notes_l, MUTED), (axes[1], notes_r, TEAL)):
-        for i, s in enumerate(ns):
-            ax.text(0.5, -0.10 - 0.085 * i, s, transform=ax.transAxes,
-                    ha="center", fontsize=10,
-                    color=col if i < 2 else (CLAY if col is MUTED else TEAL),
-                    weight="bold" if i == 3 else "normal")
-    axes[1].text(0.5, -0.46, "(proposed construction — not yet run; matrix "
-                 "shown is illustrative)", transform=axes[1].transAxes,
-                 ha="center", fontsize=9, color=MUTED, style="italic")
-    axes[0].text(0.5, -0.46, f"(real matrix, N=18, β=5)",
-                 transform=axes[0].transAxes, ha="center", fontsize=9,
-                 color=MUTED, style="italic")
+    notes_l = [("circulant — depends only on separation", MUTED, "normal"),
+               ("filtration forced through C₂₄(1..k)", MUTED, "normal"),
+               ("theorem applies ⇒ one H₁ bar, two scalars", CLAY, "normal"),
+               ("H₁ cannot carry information", CLAY, "bold"),
+               ("(real matrix, N = 18, β = 5)", MUTED, "italic")]
+    notes_r = [("block structure — L–L, R–R and L–R", TEAL, "normal"),
+               ("not circulant: no forced nesting", TEAL, "normal"),
+               ("theorem does NOT apply", TEAL, "normal"),
+               ("H₁ could carry information", TEAL, "bold"),
+               ("(proposed — not yet run; matrix is illustrative)",
+                MUTED, "italic")]
+    for ax, ns in zip(notes_ax, (notes_l, notes_r)):
+        blank_axes(ax); ax.set_aspect("auto")
+        ax.set_xlim(0, 1); ax.set_ylim(0, 1)
+        for i, (s, col, wt) in enumerate(ns):
+            ax.text(0.5, 0.92 - 0.21 * i, s, ha="center", va="center",
+                    fontsize=10 if wt != "italic" else 9, color=col,
+                    weight="bold" if wt == "bold" else "normal",
+                    style="italic" if wt == "italic" else "normal")
 
     provenance(META["id"],
                f"LEFT: real 24×24 circulant matrix from profiles_cache.pkl "

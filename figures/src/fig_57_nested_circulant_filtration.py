@@ -48,12 +48,13 @@ def build():
                 fontsize=10.5, color=TEAL if k < 8 else CLAY,
                 weight="bold" if boundary else "normal")
 
-    axes[3].annotate("k/n = 1/3\nthe loop dies", xy=(0, 1.05),
-                     xytext=(0, 1.95), ha="center", fontsize=10.5,
-                     color=AMBER, weight="bold",
-                     arrowprops=dict(arrowstyle="-|>", color=AMBER, lw=1.5))
     for ax in axes:
-        ax.set_ylim(-1.95, 2.25)
+        ax.set_ylim(-1.95, 2.65)
+    # placed above the k label, not on top of it
+    axes[3].annotate("k/n = 1/3\nthe loop dies", xy=(0, 1.40),
+                     xytext=(0, 2.35), ha="center", va="center",
+                     fontsize=10.5, color=AMBER, weight="bold",
+                     arrowprops=dict(arrowstyle="-|>", color=AMBER, lw=1.5))
 
     provenance(META["id"],
                f"N={N}, β={beta}, declared C: thresholds 1/Ĝ(k) = "

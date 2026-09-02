@@ -79,8 +79,24 @@ def blank_axes(ax):
     return ax
 
 
+def tidy_log_axes(fig):
+    """Suppress minor tick labels on log axes.
+
+    Matplotlib labels minor ticks when a log axis spans less than a decade,
+    which produces colliding labels like '3×10⁻²' '4×10⁻²'. Major ticks are
+    set explicitly wherever that would leave an axis under-labelled.
+    """
+    from matplotlib.ticker import NullFormatter
+    for ax in fig.axes:
+        for axis, scale in ((ax.xaxis, ax.get_xscale()),
+                            (ax.yaxis, ax.get_yscale())):
+            if scale == "log":
+                axis.set_minor_formatter(NullFormatter())
+
+
 def finish(fig, fig_id, name=None):
     """Save PDF (white bg, vector) and PNG (transparent, 300 dpi)."""
+    tidy_log_axes(fig)
     stem = f"fig_{fig_id:02d}_{name}" if name else f"fig_{fig_id:02d}"
     pdf, png = OUT / f"{stem}.pdf", OUT / f"{stem}.png"
     fig.savefig(pdf, facecolor="white", edgecolor="none")

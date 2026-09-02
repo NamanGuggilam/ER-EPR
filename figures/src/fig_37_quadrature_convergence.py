@@ -50,6 +50,7 @@ def build():
     ax.set_xlabel("τ / β")
     ax.set_ylabel("conv_err  =  |G_coarse − G_fine| / G_fine")
     ax.set_ylim(floor / 3, 3e-5)
+    ax.set_yticks([1e-17, 1e-15, 1e-13, 1e-11, 1e-9, 1e-7, 1e-5])
     ax.text(0.02, 1.6e-6, "acceptance threshold  1e−6", fontsize=10,
             color=CLAY, ha="left")
     n_exact = int((conv == 0).sum())

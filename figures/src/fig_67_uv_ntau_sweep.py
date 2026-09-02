@@ -44,11 +44,13 @@ def build():
     ax.set_xlabel("n_τ  (points on the thermal circle)")
     ax.set_ylabel("disagreement per pair")
     ax.legend(loc="upper left", fontsize=9.5)
-    for x, g, t in zip(n, gap, tmin):
-        ax.annotate(f"{g:.3f}\nτ_min = {t:.3f}", xy=(x, g), xytext=(0, -30),
-                    textcoords="offset points", ha="center", fontsize=9,
+    for i, (x, g, t) in enumerate(zip(n, gap, tmin)):
+        ax.annotate(f"{g:.3f}\nτ_min = {t:.3f}", xy=(x, g),
+                    xytext=(14 if i == 0 else 0, -32),
+                    textcoords="offset points",
+                    ha="left" if i == 0 else "center", fontsize=9,
                     color=MUTED)
-    ax.set_ylim(0.20, 0.62)
+    ax.set_ylim(0.17, 0.62)
     ax.text(0.97, 0.06, "finer grid ⇒ worse agreement",
             transform=ax.transAxes, ha="right", fontsize=10.5, color=CLAY,
             weight="bold")

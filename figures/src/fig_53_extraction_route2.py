@@ -58,14 +58,14 @@ def build():
 
     ax.set_xlabel("T = 1/β")
     ax.set_ylabel("S + (3/2) ln β   (offset)")
-    ax.legend(loc="lower left", fontsize=9)
-    ax.text(0.97, 0.94, "slope = 4π²C\nfitted slope is negative at every N",
-            transform=ax.transAxes, ha="right", va="top", fontsize=10,
-            color=CLAY, weight="bold")
     ax.axvspan(1 / hi, 1 / lo, color=ICE, alpha=0.35, zorder=1)
-    ax.text((1 / hi + 1 / lo) / 2, ax.get_ylim()[0] * 0.92,
-            f"fit window β ∈ [{lo:g}, {hi:g}]", ha="center", fontsize=9,
-            color=MUTED)
+    ax.legend(loc="lower right", fontsize=9)
+    ax.text(0.03, 0.16, "slope = 4π²C\nfitted slope is negative at every N",
+            transform=ax.transAxes, ha="left", va="bottom", fontsize=10,
+            color=CLAY, weight="bold")
+    ax.text((1 / hi + 1 / lo) / 2, 0.97, f"fit window\nβ ∈ [{lo:g}, {hi:g}]",
+            transform=ax.get_xaxis_transform(), ha="center", va="top",
+            fontsize=9, color=MUTED)
 
     provenance(META["id"],
                f"recomputed Route 2 from cached spectra: C = "
