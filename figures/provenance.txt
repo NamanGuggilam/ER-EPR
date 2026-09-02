@@ -1,3 +1,11 @@
 fig_04: analytic binary entropy on 2001 points; max S = 0.693147 at p = 0.5 (log 2 = 0.693147)
 fig_06: two-level TFD (E=0,1) recomputed on 600 log-spaced β in [0.01,20]; 6 committed values from rung2_results.txt reproduced to <5e-6 (e.g. β=1 → S=0.58220)
 fig_10: Flamm paraboloid computed on a 160×160 grid, r ∈ [1.0, 6], r_s = 1.0; throat circumference radius = 1.0
+fig_21: 12-point noisy ring; ripser H₁ bar = [0.711334, 1.757493], persistence 1.046159
+fig_22: 12-point ring: 6 longest H₀ bars + 1 H₁ bar [0.7113, 1.7575] shown in both renderings
+fig_25: persim.wasserstein on 3+3 illustrative points: W = 1.398056, 3 matched pairs (p=1, L2 ground metric)
+fig_26: ε = 0.12 perturbation of a 12-point ring distance matrix; H₁ bar [0.7113,1.7575] → [0.8039,1.7404], max shift 0.0925 ≤ ε
+fig_27: Theorem 4.3 evaluated exactly (Fraction) at n=24: S¹ for k=1..7; k=8 (k/n=1/3) gives ⋁^7 S^2; then k=9:S^3, k=10:S^5, k=11:S^11, k=12:full simplex
+(contractible)
+fig_27: Theorem 4.3 evaluated exactly (Fraction) at n=24: S¹ for k=1..7; k=8 (k/n=1/3) gives ⋁⁷ S²; then k=9:S³, k=10:S⁵, k=11:S¹¹, k=12:full
+simplex
