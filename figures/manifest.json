@@ -106,5 +106,590 @@
     "type": "schematic",
     "data_source": "none (schematic)",
     "caption": "A scalar comparison can only agree or disagree one way; a barcode comparison has many independent ways to fail."
+  },
+  {
+    "figure_id": 13,
+    "filename": "fig_13_deformation_invariance.png",
+    "pdf": "fig_13_deformation_invariance.pdf",
+    "slide_number": 19,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "Topology sees only what survives deformation: the number of independent loops, \u03b2\u2081."
+  },
+  {
+    "figure_id": 14,
+    "filename": "fig_14_point_cloud_to_complex.png",
+    "pdf": "fig_14_point_cloud_to_complex.pdf",
+    "slide_number": 22,
+    "type": "schematic",
+    "data_source": "12-point noisy ring; VR complex + Betti numbers computed at each t",
+    "caption": "Growing one radius turns a point cloud into a complex: isolated points, then edges, then a loop, then the loop fills in."
+  },
+  {
+    "figure_id": 15,
+    "filename": "fig_15_simplex_ladder.png",
+    "pdf": "fig_15_simplex_ladder.pdf",
+    "slide_number": 23,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "The building blocks: a k-simplex is the filled hull of k+1 points."
+  },
+  {
+    "figure_id": 16,
+    "filename": "fig_16_boundary_operator.png",
+    "pdf": "fig_16_boundary_operator.pdf",
+    "slide_number": 25,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "The boundary of a triangle is its three oriented edges; applying \u2202 twice cancels everything."
+  },
+  {
+    "figure_id": 17,
+    "filename": "fig_17_cycle_vs_boundary.png",
+    "pdf": "fig_17_cycle_vs_boundary.pdf",
+    "slide_number": 26,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "Homology counts cycles that are not boundaries: the hollow triangle is a hole, the filled one is not."
+  },
+  {
+    "figure_id": 18,
+    "filename": "fig_18_threshold_problem.png",
+    "pdf": "fig_18_threshold_problem.pdf",
+    "slide_number": 27,
+    "type": "schematic",
+    "data_source": "12-point ring; Betti numbers computed at each t",
+    "caption": "One threshold is never enough: too small and the cloud is dust, too large and everything fills in, and nothing tells you where the middle is."
+  },
+  {
+    "figure_id": 19,
+    "filename": "fig_19_filtration_nested.png",
+    "pdf": "fig_19_filtration_nested.pdf",
+    "slide_number": 28,
+    "type": "schematic",
+    "data_source": "12-point ring; complexes and \u03b2\u2081 computed at 5 thresholds",
+    "caption": "A filtration is one nested family of complexes; homology turns the inclusions into linear maps."
+  },
+  {
+    "figure_id": 20,
+    "filename": "fig_20_vr_clique_rule.png",
+    "pdf": "fig_20_vr_clique_rule.pdf",
+    "slide_number": 29,
+    "type": "schematic",
+    "data_source": "none (schematic); edge lengths compared to a stated t",
+    "caption": "The Vietoris\u2013Rips rule: fill a simplex exactly when every pair inside it is within t."
+  },
+  {
+    "figure_id": 21,
+    "filename": "fig_21_birth_and_death.png",
+    "pdf": "fig_21_birth_and_death.pdf",
+    "slide_number": 30,
+    "type": "schematic",
+    "data_source": "12-point ring; birth/death thresholds located by bisection on ripser's \u03b2\u2081",
+    "caption": "A feature's bar runs from the threshold where it appears to the threshold where it fills in."
+  },
+  {
+    "figure_id": 22,
+    "filename": "fig_22_barcode_and_diagram.png",
+    "pdf": "fig_22_barcode_and_diagram.pdf",
+    "slide_number": 31,
+    "type": "schematic",
+    "data_source": "12-point ring; ripser H\u2080/H\u2081 (same data both panels)",
+    "caption": "Barcode and persistence diagram are two renderings of one object: a bar [b, d) is the point (b, d)."
+  },
+  {
+    "figure_id": 23,
+    "filename": "fig_23_persistence_module_functor.png",
+    "pdf": "fig_23_persistence_module_functor.pdf",
+    "slide_number": 32,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "A persistence module is a functor (\u211d\u22650, \u2264) \u2192 Vect; a morphism is a natural transformation, so the squares commute by definition."
+  },
+  {
+    "figure_id": 24,
+    "filename": "fig_24_interval_decomposition.png",
+    "pdf": "fig_24_interval_decomposition.pdf",
+    "slide_number": 33,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "Every tame persistence module splits uniquely into interval modules \u2014 that multiset of intervals is the barcode."
+  },
+  {
+    "figure_id": 25,
+    "filename": "fig_25_wasserstein_matching.png",
+    "pdf": "fig_25_wasserstein_matching.pdf",
+    "slide_number": 34,
+    "type": "schematic",
+    "data_source": "illustrative diagrams; matching + costs from persim.wasserstein (p=1, L2 ground metric)",
+    "caption": "The Wasserstein distance is the cheapest pairing of two diagrams, with unmatched points sent to the diagonal."
+  },
+  {
+    "figure_id": 26,
+    "filename": "fig_26_stability_theorem.png",
+    "pdf": "fig_26_stability_theorem.pdf",
+    "slide_number": 35,
+    "type": "schematic",
+    "data_source": "12-point ring; \u03b5-perturbed distance matrix re-run through ripser (shift measured, not asserted)",
+    "caption": "Stability: perturbing the distance matrix by \u03b5 moves every bar by at most \u03b5."
+  },
+  {
+    "figure_id": 27,
+    "filename": "fig_27_adamaszek_adams_classification.png",
+    "pdf": "fig_27_adamaszek_adams_classification.pdf",
+    "slide_number": 35,
+    "type": "data",
+    "data_source": "Theorem 4.3, arXiv:1503.03669, evaluated with exact rational arithmetic at n=24, k=1..12",
+    "caption": "The homotopy type of the circulant clique complex at n = 24: a circle up to k = 7, a wedge of 7 spheres exactly at k/n = 1/3, then odd spheres invisible to H\u2081."
+  },
+  {
+    "figure_id": 28,
+    "filename": "fig_28_majorana_jordan_wigner.png",
+    "pdf": "fig_28_majorana_jordan_wigner.pdf",
+    "slide_number": 36,
+    "type": "schematic",
+    "data_source": "syk_model.generate_majoranas(8); algebra residual computed from the built matrices",
+    "caption": "Jordan\u2013Wigner turns N Majoranas into Pauli strings: a Z string, one active site, then identities."
+  },
+  {
+    "figure_id": 29,
+    "filename": "fig_29_syk_all_to_all.png",
+    "pdf": "fig_29_syk_all_to_all.pdf",
+    "slide_number": 37,
+    "type": "schematic",
+    "data_source": "none (schematic); 4 of the C(8,4)=70 quartets drawn",
+    "caption": "SYK: every quartet of Majoranas interacts, with Gaussian random strength of variance 6J\u00b2/N\u00b3."
+  },
+  {
+    "figure_id": 30,
+    "filename": "fig_30_syk_spectrum.png",
+    "pdf": "fig_30_syk_spectrum.pdf",
+    "slide_number": 39,
+    "type": "data",
+    "data_source": "rung4/data/spectra_N{12,14,16,18}_R*.npz",
+    "caption": "SYK density of states at N = 12\u201318, from the cached exact-diagonalisation ensembles."
+  },
+  {
+    "figure_id": 31,
+    "filename": "fig_31_syk_vs_goe_dos.png",
+    "pdf": "fig_31_syk_vs_goe_dos.pdf",
+    "slide_number": 40,
+    "type": "data",
+    "data_source": "rung4/data/spectra_N18_R20.npz + rung4.build_goe_control(18, R, spectra) \u2014 the extraction gate's own control path",
+    "caption": "At N = 18 the SYK spectral edge is indistinguishable from a bandwidth-matched GOE ensemble: no Schwarzian edge at accessible N."
+  },
+  {
+    "figure_id": 32,
+    "filename": "fig_32_conformal_profile.png",
+    "pdf": "fig_32_conformal_profile.pdf",
+    "slide_number": 41,
+    "type": "data",
+    "data_source": "analytic conformal shape [sin(\u03c0m/24)]^(\u22121/2), computed",
+    "caption": "The conformal (C \u2192 \u221e) correlation profile on the 24-point thermal circle; \u011c(1) and \u011c(8) are the two values the whole comparison reduces to."
+  },
+  {
+    "figure_id": 33,
+    "filename": "fig_33_schwarzian_soft_mode.png",
+    "pdf": "fig_33_schwarzian_soft_mode.pdf",
+    "slide_number": 42,
+    "type": "schematic",
+    "data_source": "illustrative reparametrisation f(\u03c4) = \u03c4 + \u03b5 sin 3\u03c4",
+    "caption": "The Schwarzian mode is a wobble of the thermal circle; C sets how stiff that wobble is."
+  },
+  {
+    "figure_id": 34,
+    "filename": "fig_34_jt_ads2_geometry.png",
+    "pdf": "fig_34_jt_ads2_geometry.pdf",
+    "slide_number": 43,
+    "type": "data",
+    "data_source": "Poincar\u00e9-disc geodesics (orthogonal circles) + finite-cutoff boundary curve, computed",
+    "caption": "JT gravity on AdS\u2082: the bulk geometry is rigid \u2014 all the dynamics lives in the shape of the finite-cutoff boundary curve."
+  },
+  {
+    "figure_id": 35,
+    "filename": "fig_35_eternal_black_hole.png",
+    "pdf": "fig_35_eternal_black_hole.pdf",
+    "slide_number": 44,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "The eternal black hole has two boundaries joined by a bridge; the single parameter \u03b2 fixes both the entanglement and the throat."
+  },
+  {
+    "figure_id": 36,
+    "filename": "fig_36_schwarzian_integrand_landscape.png",
+    "pdf": "fig_36_schwarzian_integrand_landscape.pdf",
+    "slide_number": 45,
+    "type": "data",
+    "data_source": "schwarzian.log_g_integrand on a 600\u00d7600 (s,d) grid, \u03b2=1, C=80, \u03c4=0.1, \u0394=1/4",
+    "caption": "The G-integrand in (s, d) coordinates: a narrow ridge far from the origin, at the closed-form saddle s* = 4\u03c0C/\u03b2."
+  },
+  {
+    "figure_id": 37,
+    "filename": "fig_37_quadrature_convergence.png",
+    "pdf": "fig_37_quadrature_convergence.pdf",
+    "slide_number": 46,
+    "type": "data",
+    "data_source": "schwarzian.compute_G conv_err sweep, \u03b2=1, C=80 (cached in figures/cache_convergence.npz)",
+    "caption": "Every Schwarzian value used in this work self-reports its coarse-vs-fine agreement; all sit far below the 1e-6 acceptance threshold."
+  },
+  {
+    "figure_id": 38,
+    "filename": "fig_38_rung_ladder.png",
+    "pdf": "fig_38_rung_ladder.pdf",
+    "slide_number": 47,
+    "type": "schematic",
+    "data_source": "none (schematic); statuses as recorded in the repo",
+    "caption": "The ladder: each rung makes the comparison harder to pass, and rung 4 is the first that could fail."
+  },
+  {
+    "figure_id": 39,
+    "filename": "fig_39_control_design.png",
+    "pdf": "fig_39_control_design.pdf",
+    "slide_number": 48,
+    "type": "schematic",
+    "data_source": "none (schematic); criterion as pre-registered in rung4.py stage_compare",
+    "caption": "The pre-declared criterion: the declared dictionary counts as favoured only if it beats both mismatched-C controls."
+  },
+  {
+    "figure_id": 40,
+    "filename": "fig_40_rung1_barcodes.png",
+    "pdf": "fig_40_rung1_barcodes.pdf",
+    "slide_number": 52,
+    "type": "data",
+    "data_source": "rung1_results.txt (exact double-precision bars)",
+    "caption": "Rung 1: the two H\u2080 barcodes coincide exactly once the ER bar is rescaled by \u03c6."
+  },
+  {
+    "figure_id": 41,
+    "filename": "fig_41_rung1_tautology.png",
+    "pdf": "fig_41_rung1_tautology.pdf",
+    "slide_number": 53,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "Rung 1's agreement is definitional: \u03c6 is defined as the ratio it is then verified to reproduce."
+  },
+  {
+    "figure_id": 42,
+    "filename": "fig_42_rung2_phi_sweep.png",
+    "pdf": "fig_42_rung2_phi_sweep.pdf",
+    "slide_number": 56,
+    "type": "data",
+    "data_source": "rung2 sweep recomputed (100 \u03b2) + ripser float32 barcodes; checked against rung2_results.txt maxima",
+    "caption": "Rung 2: the map \u03c6(\u03b2) rescales one barcode onto the other at every temperature \u2014 provided the comparison is done in double precision."
+  },
+  {
+    "figure_id": 43,
+    "filename": "fig_43_rung3_h1_asymmetry.png",
+    "pdf": "fig_43_rung3_h1_asymmetry.pdf",
+    "slide_number": 61,
+    "type": "data",
+    "data_source": "rung3_results.txt temperature-sweep table",
+    "caption": "Rung 3: the SYK side carries H\u2081 loops at every temperature; the 1-D JT slice carries none, and cannot."
+  },
+  {
+    "figure_id": 44,
+    "filename": "fig_44_chordal_indifference_proof.png",
+    "pdf": "fig_44_chordal_indifference_proof.pdf",
+    "slide_number": 63,
+    "type": "schematic",
+    "data_source": "4 points on \u211d with an explicit threshold; the chord is verified against that threshold",
+    "caption": "Points on a line give an indifference graph, which is chordal: every long cycle has a chord, so the clique complex is contractible and H\u2081 is exactly zero."
+  },
+  {
+    "figure_id": 45,
+    "filename": "fig_45_rung4_design.png",
+    "pdf": "fig_45_rung4_design.pdf",
+    "slide_number": 66,
+    "type": "schematic",
+    "data_source": "none (schematic); mirrors rung4.stage_compare",
+    "caption": "Rung 4 puts both sides on the same thermal circle, through the same distance rule and the same homology computation \u2014 the symmetry rung 3 lacked."
+  },
+  {
+    "figure_id": 46,
+    "filename": "fig_46_thermal_circle.png",
+    "pdf": "fig_46_thermal_circle.pdf",
+    "slide_number": 67,
+    "type": "schematic",
+    "data_source": "none (schematic); n_tau = 24 as in rung4",
+    "caption": "Euclidean time is a circle: only the separation m = min(|i\u2212j|, 24\u2212|i\u2212j|) matters, and m = 1 and m = 8 are the two that will carry the result."
+  },
+  {
+    "figure_id": 47,
+    "filename": "fig_47_check_a_residual.png",
+    "pdf": "fig_47_check_a_residual.pdf",
+    "slide_number": 68,
+    "type": "data",
+    "data_source": "rung4_checks_results.txt, Check A table (C=100)",
+    "caption": "Check A: with the true density the free-energy residual is flat at \u2212log 2 across a 32\u00d7 range in C/\u03b2, while both wrong-power controls drift."
+  },
+  {
+    "figure_id": 48,
+    "filename": "fig_48_check_b_scaling.png",
+    "pdf": "fig_48_check_b_scaling.pdf",
+    "slide_number": 69,
+    "type": "data",
+    "data_source": "rung4_checks_results.txt, Check B summary table",
+    "caption": "Check B: the deviation from the conformal shape shrinks exactly as O(\u03b2/C), halving per doubling of C."
+  },
+  {
+    "figure_id": 49,
+    "filename": "fig_49_check_c_collapse.png",
+    "pdf": "fig_49_check_c_collapse.pdf",
+    "slide_number": 70,
+    "type": "data",
+    "data_source": "rung4_checks_results.txt, Check C lines",
+    "caption": "Check C: the barcode converges onto the tree-level frozen circle, halving per doubling of C \u2014 Check B seen through ripser, not independent evidence."
+  },
+  {
+    "figure_id": 50,
+    "filename": "fig_50_check_d_scale_invariance.png",
+    "pdf": "fig_50_check_d_scale_invariance.pdf",
+    "slide_number": 71,
+    "type": "data",
+    "data_source": "rung4_checks_results.txt, Check D tests 1 and 2",
+    "caption": "Check D: G depends on \u03b2 and C only through \u03b2/C \u2014 test 1 is a manifest symmetry (a regression check), test 2 shows the ratio genuinely matters."
+  },
+  {
+    "figure_id": 51,
+    "filename": "fig_51_check_e_dense_grid.png",
+    "pdf": "fig_51_check_e_dense_grid.pdf",
+    "slide_number": 72,
+    "type": "data",
+    "data_source": "rung4_checks_results.txt, Check E table",
+    "caption": "Check E: adaptive quadrature agrees with an independent dense grid to machine precision in the C \u2248 0.1\u20130.2 regime where the physics actually sits."
+  },
+  {
+    "figure_id": 52,
+    "filename": "fig_52_extraction_route1.png",
+    "pdf": "fig_52_extraction_route1.pdf",
+    "slide_number": 74,
+    "type": "data",
+    "data_source": "rung4_results.txt extract stage, Route 1 band tables",
+    "caption": "Route 1: the fitted C drifts by a factor of 1.6\u20134.3 across fitting bands at every N \u2014 no plateau, so no measurement of C."
+  },
+  {
+    "figure_id": 53,
+    "filename": "fig_53_extraction_route2.png",
+    "pdf": "fig_53_extraction_route2.pdf",
+    "slide_number": 75,
+    "type": "data",
+    "data_source": "cached spectra through rung4.entropy_curves / fit_entropy_window; checked against rung4_results.txt",
+    "caption": "Route 2: regressing the Schwarzian entropy term gives a negative C at every N \u2014 an unphysical stiffness, reported as data."
+  },
+  {
+    "figure_id": 54,
+    "filename": "fig_54_extraction_gate_summary.png",
+    "pdf": "fig_54_extraction_gate_summary.pdf",
+    "slide_number": 76,
+    "type": "data",
+    "data_source": "rung4_results.txt, section 4 (THE C(N) GATE)",
+    "caption": "The pre-registered extraction gate failed on every criterion at every N: C could not be measured from these spectra."
+  },
+  {
+    "figure_id": 55,
+    "filename": "fig_55_ghat_profiles_grid.png",
+    "pdf": "fig_55_ghat_profiles_grid.pdf",
+    "slide_number": 78,
+    "type": "data",
+    "data_source": "rung4/profiles_cache.pkl (160 SYK + 64 ER profiles)",
+    "caption": "Correlation-decay shape in all 16 cells: SYK (amber, \u00b11 std over 10 realisations) against the declared Schwarzian, the \u00d75 and \u00f75 controls and the conformal limit."
+  },
+  {
+    "figure_id": 56,
+    "filename": "fig_56_circulant_distance_matrix.png",
+    "pdf": "fig_56_circulant_distance_matrix.pdf",
+    "slide_number": 79,
+    "type": "data",
+    "data_source": "rung4.circle_distance_matrix on the cached declared-C profile, N=18, \u03b2=5",
+    "caption": "The thermal-circle distance matrix is circulant: 576 entries carrying only 12 independent numbers."
+  },
+  {
+    "figure_id": 57,
+    "filename": "fig_57_nested_circulant_filtration.png",
+    "pdf": "fig_57_nested_circulant_filtration.pdf",
+    "slide_number": 80,
+    "type": "data",
+    "data_source": "thresholds 1/\u011c(k) from profiles_cache.pkl (N=18, \u03b2=5, declared C); graphs are C\u2082\u2084(1..k)",
+    "caption": "Raising the threshold walks through the circulant graphs C\u2082\u2084(1..k) and nothing else; at k = 8 the loop dies."
+  },
+  {
+    "figure_id": 58,
+    "filename": "fig_58_two_scalar_reduction.png",
+    "pdf": "fig_58_two_scalar_reduction.pdf",
+    "slide_number": 81,
+    "type": "schematic",
+    "data_source": "none (schematic); structure proved in fig 57",
+    "caption": "Everything the persistent homology can see reduces to \u011c(1) and \u011c(8), weighted 23 : 1 toward the shortest separation."
+  },
+  {
+    "figure_id": 59,
+    "filename": "fig_59_all_224_barcodes.png",
+    "pdf": "fig_59_all_224_barcodes.pdf",
+    "slide_number": 82,
+    "type": "data",
+    "data_source": "rung4/diagram_cache.pkl (224 diagrams) + profiles_cache.pkl for the predicted coordinates",
+    "caption": "Every one of the 224 diagrams has exactly one H\u2081 bar, at the coordinates the structure theorem predicts."
+  },
+  {
+    "figure_id": 60,
+    "filename": "fig_60_wh0_prediction_vs_measured.png",
+    "pdf": "fig_60_wh0_prediction_vs_measured.pdf",
+    "slide_number": 83,
+    "type": "data",
+    "data_source": "split_out.txt (measured W_H\u2080) vs 23\u00b7|\u0394(1/\u011c(1))| from profiles_cache.pkl \u2014 all 16 cells \u00d7 4 tags",
+    "caption": "Measured W_H\u2080 against its closed form: 64 cells on the identity line, confirming the barcode reduces to \u011c(1)."
+  },
+  {
+    "figure_id": 61,
+    "filename": "fig_61_reachability_family.png",
+    "pdf": "fig_61_reachability_family.pdf",
+    "slide_number": 84,
+    "type": "data",
+    "data_source": "cfit_out2.txt \u011c_Schwarzian(1) sweep + profiles_cache.pkl SYK values",
+    "caption": "The Schwarzian family is bounded below by the conformal value 2.7679; SYK sits beneath that floor for every \u03b2 \u2264 20 and only enters the family's range at \u03b2 = 40."
+  },
+  {
+    "figure_id": 62,
+    "filename": "fig_62_crossing_per_N.png",
+    "pdf": "fig_62_crossing_per_N.pdf",
+    "slide_number": 84,
+    "type": "data",
+    "data_source": "profiles_cache.pkl \u2014 \u011c_SYK(1) mean \u00b1 std per cell",
+    "caption": "SYK's \u011c(1) crosses the conformal value between \u03b2 = 20 and \u03b2 = 40 at every N; the \u03b2 = 40 points carry large realisation spread."
+  },
+  {
+    "figure_id": 63,
+    "filename": "fig_63_cfit_table.png",
+    "pdf": "fig_63_cfit_table.pdf",
+    "slide_number": 86,
+    "type": "data",
+    "data_source": "rung4/diagnostics/cfit_out2.txt (C \u2208 (0, 200])",
+    "caption": "Best-fit C per cell for both targets: fits exist only at \u03b2 = 40 for \u011c(1), and every other cell is monotone toward the boundary \u2014 no fit, not a boundary value."
+  },
+  {
+    "figure_id": 64,
+    "filename": "fig_64_cfit_beta_dependence.png",
+    "pdf": "fig_64_cfit_beta_dependence.pdf",
+    "slide_number": 87,
+    "type": "data",
+    "data_source": "cfit_out2.txt, \u011c(8) target (the only target with fits at two temperatures)",
+    "caption": "The fitted C moves with temperature by 29\u2013158% of its mean, though the declared dictionary makes it temperature-independent."
+  },
+  {
+    "figure_id": 65,
+    "filename": "fig_65_cfit_ratio.png",
+    "pdf": "fig_65_cfit_ratio.pdf",
+    "slide_number": 88,
+    "type": "data",
+    "data_source": "cfit_out2.txt \u2014 C_fit(\u011c1)/C_fit(\u011c8) at \u03b2 = 40",
+    "caption": "Fitting the nearest-neighbour scale and the \u03b2/3 scale demands different couplings \u2014 a shape failure, independent of the value of C."
+  },
+  {
+    "figure_id": 66,
+    "filename": "fig_66_power_law_fit.png",
+    "pdf": "fig_66_power_law_fit.pdf",
+    "slide_number": 89,
+    "type": "data",
+    "data_source": "cfit_out2.txt \u2014 the four \u03b2=40 fits, refitted here",
+    "caption": "C_fit against N: the exponent is 2.16 \u00b1 2.40 with a confidence band spanning orders of magnitude, and the points are not even monotone in N."
+  },
+  {
+    "figure_id": 67,
+    "filename": "fig_67_uv_ntau_sweep.png",
+    "pdf": "fig_67_uv_ntau_sweep.pdf",
+    "slide_number": 90,
+    "type": "data",
+    "data_source": "rung4/diagnostics/uv_out.txt, n_\u03c4 sweep at N=18, \u03b2=5",
+    "caption": "Refining the time grid makes the disagreement worse \u2014 the opposite of a discretisation artefact \u2014 because finer grids probe further into the UV."
+  },
+  {
+    "figure_id": 68,
+    "filename": "fig_68_uv_truncation.png",
+    "pdf": "fig_68_uv_truncation.pdf",
+    "slide_number": 91,
+    "type": "data",
+    "data_source": "rung4/diagnostics/uv_out.txt, m_min clamp at N=18, \u03b2=5",
+    "caption": "Dropping the shortest separations improves agreement monotonically, locating the disagreement in the UV. Diagnostic only \u2014 not adopted."
+  },
+  {
+    "figure_id": 69,
+    "filename": "fig_69_beta_over_C_grid.png",
+    "pdf": "fig_69_beta_over_C_grid.pdf",
+    "slide_number": 92,
+    "type": "data",
+    "data_source": "\u03b2/C from the declared dictionary C(N)=\u221a2\u00b7\u03b1_S\u00b7N",
+    "caption": "Every cell sits at \u03b2/C between 28 and 332, one to two orders of magnitude from the semiclassical requirement \u03b2/C \u226a 1 \u2014 a consequence of the dictionary itself."
+  },
+  {
+    "figure_id": 70,
+    "filename": "fig_70_three_probes.png",
+    "pdf": "fig_70_three_probes.pdf",
+    "slide_number": 93,
+    "type": "schematic",
+    "data_source": "none (schematic); each arrow's evidence is figs 31/54, 69, 55/61",
+    "caption": "Three independent probes \u2014 spectral, parametric and correlator \u2014 reach the same conclusion."
+  },
+  {
+    "figure_id": 71,
+    "filename": "fig_71_structure_theorem_diagram.png",
+    "pdf": "fig_71_structure_theorem_diagram.pdf",
+    "slide_number": 85,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "The structure theorem: monotonicity forces a circulant filtration, Adamaszek\u2013Adams fixes each homotopy type, and the barcode collapses to two numbers."
+  },
+  {
+    "figure_id": 72,
+    "filename": "fig_72_wedge_boundary_case.png",
+    "pdf": "fig_72_wedge_boundary_case.pdf",
+    "slide_number": 85,
+    "type": "data",
+    "data_source": "Theorem 4.3 branch evaluated exactly for n = 21..26",
+    "caption": "Which branch applies depends on n: every n divisible by 3 lands exactly on k/n = 1/3 and gets the wedge branch, the rest get an odd sphere."
+  },
+  {
+    "figure_id": 73,
+    "filename": "fig_73_phi_naturality_square.png",
+    "pdf": "fig_73_phi_naturality_square.pdf",
+    "slide_number": 86,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "Naturality: the square commutes, and in this category that comes free with the morphism rather than as an extra hypothesis."
+  },
+  {
+    "figure_id": 74,
+    "filename": "fig_74_isomorphism_criterion.png",
+    "pdf": "fig_74_isomorphism_criterion.pdf",
+    "slide_number": 87,
+    "type": "data",
+    "data_source": "cfit_out2.txt C_fit ratios + profiles_cache.pkl",
+    "caption": "The corollary: two barcodes agree iff both scalars agree. Matching \u011c(1) forces \u011c(8) to disagree, so no C satisfies both."
+  },
+  {
+    "figure_id": 75,
+    "filename": "fig_75_one_vs_two_boundary.png",
+    "pdf": "fig_75_one_vs_two_boundary.pdf",
+    "slide_number": 95,
+    "type": "data",
+    "data_source": "LEFT: real circulant matrix (profiles_cache.pkl, N=18 \u03b2=5). RIGHT: illustrative block matrix for the proposed two-boundary construction (not yet run).",
+    "caption": "One boundary gives a circulant matrix and a theorem-determined barcode; two boundaries give a block matrix the theorem does not cover, where H\u2081 could carry information."
+  },
+  {
+    "figure_id": 76,
+    "filename": "fig_76_paper_structure.png",
+    "pdf": "fig_76_paper_structure.pdf",
+    "slide_number": 96,
+    "type": "schematic",
+    "data_source": "none (schematic)",
+    "caption": "The paper in four steps: a theorem, its corollary, the application to SYK/JT, and the methodological conclusion."
+  },
+  {
+    "figure_id": 77,
+    "filename": "fig_77_project_timeline.png",
+    "pdf": "fig_77_project_timeline.pdf",
+    "slide_number": 98,
+    "type": "schematic",
+    "data_source": "rung dates from git history; targets are planned",
+    "caption": "Project timeline: rungs 1\u20134 complete, rung 5 in progress, arXiv submission ahead of the November deadline."
   }
 ]

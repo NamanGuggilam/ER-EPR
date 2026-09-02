@@ -29,14 +29,20 @@ def build():
     top, bot = fig.add_subplot(gs[0]), fig.add_subplot(gs[1])
     blank_axes(top)
     tmin, tmax = 0.2, 2.0
-    top.set_xlim(tmin, tmax); top.set_ylim(-1.6, 2.3)
+    top.set_xlim(tmin, tmax); top.set_ylim(0, 1)
     top.set_aspect("auto")
 
+    # Insets keep equal aspect, so the complexes stay round; each is placed
+    # at the x position of its own threshold.
     for t in (0.42, birth + 0.02, 1.25, death + 0.06):
-        sub = P * 0.10 + np.array([t, 0.55])
-        vr.draw(top, sub, 0.10 * (t + 1e-9), STY, discs=False, pt_ms=2.6,
-                lw=0.8, tri_alpha=0.20)
-        note(top, (t, -0.95), f"t = {t:.2f}", fs=9.5, color=MUTED)
+        xf = (t - tmin) / (tmax - tmin)
+        sub = top.inset_axes([xf - 0.075, 0.30, 0.15, 0.66])
+        blank_axes(sub)
+        sub.set_xlim(-1.45, 1.45); sub.set_ylim(-1.45, 1.45)
+        vr.draw(sub, P, t, STY, discs=False, pt_ms=3.4, lw=1.0,
+                tri_alpha=0.20)
+        top.text(t, 0.14, f"t = {t:.2f}", ha="center", fontsize=9.5,
+                 color=MUTED)
 
     style_axes(bot, grid_axis="x")
     bot.set_xlim(tmin, tmax)
@@ -45,10 +51,10 @@ def build():
     bot.spines["left"].set_visible(False)
     bar_h(bot, 0.55, birth, death, color=AMBER, lw=11)
     bot.set_xlabel("filtration threshold  t")
-    for x, lab, dy in ((birth, f"born\nt = {birth:.3f}", 0.86),
-                       (death, f"dies\nt = {death:.3f}", 0.86)):
+    for x, lab, ha, off in ((birth, f"born\nt = {birth:.3f}", "right", -0.02),
+                            (death, f"dies\nt = {death:.3f}", "left", 0.02)):
         bot.axvline(x, color=MUTED, ls="--", lw=1.0, zorder=1)
-        bot.text(x, dy, lab, ha="center", va="center", fontsize=10,
+        bot.text(x + off, 0.86, lab, ha=ha, va="center", fontsize=10,
                  color=INK)
     bot.text((birth + death) / 2, 0.30, "persistence = "
              f"{death - birth:.3f}", ha="center", fontsize=10, color=AMBER)
