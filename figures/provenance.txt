@@ -16,3 +16,7 @@ fig_34: Poincaré-disc geodesics as orthogonal circles (centre 1/cos φ, radius 
 fig_36: schwarzian.log_g_integrand on 600×600 grid, β=1.0, C=80.0, τ=0.1: peak log-value 1587.0270 at (s=1009.06, d=2.61); s* = 1005.31, s_max = 1561.27
 fig_37: compute_G conv_err at β=1.0, C=80.0, τ/β = 1/24..12/24 (computed now): max conv_err = 6.82e-13, 9/12 exactly zero; all ≤ 1e-6
 fig_36: schwarzian.log_g_integrand on 600×600 grid, β=1.0, C=80.0, τ=0.1: peak log-value 1587.0270 at (s=1009.06, d=2.61); s* = 1005.31, s_max = 1561.27
+fig_43: rung3_results.txt sweep: β=[np.float64(0.1), np.float64(0.5), np.float64(1.0), np.float64(2.0), np.float64(5.0)], EPR H₁=[np.int64(1), np.int64(1), np.int64(2), np.int64(4), np.int64(3)], ER H₁=[np.int64(0), np.int64(0), np.int64(0), np.int64(0), np.int64(0)] (disorder average at β=1 was 2.80 ± 1.17)
+fig_40: rung1_results.txt exact bars: d_ent=0.7213475204444817, ell=0.6931471805599453, φ=0.9609060278, ell/φ=0.7213475204444817 (= d_ent to 0.0e+00), W=0.0e+00; ripser float32 bars 0.7213475108146667, 0.6931471824645996
+fig_42: rung2 sweep recomputed on 100 β: exact W max=3.638e-12 (committed 3.638e-12), raw float32 W max=7.181e-01 (committed 7.289e-01); φ(β→0)=0.960871
+fig_42: rung2 sweep recomputed on 100 β: exact W max=3.638e-12 (committed 3.638e-12), raw float32 W max=7.289e-01 (committed 7.289e-01); φ(β→0)=0.960871
