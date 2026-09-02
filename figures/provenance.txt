@@ -9,3 +9,10 @@ fig_27: Theorem 4.3 evaluated exactly (Fraction) at n=24: S¹ for k=1..7; k=8 (k
 (contractible)
 fig_27: Theorem 4.3 evaluated exactly (Fraction) at n=24: S¹ for k=1..7; k=8 (k/n=1/3) gives ⋁⁷ S²; then k=9:S³, k=10:S⁵, k=11:S¹¹, k=12:full
 simplex
+fig_30: cached SYK spectra — N=12: spectra_N12_R50.npz, R=50, dim=64, mean bandwidth=1.1482, E∈[-0.640,0.622]; N=14: spectra_N14_R50.npz, R=50, dim=128, mean bandwidth=1.3601, E∈[-0.740,0.723]; N=16: spectra_N16_R30.npz, R=30, dim=256, mean bandwidth=1.5698, E∈[-0.835,0.818]; N=18: spectra_N18_R20.npz, R=20, dim=512, mean bandwidth=1.7468, E∈[-0.909,0.901]
+fig_31: SYK N=18 from spectra_N18_R20.npz (R=20, dim=512) vs rung4.build_goe_control(N=18, R=20) — same path as the extraction gate; edge region ε ≤ 0.8076 (45th pct); KS-style max quantile gap = 0.0055
+fig_32: analytic conformal profile, Δ=0.25, n_tau=24: Ĝ(1)=2.767905, Ĝ(8)=1.074570 (matches data.CONF_G1/CONF_G8)
+fig_34: Poincaré-disc geodesics as orthogonal circles (centre 1/cos φ, radius tan φ); cutoff curve at mean radius 1 − ε with ε = 0.085
+fig_36: schwarzian.log_g_integrand on 600×600 grid, β=1.0, C=80.0, τ=0.1: peak log-value 1587.0270 at (s=1009.06, d=2.61); s* = 1005.31, s_max = 1561.27
+fig_37: compute_G conv_err at β=1.0, C=80.0, τ/β = 1/24..12/24 (computed now): max conv_err = 6.82e-13, 9/12 exactly zero; all ≤ 1e-6
+fig_36: schwarzian.log_g_integrand on 600×600 grid, β=1.0, C=80.0, τ=0.1: peak log-value 1587.0270 at (s=1009.06, d=2.61); s* = 1005.31, s_max = 1561.27
