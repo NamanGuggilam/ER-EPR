@@ -59,7 +59,7 @@ def build():
     ax.legend(loc="lower left", fontsize=8.5)
     ax.text(0.97, 0.95, f"χ²/dof = {chi2:.1f}/{dof}\n"
             f"points not monotone in N", transform=ax.transAxes, ha="right",
-            va="top", fontsize=10, color=CLAY, weight="bold")
+            va="top", fontsize=10, color=CLAY, weight="bold", bbox=halo())
 
     provenance(META["id"],
                f"refit of the four β=40 C_fit values {list(np.round(C, 4))} "

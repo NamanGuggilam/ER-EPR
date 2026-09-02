@@ -41,11 +41,14 @@ def build():
     ax.set_ylabel("C_fit   (target Ĝ(8))")
     ax.set_xticks([20, 40]); ax.set_xticklabels(["20", "40"])
     ax.legend(loc="upper left", fontsize=9.5)
-    ax.text(0.97, 0.10,
+    # the band between the N=12 curve and the N=16/18 curves is the only
+    # empty region; putting this at the bottom laid it across the dotted
+    # C(N) lines and the N=14/16 curves
+    ax.text(0.5, 0.53,
             "dotted lines: declared C(N)\n"
             "a dictionary C cannot depend on β at all",
-            transform=ax.transAxes, ha="right", fontsize=9.5, color=CLAY,
-            weight="bold")
+            transform=ax.transAxes, ha="center", va="center", fontsize=9.5,
+            color=CLAY, weight="bold")
 
     provenance(META["id"],
                "C_fit(Ĝ8) spread across β at fixed N: " +

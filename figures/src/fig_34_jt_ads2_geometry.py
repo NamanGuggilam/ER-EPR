@@ -50,8 +50,10 @@ def build():
                        + 0.18 * np.sin(9 * t + 2.0))
     ax.plot(wig * np.cos(t), wig * np.sin(t), color=AMBER, lw=2.8, zorder=5)
 
-    note(ax, (0, 0.14), "rigid bulk", fs=12, color=NAVY, weight="bold")
-    note(ax, (0, -0.22), "constant negative curvature", fs=10, color=MUTED)
+    ax.text(0, 0.14, "rigid bulk", ha="center", va="center", fontsize=12,
+            color=NAVY, weight="bold", bbox=halo(0.85), zorder=6)
+    ax.text(0, -0.22, "constant negative curvature", ha="center", va="center",
+            fontsize=10, color=MUTED, bbox=halo(0.85), zorder=6)
     note(ax, (0, 1.24), "boundary curve at finite cutoff", fs=10.5,
          color=AMBER, weight="bold")
     note(ax, (0, -1.32),

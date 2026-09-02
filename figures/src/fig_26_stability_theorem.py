@@ -46,8 +46,9 @@ def build():
     ax.set_xlabel("t")
     ax.set_xlim(0.30, 2.05); ax.set_ylim(0.2, 3.5)
     note(ax, (1.18, 3.05), f"‖D − D′‖∞ = ε = {eps:.2f}", fs=11, color=INK)
-    note(ax, (1.18, 0.62), f"largest endpoint shift = {shift:.3f}  ≤  ε",
-         fs=11, color=TEAL, weight="bold")
+    ax.text(1.18, 0.62, f"largest endpoint shift = {shift:.3f}  ≤  ε",
+            ha="center", va="center", fontsize=11, color=TEAL, weight="bold",
+            bbox=halo())
 
     provenance(META["id"],
                f"ε = {eps} perturbation of a 12-point ring distance matrix; "

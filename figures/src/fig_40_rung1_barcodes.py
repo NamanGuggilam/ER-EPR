@@ -63,9 +63,10 @@ def build():
     ax.set_xlim(-0.30, 0.98); ax.set_ylim(0.3, 4.35)
     note(ax, (0.42, 3.85), f"φ = S(A)·I(A:B) = 2(log 2)² = {scale:.7f}",
          fs=11.5, color=INK)
-    note(ax, (0.42, 0.72),
-         f"Wasserstein after rescaling = {W:.1e}   (exact, double precision)",
-         fs=11, color=AMBER, weight="bold")
+    ax.text(0.42, 0.72,
+            f"Wasserstein after rescaling = {W:.1e}   (exact, double precision)",
+            ha="center", va="center", fontsize=11, color=AMBER, weight="bold",
+            bbox=halo(), zorder=6)
     note(ax, (0.42, 0.45),
          f"ripser reports these bars in float32 ({raw_epr:.7f}, {raw_er:.7f}); "
          "the isomorphism check uses the exact values",

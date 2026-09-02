@@ -80,6 +80,55 @@ def texts_of(fig):
     return out
 
 
+def data_ink(fig):
+    """Alpha mask of everything except text, gridlines, spines and
+    backgrounds — i.e. the data a label must not be drawn on top of."""
+    import numpy as np
+    hidden = []
+
+    def hide(art):
+        if art.get_visible():
+            art.set_visible(False)
+            hidden.append(art)
+
+    from matplotlib.patches import Patch
+    from matplotlib.image import AxesImage
+    from matplotlib.collections import QuadMesh
+    for t in fig.findobj(plt.Text):
+        hide(t)
+    # heatmaps and meshes are backgrounds too: labelling a cell of one is
+    # standard practice, not a collision
+    for im in fig.findobj(lambda o: isinstance(o, (AxesImage, QuadMesh))):
+        hide(im)
+    # Patches are designed backgrounds — boxes, discs, bars, shaded bands.
+    # Text placed on one of those is a deliberate choice; text landing on a
+    # plotted LINE or MARKER is the defect, so the mask keeps only those.
+    for p in fig.findobj(Patch):
+        hide(p)
+    for ax in fig.axes:
+        for g in list(ax.get_xgridlines()) + list(ax.get_ygridlines()):
+            hide(g)
+        for sp in ax.spines.values():
+            hide(sp)
+        for tick in list(ax.get_xticklines()) + list(ax.get_yticklines()):
+            hide(tick)
+
+    faces = [(fig.patch, fig.patch.get_alpha())]
+    faces += [(ax.patch, ax.patch.get_alpha()) for ax in fig.axes]
+    for p, _ in faces:
+        p.set_alpha(0.0)
+
+    fig.canvas.draw()
+    buf = np.asarray(fig.canvas.buffer_rgba()).copy()
+
+    for p, a in faces:
+        p.set_alpha(a)
+    for art in hidden:
+        art.set_visible(True)
+    fig.canvas.draw()
+    return buf[..., 3] > 30          # rows top-down
+
+
 def check(path):
     fid = int(path.stem.split("_")[1])
     spec = importlib.util.spec_from_file_location(path.stem, path)
@@ -133,6 +182,33 @@ def check(path):
             if dx > 2 or dy > 2:
                 issues.append(f"BOX   {s[:38]!r} overflows by "
                               f"{max(dx, 0):.0f}×{max(dy, 0):.0f} px")
+        # Annotation text drawn on top of plotted lines/markers. Tick labels,
+        # axis labels, legend entries and colorbar labels are placed by
+        # matplotlib in the margins and are excluded; so is any text that
+        # carries its own backing box.
+        import numpy as np
+        furniture = set()
+        for ax in fig.axes:
+            for a in (list(ax.get_xticklabels()) + list(ax.get_yticklabels())
+                      + [ax.xaxis.label, ax.yaxis.label, ax.title]):
+                furniture.add(id(a))
+            leg = ax.get_legend()
+            if leg is not None:
+                for a in leg.findobj(plt.Text):
+                    furniture.add(id(a))
+        mask = data_ink(fig)
+        H = mask.shape[0]
+        for s, bb, t in ts:
+            if t.get_bbox_patch() is not None or id(t) in furniture:
+                continue
+            x0, x1 = int(max(bb.x0, 0)), int(min(bb.x1, mask.shape[1]))
+            r0, r1 = int(max(H - bb.y1, 0)), int(min(H - bb.y0, H))
+            if x1 - x0 < 2 or r1 - r0 < 2:
+                continue
+            frac = float(mask[r0:r1, x0:x1].mean())
+            if frac > 0.05:
+                issues.append(f"ONDATA {s[:34]!r} sits on data "
+                              f"({frac:.0%} of its box is ink)")
         for (s1, b1, _), (s2, b2, _) in combinations(ts, 2):
             ix = max(0, min(b1.x1, b2.x1) - max(b1.x0, b2.x0))
             iy = max(0, min(b1.y1, b2.y1) - max(b1.y0, b2.y0))

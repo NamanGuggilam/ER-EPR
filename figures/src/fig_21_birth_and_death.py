@@ -57,7 +57,8 @@ def build():
         bot.text(x + off, 0.86, lab, ha=ha, va="center", fontsize=10,
                  color=INK)
     bot.text((birth + death) / 2, 0.30, "persistence = "
-             f"{death - birth:.3f}", ha="center", fontsize=10, color=AMBER)
+             f"{death - birth:.3f}", ha="center", fontsize=10, color=AMBER,
+             bbox=halo())
     for x in (birth, death):
         top.axvline(x, color=MUTED, ls="--", lw=1.0, zorder=1)
 

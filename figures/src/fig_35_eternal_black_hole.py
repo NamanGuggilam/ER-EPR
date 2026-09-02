@@ -37,7 +37,8 @@ def build():
 
     ax.plot([x0, x1], [4.0, 4.0], color=AMBER, lw=2.0, ls=(0, (5, 4)),
             zorder=6)
-    note(ax, (10.0, 4.42), "the bridge", fs=11.5, color=AMBER, weight="bold")
+    ax.text(10.0, 4.42, "the bridge", ha="center", va="center",
+            fontsize=11.5, color=AMBER, weight="bold", bbox=halo(), zorder=7)
     note(ax, (10.0, 2.35), "|TFD(β)⟩", fs=15, color=INK)
     note(ax, (10.0, 1.35),
          "one β controls both the entanglement and the throat",

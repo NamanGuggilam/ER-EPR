@@ -79,6 +79,12 @@ def blank_axes(ax):
     return ax
 
 
+def halo(alpha=0.80):
+    """Backing for a label that must sit over plotted lines: keeps the text
+    legible without moving it off the feature it names."""
+    return dict(boxstyle="round,pad=0.25", fc="white", ec="none", alpha=alpha)
+
+
 def tidy_log_axes(fig):
     """Suppress minor tick labels on log axes.
 
