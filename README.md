@@ -75,6 +75,42 @@ is **conjectured and not tested here**, including the broader question of whethe
 persistent homology of a bare correlation-distance matrix is even the right invariant for
 probing SYK/JT, as against spectral form factors, OTOCs, or the Schwarzian action.
 
+### Rung 4 — Exact Schwarzian vs SYK (`rung4/`)
+
+Rung 4 swaps the JT radial slice for the exact Mertens–Turiaci–Verlinde Schwarzian
+boundary two-point function (arXiv:1705.08408) as the ER side. Both sides are compared
+on the same 24-point thermal τ circle, using distance `d = 1/Ĝ` with `Ĝ = G/G(β/2)`.
+
+- `rung4/schwarzian.py` passes validation Checks A–E (`rung4/rung4_checks.py`) to
+  quadrature precision within its validated scope `C ≤ 200`.
+- **Extract stage:** a pre-registered gate tried to measure the Schwarzian coupling
+  `C(N)` directly from SYK spectra (N = 12–18) and **failed 0/4**. The two routes
+  disagree by 230–433%, and the SYK pattern tracks a GOE control.
+- **Compare stage:** a literature-declared dictionary was used,
+  `C(N) = √2 · α_S · N` with `α_S ≈ 0.00709`. That value comes from a single source:
+  Maldacena–Stanford's fitted `c ≈ 0.396 N/J`. The declared C was favored in only
+  **2/16** (N, β) cells.
+- **Rescore:** `rung4/rung4_rescore.py` reran the comparison under a second distance
+  convention, `log(Gmax/G)`, and got the identical 2/16 favored set with zero flips.
+- **Verdict (closed, honest negative):** the Schwarzian regime has not emerged at
+  N ≤ 18. The result says nothing either way about ER=EPR itself. N = 20–24 is noted
+  as future work only.
+
+The full verbatim record is in `rung4/rung4_results.txt`, and there is a readable
+summary in `rung4/RUNG4_REPORT_FOR_ARJUN.md`. `rung4/diagnostics/` proves a structural
+limit for this construction: on a circulant τ circle with monotone Ĝ, the barcodes
+depend on only two numbers per side (see `rung4/diagnostics/README.md`).
+
+## Figures and write-ups
+
+- `figures/`: 77 figures, each as PNG and PDF, covering the path from the Bell state and
+  TFD through holography, persistent homology, and the stability theorem to the
+  rung-by-rung results. Rebuild them with `python figures/build_all.py`. Provenance for
+  each figure is in `figures/provenance.txt` and `figures/manifest.json`.
+- `er_epr_ground_up.pdf`: a from-first-principles write-up of the whole project.
+- `presentation/`: the slide deck (`.pptx`), plus the "Topology of Entanglement"
+  document in `.docx` and `.pdf`.
+
 ## Results in this repo
 
 | File | Contents |
@@ -82,6 +118,8 @@ probing SYK/JT, as against spectral form factors, OTOCs, or the Schwarzian actio
 | `rung1_results.txt` / `rung1_barcodes.png` | Bell pair vs RT throat, side-by-side barcodes |
 | `rung2_results.txt` / `rung2_plots.png` | β-sweep, 2×2 diagnostic panel grid |
 | `rung3_results.txt` / `rung3_plots.png`, `rung3_h1_comparison.png` | SYK/JT barcodes and H1 comparison |
+| `rung4/rung4_results.txt` / `rung4/rung4_compare.png` | Schwarzian extract gate, compare stage, rescore, closure |
+| `rung4/rung4_checks_results.txt` | Schwarzian validation Checks A–E |
 
 ## Running
 
@@ -93,6 +131,12 @@ pip install -r requirements.txt
 python rung1.py
 python rung2.py
 python rung3.py
+
+python rung4/schwarzian.py               # sanity gate: G(0.1,1,80) = 3.980425717581e+02
+python rung4/rung4_checks.py A B C D E   # validation checks
+python rung4/rung4.py extract            # C(N) extraction gate
+python rung4/rung4.py compare            # barcode comparison (~53 min)
+python rung4/rung4_rescore.py            # two-convention rescore
 ```
 
 Each script regenerates its own `*_results.txt` and `*.png` in place. Rung 3 is the
