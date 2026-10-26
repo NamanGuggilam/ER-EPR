@@ -1,0 +1,175 @@
+==============================================================================
+RTN RUNG 7 -- convergence of the open chain toward RT as D grows
+==============================================================================
+6-site open-chain random MPS, complex Gaussian tensors, alpha = 1.0
+route A (one-cut intervals) : D = [16, 32, 64, 128, 256]
+route B (all 15 intervals)  : D = [16, 24, 32, 40]
+spot check (all 15)         : D = 64, 3 draws
+runs per D: seeds s = [0, 1, 2, 3, 4, 5] (s = 0 primary, s = 1..5 the stability seeds), 50 draws each
+draw d of run s seeded np.random.seed(1000*s + d), as in rungs 5-6
+
+[0] VALIDATION of both entropy methods against earlier rungs
+    all-interval route vs rung-5 full SVD (D = 2, 4)   max |diff| = 1.8e-15  PASS
+    all-interval route vs rung-6 transfer (D = 8, 16)  max |diff| = 2.2e-15  PASS
+    one-cut route vs rung-6 transfer (D = 4, 8, 16)    max |diff| = 1.1e-15  PASS
+    (bond 1 is the single site [1..1], checked via its complement
+     [2..6]; bonds 2..5 are the pairs (1,k) directly)
+
+[0b] CAN THE BRIEF'S SUCCESS CRITERION FAIL?
+     Synthetic entropies that VIOLATE RT, scored by the brief's test
+     (power law W_H0 ~ D^-beta, success = beta > 0 and R^2 > 0.95):
+     S = (3 - cut) log D: RT ordering REVERSED
+       beta = 1.056, R^2 = 0.9969 -> criterion PASSES; phi_opt pinned at the [0.1, 10] bound at D = [16, 32, 64, 128, 256]
+     S = 0.5 * L_RT: RT broken by a factor of 2
+       beta = 0.369, R^2 = 0.5371 -> criterion fails; phi_opt pinned at the [0.1, 10] bound at D = [128, 256]
+       (it fails because the phi it needs runs off the search
+        window, not because the test detected the violation)
+     At least one RT-violating construction passes, so passing the
+     criterion cannot confirm convergence.
+
+[A] ROUTE A: one-cut intervals, entropy across each bond, D = [16, 32, 64, 128, 256]
+    delta = log D - S (absolute deficit), S/L_RT = S / log D
+
+  D =  16  [    0.5 s]
+    mean S         = 2.072369   (sd over runs 0.002361)
+    S / L_RT       = 0.747449
+    delta          = 0.700220   (sd over runs 0.002361)
+    delta by bond  = [0.8592, 0.6021, 0.5856, 0.5971, 0.8572]   (bonds 1..5)
+    e^(alpha*delta)= 2.014195   (phi that would absorb this deficit)
+
+  D =  32  [    2.9 s]
+    mean S         = 2.797504   (sd over runs 0.000663)
+    S / L_RT       = 0.807189
+    delta          = 0.668232   (sd over runs 0.000663)
+    delta by bond  = [0.8479, 0.5529, 0.5412, 0.5504, 0.8487]   (bonds 1..5)
+    e^(alpha*delta)= 1.950785   (phi that would absorb this deficit)
+
+  D =  64  [   27.2 s]
+    mean S         = 3.507799   (sd over runs 0.000879)
+    S / L_RT       = 0.843447
+    delta          = 0.651084   (sd over runs 0.000879)
+    delta by bond  = [0.8412, 0.5263, 0.5209, 0.5266, 0.8404]   (bonds 1..5)
+    e^(alpha*delta)= 1.917619   (phi that would absorb this deficit)
+
+  D = 128  [  236.6 s]
+    mean S         = 4.209916   (sd over runs 0.000371)
+    S / L_RT       = 0.867661
+    delta          = 0.642115   (sd over runs 0.000371)
+    delta by bond  = [0.8374, 0.5131, 0.5101, 0.5129, 0.837]   (bonds 1..5)
+    e^(alpha*delta)= 1.900495   (phi that would absorb this deficit)
+
+  D = 256  [ 2274.6 s]
+    mean S         = 4.907487   (sd over runs 0.000129)
+    S / L_RT       = 0.885001
+    delta          = 0.637690   (sd over runs 0.000129)
+    delta by bond  = [0.835, 0.5062, 0.5053, 0.5066, 0.8354]   (bonds 1..5)
+    e^(alpha*delta)= 1.892105   (phi that would absorb this deficit)
+
+  SUMMARY, route A
+     D    log D     mean S    S/L_RT     delta       sd  e^(a*dlt)
+    16   2.7726   2.072369  0.747449  0.700220 0.002361   2.014195
+    32   3.4657   2.797504  0.807189  0.668232 0.000663   1.950785
+    64   4.1589   3.507799  0.843447  0.651084 0.000879   1.917619
+   128   4.8520   4.209916  0.867661  0.642115 0.000371   1.900495
+   256   5.5452   4.907487  0.885001  0.637690 0.000129   1.892105
+
+  FIT 1: S/L_RT = A - B / log D   (does S/L_RT -> 1?)
+    A = 1.025064 +- 0.004795,  B = 0.763711 +- 0.018224,  R^2 = 0.998295
+    extrapolated S/L_RT at D -> infinity: 1.025064  (5.2 sigma from 1)
+    By definition S/L_RT = 1 - delta/log D on one-cut pairs, so ANY
+    bounded delta sends this ratio to 1.  It is a weak test: it
+    cannot tell delta -> 0 from delta -> constant.
+
+  FIT 2: delta(D) = delta_inf + c / D   (does the deficit vanish?)
+    delta_inf = 0.634047 +- 0.000471,  c = 1.0662 +- 0.0146,  R^2 = 0.9994
+    delta_inf is 1347.1 sigma from zero
+
+  FIT 3: delta(D) = a * D^-gamma   (the delta_inf = 0 hypothesis)
+    gamma = 0.0327 +- 0.0066,  R^2 (log space) = 0.8924
+    SSE in delta: constant + c/D = 1.450e-06,  pure power law = 2.761e-04
+    better fit: constant + c/D (both are 2-parameter models, 5 points)
+    phi implied at D -> infinity by fit 2: e^(alpha*delta_inf) = 1.8852
+    (5 points and 2-parameter fits: treat these as a direction, not
+     a law.  The run-to-run sd above is the honest error scale.)
+
+[B] ROUTE B: all 15 intervals, full PH comparison, D = [16, 24, 32, 40]
+
+  D =  16  [   19.7 s]
+     run   phi_opt  bound?       W_H0       W_H1    tau  disc   S/L c1   S/L c2
+       0   1.79727      no  2.875e-02  0.000e+00  0.776     0   0.7607   0.7222
+       1   1.80080      no  2.854e-02  0.000e+00  0.776     0   0.7610   0.7221
+       2   1.78968      no  2.851e-02  0.000e+00  0.776     0   0.7621   0.7224
+       3   1.78619      no  2.851e-02  0.000e+00  0.772     0   0.7623   0.7231
+       4   1.79943      no  2.851e-02  0.000e+00  0.776     0   0.7612   0.7227
+       5   1.80339      no  2.776e-02  0.000e+00  0.772     0   0.7630   0.7248
+    pure-state check, max |S(A) - S(A^c)| over runs: 8.9e-16
+
+  D =  24  [  112.3 s]
+     run   phi_opt  bound?       W_H0       W_H1    tau  disc   S/L c1   S/L c2
+       0   1.74730      no  1.185e-02  0.000e+00  0.772     0   0.8003   0.7643
+       1   1.73684      no  1.196e-02  0.000e+00  0.780     0   0.8005   0.7641
+       2   1.74436      no  1.192e-02  0.000e+00  0.772     0   0.8002   0.7637
+       3   1.74938      no  1.198e-02  0.000e+00  0.772     0   0.7995   0.7635
+       4   1.74723      no  1.203e-02  0.000e+00  0.776     0   0.7993   0.7627
+       5   1.74776      no  1.196e-02  0.000e+00  0.780     0   0.7996   0.7637
+    pure-state check, max |S(A) - S(A^c)| over runs: 8.9e-16
+
+  D =  32  [  516.5 s]
+     run   phi_opt  bound?       W_H0       W_H1    tau  disc   S/L c1   S/L c2
+       0   1.72186      no  6.555e-03  0.000e+00  0.772     0   0.8198   0.7854
+       1   1.71907      no  6.544e-03  0.000e+00  0.772     0   0.8201   0.7857
+       2   1.71333      no  6.576e-03  0.000e+00  0.776     0   0.8202   0.7855
+       3   1.71909      no  6.488e-03  0.000e+00  0.776     0   0.8207   0.7858
+       4   1.71540      no  6.561e-03  0.000e+00  0.776     0   0.8202   0.7856
+       5   1.71962      no  6.544e-03  0.000e+00  0.772     0   0.8201   0.7856
+    pure-state check, max |S(A) - S(A^c)| over runs: 1.3e-15
+
+  D =  40  [ 1696.2 s]
+     run   phi_opt  bound?       W_H0       W_H1    tau  disc   S/L c1   S/L c2
+       0   1.70466      no  4.099e-03  0.000e+00  0.772     0   0.8332   0.8003
+       1   1.70412      no  4.108e-03  0.000e+00  0.776     0   0.8332   0.7999
+       2   1.70354      no  4.115e-03  0.000e+00  0.772     0   0.8331   0.7998
+       3   1.70118      no  4.107e-03  0.000e+00  0.776     0   0.8334   0.8003
+       4   1.70521      no  4.069e-03  0.000e+00  0.780     0   0.8336   0.8009
+       5   1.70842      no  4.082e-03  0.000e+00  0.772     0   0.8333   0.8002
+    pure-state check, max |S(A) - S(A^c)| over runs: 1.3e-15
+
+  SUMMARY, route B (mean over the 6 runs; sd in parentheses)
+     D    mean S   S/L c1   S/L c2            phi_opt  e^(a*d1)              W_H0(opt)    disc (all runs)
+    16   2.72976   0.7617   0.7229   1.79613 (0.00615)   1.93621  2.843e-02 (3.13e-04) [0, 0, 0, 0, 0, 0]
+    24   3.29741   0.7999   0.7637   1.74548 (0.00414)   1.88868  1.195e-02 (5.62e-05) [0, 0, 0, 0, 0, 0]
+    32   3.69416   0.8202   0.7856   1.71806 (0.00284)   1.86491  6.545e-03 (2.74e-05) [0, 0, 0, 0, 0, 0]
+    40   4.00095   0.8333   0.8002   1.70452 (0.00216)   1.84955  4.097e-03 (1.60e-05) [0, 0, 0, 0, 0, 0]
+
+  THE BRIEF'S CRITERION: W_H0(phi_opt) ~ D^-beta over route B
+    beta = 2.1135 +- 0.0081,  R^2 = 1.0000  -> meets beta > 0, R^2 > 0.95
+    UNINFORMATIVE: section [0b] shows RT-reversed data passing the
+    same test.  This number confirms that both distance matrices
+    shrink, not that their entropies converge.
+
+  phi_opt vs D: does it approach 1?
+    phi_opt = [1.7961, 1.7455, 1.7181, 1.7045] at D = [16, 24, 32, 40]
+    distance from 1: [0.7961, 0.7455, 0.7181, 0.7045]
+    route A's e^(alpha*delta) at the same D range is [2.0142, 1.9508] (D = [16, 32])
+    and at D = 256: 1.8921
+
+[C] SPOT CHECK: RT ordering at D = 64, all 15 intervals, 3 draws (run s = 0)
+    [344.3 s]
+    Kendall tau = 0.776, p = 4.62e-04, discordant = 0 of 62
+    discordant per individual draw: [0, 0, 0]
+    S/L_RT: cut 1 = 0.8546, cut 2 = 0.8240
+    pure-state check: max |S(A) - S(A^c)| = 4.4e-16
+    (3 draws only: an ordering check, not a precision measurement)
+
+  wrote /Users/naman/projects/ER-EPR/rework/rtn/rtn_rung7_convergence.png
+
+[E] VERDICT
+  RT ORDERING at large D        : discordant = 0 at D = 64; route B runs [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+  S/L_RT -> 1 (fit 1)           : A = 1.0251 +- 0.0048
+  deficit delta(D), D = [16, 32, 64, 128, 256] : [0.7002, 0.6682, 0.6511, 0.6421, 0.6377]
+  delta_inf (fit 2)             : 0.6340 +- 0.0005 (1347.1 sigma from 0)
+  phi_opt, D = [16, 24, 32, 40] : [1.7961, 1.7455, 1.7181, 1.7045]
+  brief's power law (route B)   : beta = 2.114, R^2 = 1.000 -- uninformative by [0b]
+
+  total runtime 5238 s
+==============================================================================

@@ -1,0 +1,176 @@
+==============================================================================
+RTN RUNG 3 -- disk geometry (AdS2/CFT1): circle boundary, Poincare bulk
+==============================================================================
+boundary: 8 sites uniform on the unit circle
+bulk    : 8 sites at radius r = 0.7 in the Poincare disk
+NOTE: both sides are now GEOMETRIC lengths -- this rung does not test
+      the RT dictionary, only whether two geodesic length functions on
+      the same angular lattice differ by a constant.
+
+[0] ANALYTIC VALIDATION OF THE DISTANCE FORMULAS
+  check 1: d_boundary(0,4) == 2*log(1/sin(pi/8)) ~= 3.068
+    angular separation of sites 0 and 4 : 3.141593 rad (= pi, i.e. ANTIPODAL -- theta/2 = pi/2, not pi/8)
+    d_boundary(0,4) from the formula    : 0.000000
+    2*log(1/sin(pi/8))                  : 1.921094 (the brief says 3.068; the formula gives 1.921094)
+    pi/8 is theta/2 for ADJACENT sites  : d_boundary(0,1) = 1.921094
+    verdict: FAIL -- three ways: wrong pair, the formula gives 0 at
+             theta = pi, and 3.068 matches no separation here.
+
+  check 2: d_bulk antipodal finite and > adjacent, at r = 0.7
+    adjacent  (dphi = 2pi/8) : 1.833276
+    antipodal (dphi = pi)       : 3.469202
+    verdict: PASS
+
+  MONOTONICITY IN THE SHARED VARIABLE (angular separation):
+        pair     theta   d_boundary     d_bulk
+       (0,1)    0.7854     1.921094   1.833276
+       (0,2)    1.5708     0.693147   2.833939
+       (0,3)    2.3562     0.158347   3.321140
+       (0,4)    3.1416     0.000000   3.469202
+    boundary DECREASES with separation, bulk INCREASES: the two are
+    anti-monotone, so no positive constant phi can map one onto the
+    other.  This is a sign error, not a scale mismatch.
+
+[1] BOUNDARY DISTANCE MATRIX (as specified)
+
+  d_boundary(i,j) = 2*log(1/sin(theta/2))
+              0       1       2       3       4       5       6       7
+     0    0.000   1.921   0.693   0.158   0.000   0.158   0.693   1.921
+     1    1.921   0.000   1.921   0.693   0.158   0.000   0.158   0.693
+     2    0.693   1.921   0.000   1.921   0.693   0.158   0.000   0.158
+     3    0.158   0.693   1.921   0.000   1.921   0.693   0.158   0.000
+     4    0.000   0.158   0.693   1.921   0.000   1.921   0.693   0.158
+     5    0.158   0.000   0.158   0.693   1.921   0.000   1.921   0.693
+     6    0.693   0.158   0.000   0.158   0.693   1.921   0.000   1.921
+     7    1.921   0.693   0.158   0.000   0.158   0.693   1.921   0.000
+
+  zero off-diagonal entries : 8 (antipodal pairs -> distinct sites at distance 0,
+                              so this is a pseudometric, not a metric)
+  infinite entries          : 0
+  distinct finite values    : [0.0, 0.158347184, 0.693147181, 1.921094358]
+
+[2] BULK DISTANCE MATRIX (Poincare disk, r = 0.7)
+
+  d_bulk(i,j) = arccosh(1 + 2*chord^2/((1-r1^2)(1-r2^2)))
+              0       1       2       3       4       5       6       7
+     0    0.000   1.833   2.834   3.321   3.469   3.321   2.834   1.833
+     1    1.833   0.000   1.833   2.834   3.321   3.469   3.321   2.834
+     2    2.834   1.833   0.000   1.833   2.834   3.321   3.469   3.321
+     3    3.321   2.834   1.833   0.000   1.833   2.834   3.321   3.469
+     4    3.469   3.321   2.834   1.833   0.000   1.833   2.834   3.321
+     5    3.321   3.469   3.321   2.834   1.833   0.000   1.833   2.834
+     6    2.834   3.321   3.469   3.321   2.834   1.833   0.000   1.833
+     7    1.833   2.834   3.321   3.469   3.321   2.834   1.833   0.000
+
+  distinct finite values    : [1.833275914, 2.833939295, 3.321140335, 3.469202111]
+
+[3] BARCODES (ripser, maxdim = 1)
+  BOUNDARY side:
+    H0: 4 bars (1 infinite)
+      [0.000000, 0.158347]   persistence 0.158347
+      [0.000000, 0.158347]   persistence 0.158347
+      [0.000000, 0.158347]   persistence 0.158347
+    H1: 5 bars (0 infinite)
+      [0.158347, 0.693147]   persistence 0.534800
+      [0.158347, 0.693147]   persistence 0.534800
+      [0.158347, 0.693147]   persistence 0.534800
+      [0.158347, 0.693147]   persistence 0.534800
+      [0.158347, 0.693147]   persistence 0.534800
+  BULK side at phi = 1:
+    H0: 8 bars (1 infinite)
+      [0.000000, 1.833276]   persistence 1.833276
+      [0.000000, 1.833276]   persistence 1.833276
+      [0.000000, 1.833276]   persistence 1.833276
+      [0.000000, 1.833276]   persistence 1.833276
+      [0.000000, 1.833276]   persistence 1.833276
+      [0.000000, 1.833276]   persistence 1.833276
+      [0.000000, 1.833276]   persistence 1.833276
+    H1: 1 bars (0 infinite)
+      [1.833276, 3.321140]   persistence 1.487864
+  BULK side at the optimal phi = 0.001000 (fitted on H0):
+    H0: 8 bars (1 infinite)
+      [0.000000, 0.001833]   persistence 0.001833
+      [0.000000, 0.001833]   persistence 0.001833
+      [0.000000, 0.001833]   persistence 0.001833
+      [0.000000, 0.001833]   persistence 0.001833
+      [0.000000, 0.001833]   persistence 0.001833
+      [0.000000, 0.001833]   persistence 0.001833
+      [0.000000, 0.001833]   persistence 0.001833
+    H1: 1 bars (0 infinite)
+      [0.001833, 0.003321]   persistence 0.001488
+
+[4] WASSERSTEIN DISTANCE (finite bars only)
+                             setting         W_H0         W_H1
+                  phi = 1 (unscaled)     9.410158     2.942882
+            phi = 2 (rung 2's value)    18.484411     3.994961
+  phi = 0.001000 (optimal, H0-fitted)     0.344979     1.891856
+  note on the optimum: grid minimum (refinement declined)
+
+[5] BULK RADIUS SWEEP: r from 0.3 to 0.95 in 8 steps
+    (the boundary side does not depend on r, so only the bulk moves)
+        r  d_bulk adj  d_bulk anti     phi opt   W_H0(opt)  W_H0(phi=1)   W_H1(opt)
+   0.3000    0.499431     1.238078    0.001000    0.338377     2.435854    1.891266
+   0.3929    0.696920     1.660697    0.001000    0.339355     3.586908    1.891410
+   0.4857    0.938265     2.121744    0.001000    0.340549     4.980082    1.891554
+   0.5786    1.248579     2.641251    0.001000    0.342085     6.516055    1.891692
+   0.6714    1.670384     3.253359    0.001000    0.344173     8.603885    1.891820
+   0.7643    2.283624     4.025762    0.001000    0.347208    11.639269    1.891928
+   0.8571    3.274106     5.129899    0.001000    0.352111    16.541904    1.892005
+   0.9500    5.413644     7.327123    0.001000    0.362701    27.132077    1.892045
+
+[6] IS H1 NON-TRIVIAL ON EITHER SIDE?
+  boundary: 5 finite H1 bar(s), longest persistence 0.534800
+      bulk: 1 finite H1 bar(s), longest persistence 1.487864
+
+  CAVEAT -- this check cannot fail, so it carries no information.
+  Both matrices are circulant (distance depends only on angular
+  separation).  The repo's rung-4 diagnostics proved via
+  Adamaszek-Adams that a circulant filtration with monotone weights
+  forces exactly one H1 bar and H0 = n-1 identical bars.  A non-zero
+  H1 here is a property of the construction, not a detection of the
+  circle's pi_1.  Rung 4 was misled by exactly this before.
+
+[7] DIAGNOSTIC TRACK: correctly ordered boundary geodesic
+    L = 2*log((2/eps)*sin(theta/2)), eps = 0.1
+    (NOT the specified formula -- run to show what the sign error costs)
+
+  d_boundary_regularized(i,j)
+              0       1       2       3       4       5       6       7
+     0    0.000   4.070   5.298   5.833   5.991   5.833   5.298   4.070
+     1    4.070   0.000   4.070   5.298   5.833   5.991   5.833   5.298
+     2    5.298   4.070   0.000   4.070   5.298   5.833   5.991   5.833
+     3    5.833   5.298   4.070   0.000   4.070   5.298   5.833   5.991
+     4    5.991   5.833   5.298   4.070   0.000   4.070   5.298   5.833
+     5    5.833   5.991   5.833   5.298   4.070   0.000   4.070   5.298
+     6    5.298   5.833   5.991   5.833   5.298   4.070   0.000   4.070
+     7    4.070   5.298   5.833   5.991   5.833   5.298   4.070   0.000
+
+  barcodes:
+    H0: 8 bars (1 infinite)
+      [0.000000, 4.070370]   persistence 4.070370
+      [0.000000, 4.070370]   persistence 4.070370
+      [0.000000, 4.070370]   persistence 4.070370
+      [0.000000, 4.070370]   persistence 4.070370
+      [0.000000, 4.070370]   persistence 4.070370
+      [0.000000, 4.070370]   persistence 4.070370
+      [0.000000, 4.070370]   persistence 4.070370
+    H1: 1 bars (0 infinite)
+      [4.070370, 5.833117]   persistence 1.762747
+
+  optimal phi (H0-fitted) : 2.220271
+  W_H0 at that phi        : 0.000000
+  W_H1 at that phi        : 1.540716
+  monotone ordering matches the bulk, so the fit is meaningful here
+  (compare the as-specified track above, where it cannot be).
+
+  wrote /Users/naman/projects/ER-EPR/rework/rtn/rtn_rung3_barcodes.png
+
+[8] VERDICT
+  boundary d is anti-monotone in angular separation; bulk d is
+  monotone.  Best-fit phi on H0 = 0.001000, leaving W_H0 = 0.344979
+  (W_H0 at phi = 1 is 9.410158).
+  Zero-distance antipodal pairs: 8 -> pseudometric, so the
+  boundary filtration starts by merging opposite sides of the circle.
+  The as-specified construction cannot be repaired by any phi; the
+  diagnostic track shows the ordering the formula should have had.
+==============================================================================

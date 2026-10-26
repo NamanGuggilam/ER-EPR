@@ -1,0 +1,209 @@
+==============================================================================
+RTN RUNG 6 -- matched geometry: open chain on both sides
+==============================================================================
+boundary: random open-chain MPS, 6 sites, D = 4, S([i..j]) averaged over 50 draws
+bulk    : L_RT = chain_min_cut * log(D)  (RTN theorem, no randomness)
+distance: d = exp(-alpha * x), alpha = 1.0 (primary); sweep [0.5, 1.0, 2.0]
+          computed from mean S, so d ranks exactly opposite to S
+seeding : draw d of run s uses np.random.seed(1000*s + d) -- rung 5's
+
+[0] VALIDATION: transfer-matrix entropies vs rung 5's full-state SVD
+    D = 2 and 4, 5 draws each, all 15 pairs: max |diff| = 2.44e-15   PASS
+
+[0b] MIN CUT: bonds cut on the open chain vs the brief's min(j-i, N-(j-i))
+     pair  chain bonds cut  brief formula
+    (1,2)                1              1
+    (1,3)                1              2   <- differs
+    (1,4)                1              3   <- differs
+    (1,5)                1              2   <- differs
+    (1,6)                0              1   <- differs
+    (2,3)                2              1   <- differs
+    (2,4)                2              2
+    (2,5)                2              3   <- differs
+    (2,6)                1              2   <- differs
+    (3,4)                2              1   <- differs
+    (3,5)                2              2
+    (3,6)                1              3   <- differs
+    (4,5)                2              1   <- differs
+    (4,6)                1              2   <- differs
+    (5,6)                1              1
+  the brief's formula disagrees on 11 of 15 pairs: it is arc
+  length on a CIRCLE.  The bond count is used, per the brief's own
+  parenthetical and the rung-5 control.
+
+[1] BOUNDARY: mean and std of S([i..j]) over 50 draws, D = 4
+
+  mean S([i..j])  (0-based labels; pair (0,5) = whole chain)
+              0       1       2       3       4       5
+     0    0.000   0.687   0.659   0.633   0.534   0.000
+     1    0.687   0.000   1.220   1.245   1.156   0.623
+     2    0.659   1.220   0.000   1.248   1.212   0.687
+     3    0.633   1.245   1.248   0.000   1.138   0.659
+     4    0.534   1.156   1.212   1.138   0.000   0.633
+     5    0.000   0.623   0.687   0.659   0.633   0.000
+
+  std S([i..j])
+              0       1       2       3       4       5
+     0    0.000   0.147   0.142   0.148   0.157   0.000
+     1    0.147   0.000   0.214   0.251   0.236   0.158
+     2    0.142   0.214   0.000   0.210   0.213   0.147
+     3    0.148   0.251   0.210   0.000   0.199   0.142
+     4    0.157   0.236   0.213   0.199   0.000   0.148
+     5    0.000   0.158   0.147   0.142   0.148   0.000
+
+  d_boundary = exp(-1 * mean S)
+              0       1       2       3       4       5
+     0    0.000   0.503   0.518   0.531   0.586   1.000
+     1    0.503   0.000   0.295   0.288   0.315   0.536
+     2    0.518   0.295   0.000   0.287   0.298   0.503
+     3    0.531   0.288   0.287   0.000   0.321   0.518
+     4    0.586   0.315   0.298   0.321   0.000   0.531
+     5    1.000   0.536   0.503   0.518   0.531   0.000
+
+[2] BULK: L_RT = chain_min_cut * log D, D = 4
+
+  L_RT([i..j])
+              0       1       2       3       4       5
+     0    0.000   1.386   1.386   1.386   1.386   0.000
+     1    1.386   0.000   2.773   2.773   2.773   1.386
+     2    1.386   2.773   0.000   2.773   2.773   1.386
+     3    1.386   2.773   2.773   0.000   2.773   1.386
+     4    1.386   2.773   2.773   2.773   0.000   1.386
+     5    0.000   1.386   1.386   1.386   1.386   0.000
+
+  d_bulk = exp(-1 * L_RT)
+              0       1       2       3       4       5
+     0    0.000   0.250   0.250   0.250   0.250   1.000
+     1    0.250   0.000   0.062   0.062   0.062   0.250
+     2    0.250   0.062   0.000   0.062   0.062   0.250
+     3    0.250   0.062   0.062   0.000   0.062   0.250
+     4    0.250   0.062   0.062   0.062   0.000   0.250
+     5    1.000   0.250   0.250   0.250   0.250   0.000
+
+[3] PHYSICS CHECK: does RT hold?  tau(mean S, L_RT), all 15 pairs
+  Kendall tau = 0.772, p-value = 4.68e-04, discordant pairs = 0 of 62 strictly ordered
+  tau < 1 comes from ties, not disagreement.  Both sides have exact
+  ties: L_RT takes three values (0, log D, 2 log D), and S has
+  complement ties because the state is pure:
+    max |S([1..k]) - S([k+1..6])| = 4.4e-16   (pure-state check: PASS)
+  With zero discordant pairs, tau-b is already as high as those ties
+  allow -- the ordering never once contradicts RT.
+  but ORDERING is not VALUE.  mean S / L_RT by min-cut class:
+    min_cut = 1: mean 0.4611  range [0.3854, 0.4954]
+    min_cut = 2: mean 0.4339  range [0.4103, 0.4501]
+    RT saturates only as D -> infinity; at finite D the entropy sits
+    well below min_cut * log D.  Section [9] tracks that ratio with D.
+
+[4] tau(d_boundary, d_bulk) on the exp-transformed distances
+  Kendall tau = 0.772, p-value = 4.68e-04
+  identical to [3] (0.772), not merely close: the SAME strictly
+  decreasing map is applied to both sides, which reverses both
+  rankings and leaves every concordance unchanged.  This check
+  cannot differ from [3] and adds no information.
+
+[5] CIRCULANT CHECK
+  boundary: circulant = NO, 6/6 distinct rows, 12 distinct off-diagonal values
+      bulk: circulant = NO, 6/6 distinct rows, 3 distinct off-diagonal values
+  The bulk is NOT circulant, contrary to the brief's expectation:
+  pairs (1,2) and (2,3) are both one step apart, but (1,2) touches an
+  end (1 bond) and (2,3) is interior (2 bonds).  It is, however,
+  maximally DEGENERATE: three values for fifteen pairs.
+
+[6] PERSISTENT HOMOLOGY (ripser, maxdim = 1), alpha = 1.0, D = 4
+  BOUNDARY:
+    H0: 6 bars (1 infinite)
+      [0.000000, 0.503183]   persistence 0.503183
+      [0.000000, 0.503183]   persistence 0.503183
+      [0.000000, 0.297579]   persistence 0.297579
+      [0.000000, 0.287860]   persistence 0.287860
+      [0.000000, 0.287124]   persistence 0.287124
+    H1: (no bars)
+  BULK (phi = 1):
+    H0: 6 bars (1 infinite)
+      [0.000000, 0.250000]   persistence 0.250000
+      [0.000000, 0.250000]   persistence 0.250000
+      [0.000000, 0.062500]   persistence 0.062500
+      [0.000000, 0.062500]   persistence 0.062500
+      [0.000000, 0.062500]   persistence 0.062500
+    H1: (no bars)
+  H1: boundary 0 bar(s) (0 significant, max pers 0.000000); bulk 0 bar(s) (0 significant)
+  The bulk has no H1, and cannot: at scale D^(-2 alpha) the four
+  interior sites form a complete graph; at D^(-alpha) the end sites
+  join every interior site, and every 4-cycle through them is filled
+  by triangles.  Any boundary H1 bar is a transient of the finer
+  ordering among near-tied interior entropies, not topology.
+
+  W(boundary, phi * bulk), phi searched on [0.1, 10]:
+    phi = 1        : W_H0 = 1.110059   W_H1 = 0.000000
+    phi = 2.012732 : W_H0 = 0.495175   W_H1 = 0.000000   (interior optimum)
+    RT prediction: phi = 1 (exp(-a*S) = exp(-a*L_RT) if S = L_RT).
+    phi_opt > 1 measures how far finite-D entropy falls short of RT.
+
+[7] ALPHA SWEEP at D = 4 (same 50-draw entropies)
+   alpha     tau  disc   phi_opt  e^(a*dlt)  bound?   W_H0(1)  W_H0(opt)  W_H1(opt)
+    0.50   0.772     0   1.41871    1.45290      no  1.286581   0.553842   0.000000
+    1.00   0.772     0   2.01273    2.11091      no  1.110059   0.495175   0.000000
+    2.00   0.772     0   4.05109    4.45595      no  0.469276   0.206383   0.000000
+  e^(a*dlt) = exp(alpha * (log D - mean S over min-cut-1 pairs)): the
+  phi that would exactly absorb a uniform finite-D entropy deficit.
+  tau and the discordant count are alpha-independent by construction
+  (a monotone map); only the Wasserstein numbers move with alpha.
+
+[8] STABILITY: 10 independent runs at D = 4, alpha = 1.0
+   run     tau  disc   phi_opt  bound?  W_H0(opt)  W_H1(opt)
+     1   0.772     0   2.00701      no   0.452045   0.000000
+     2   0.768     0   2.00729      no   0.472629   0.000000
+     3   0.772     0   2.08804      no   0.487257   0.000086
+     4   0.768     0   2.05611      no   0.474093   0.000000
+     5   0.768     0   1.96048      no   0.483690   0.000000
+     6   0.772     0   1.95420      no   0.463117   0.000000
+     7   0.772     0   2.03696      no   0.498496   0.000000
+     8   0.772     0   2.04166      no   0.517046   0.000000
+     9   0.772     0   1.92662      no   0.491914   0.000000
+    10   0.772     0   2.08809      no   0.490425   0.000000
+         tau: mean 0.771004  std 0.001689
+     phi_opt: mean 2.016648  std 0.053043
+   W_H0(opt): mean 0.483071  std 0.017586
+   W_H1(opt): mean 0.000009  std 0.000026
+  discordant pairs, all runs: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+[9] BOND-DIMENSION SWEEP, alpha = 1.0, 50 draws each
+     D    log D     tau  disc   S/L c=1   S/L c=2   phi_opt  e^(a*dlt)  bound?  W_H0(opt)  W_H1(opt)
+     2   0.6931   0.772     0    0.2430    0.2389   1.68490    1.68993      no   0.866674   0.000000
+     4   1.3863   0.772     0    0.4611    0.4339   2.01273    2.11091      no   0.495175   0.000000
+     8   2.0794   0.772     0    0.6546    0.6149   1.92132    2.05082      no   0.127657   0.000000
+    16   2.7726   0.776     0    0.7607    0.7222   1.79727    1.94180      no   0.028746   0.000000
+
+  does phi_opt track log D?  Pearson r(phi_opt, log D) = +0.221 (p = 0.779, n = 4)
+  phi_opt / log D across the sweep: [2.4308, 1.4519, 0.924, 0.6482]
+  The RT prediction for this construction is phi = 1 at every D, not
+  log D: L_RT already contains log D.  The real convergence test is
+  the S/L columns approaching 1.
+  1 - S/L_RT, min_cut 1: [0.757, 0.5389, 0.3454, 0.2393]
+  1 - S/L_RT, min_cut 2: [0.7611, 0.5661, 0.3851, 0.2778]
+  absolute deficit log D - S, min_cut 1: [0.5247, 0.7471, 0.7182, 0.6636]
+  (a fractional gap that shrinks while the ABSOLUTE deficit stays O(1)
+   is the finite-D signature; exp(-alpha*S) feels the absolute part,
+   which is why phi_opt need not approach 1 even as S/L does.)
+  |phi_opt - e^(a*dlt)| / e^(a*dlt): ['0.3%', '4.7%', '6.3%', '7.4%']
+  phi_opt follows the deficit estimate (rising, then falling, with it)
+  rather than log D; the residual is the min-cut-2 pairs, whose
+  deficit differs, pulling on the same H0 matching.
+
+  wrote /Users/naman/projects/ER-EPR/rework/rtn/rtn_rung6_barcodes.png
+
+[10] VERDICT
+  Validated fast entropies           : YES (max |diff| 2.4e-15 vs full SVD)
+  RT ORDERING holds (0 discordant)   : YES -- every run, every D
+  RT VALUES hold at D = 4             : NO -- S/L_RT = 0.461 (cut 1), 0.434 (cut 2)
+  Barcodes match at phi = 1          : NO (W_H0 = 1.110059)
+  Best phi                           : 2.01273, W_H0 = 0.495175
+  The matched-geometry construction is the first clean test, and it
+  shows exactly what the RTN theorem promises and no more: the
+  entropy ORDERING agrees with the min cut at every D, while the
+  VALUES fall short of min_cut * log D by a finite-D deficit.  The
+  barcode comparison measures that deficit.  Two caveats: the bulk
+  has three distance values for fifteen pairs, so the barcodes compare
+  a nearly degenerate filtration; and with H1 empty on the bulk, the
+  match is decided by H0 alone.
+==============================================================================

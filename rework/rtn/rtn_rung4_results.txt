@@ -1,0 +1,170 @@
+==============================================================================
+RTN RUNG 4 -- jittered disk: breaking the circulant symmetry
+==============================================================================
+boundary: 8 sites, uniform angles + Uniform(-pi/8, pi/8) jitter, seed 42
+          d = 2*log(sin(theta/2)/eps), eps = 0.1 (monotone increasing)
+bulk    : same jittered angles at radius r = 0.7 in the Poincare disk
+phi search window: [0.1, 10.0], minimizing W_H0 + W_H1 jointly
+
+[0] VALIDATION
+  jittered angles (sorted): [-0.098536, 1.139388, 1.753004, 2.433681, 2.87143, 3.65681, 4.365309, 5.785381]
+  consecutive gaps        : [1.237924, 0.613616, 0.680677, 0.43775, 0.785379, 0.708499, 1.420073, 0.399268]
+  uniform spacing 2pi/8 = 0.785398; jitter half-width pi/8 = 0.392699 (HALF a spacing, not one)
+
+  all 28 pairwise distances, sorted by chord angle:
+      pair     theta   d_boundary      d_bulk
+     (0,7)  0.399268     1.369329    1.041105
+     (3,4)  0.437750     1.550665    1.130865
+     (1,2)  0.613616     2.210627    1.510409
+     (2,3)  0.680677     2.410780    1.641912
+     (5,6)  0.708499     2.487656    1.694388
+     (4,5)  0.785379     2.684030    1.833243
+     (2,4)  1.118426     3.337373    2.340583
+     (3,5)  1.223129     3.495438    2.472491
+     (0,1)  1.237924     3.516371    2.490194
+     (1,3)  1.294292     3.593202    2.555610
+     (6,7)  1.420073     3.749323    2.690585
+     (4,6)  1.493878     3.832068    2.763166
+     (1,7)  1.637192     3.976262    2.891235
+     (1,4)  1.732042     4.060915    2.967298
+     (0,6)  1.819341     4.131956    3.031596
+     (0,2)  1.851540     4.156592    3.053988
+     (2,5)  1.903806     4.194860    3.088865
+     (3,6)  1.931628     4.214386    3.106704
+     (5,7)  2.128572     4.336833    3.219207
+     (2,7)  2.250808     4.399868    3.277528
+     (1,5)  2.517421     4.506149    3.376440
+     (0,5)  2.527840     4.509481    3.379551
+     (0,3)  2.532217     4.510862    3.380842
+     (2,6)  2.612305     4.534301    3.402754
+     (4,7)  2.913951     4.592187    3.457008
+     (3,7)  2.931485     4.594113    3.458817
+     (0,4)  2.969966     4.597797    3.462276
+     (1,6)  3.057265     4.603392    3.467531
+
+  boundary positivity needs theta > 2*arcsin(eps) = 0.200335 rad
+  smallest chord angle on this lattice     : 0.399268 (pair 0,7)
+  -> all d_boundary finite and positive    : PASS
+  -> no zero, no infinite entries anywhere : PASS
+  -> d_boundary monotone increasing in theta: PASS
+  -> d_bulk monotone increasing in theta    : PASS
+  -> boundary rows all distinct             : 8/8 PASS
+  -> bulk rows all distinct                 : 8/8 PASS
+
+  CIRCULANT DIAGNOSTIC (the rung-3 trap):
+    boundary: not circulant (good)
+    bulk: not circulant (good)
+
+[1] DISTANCE MATRICES
+
+  d_boundary(i,j) = 2*log(sin(theta/2)/eps)
+              0       1       2       3       4       5       6       7
+     0    0.000   3.516   4.157   4.511   4.598   4.509   4.132   1.369
+     1    3.516   0.000   2.211   3.593   4.061   4.506   4.603   3.976
+     2    4.157   2.211   0.000   2.411   3.337   4.195   4.534   4.400
+     3    4.511   3.593   2.411   0.000   1.551   3.495   4.214   4.594
+     4    4.598   4.061   3.337   1.551   0.000   2.684   3.832   4.592
+     5    4.509   4.506   4.195   3.495   2.684   0.000   2.488   4.337
+     6    4.132   4.603   4.534   4.214   3.832   2.488   0.000   3.749
+     7    1.369   3.976   4.400   4.594   4.592   4.337   3.749   0.000
+
+  d_bulk(i,j) = arccosh(1 + delta), r = 0.7
+              0       1       2       3       4       5       6       7
+     0    0.000   2.490   3.054   3.381   3.462   3.380   3.032   1.041
+     1    2.490   0.000   1.510   2.556   2.967   3.376   3.468   2.891
+     2    3.054   1.510   0.000   1.642   2.341   3.089   3.403   3.278
+     3    3.381   2.556   1.642   0.000   1.131   2.472   3.107   3.459
+     4    3.462   2.967   2.341   1.131   0.000   1.833   2.763   3.457
+     5    3.380   3.376   3.089   2.472   1.833   0.000   1.694   3.219
+     6    3.032   3.468   3.403   3.107   2.763   1.694   0.000   2.691
+     7    1.041   2.891   3.278   3.459   3.457   3.219   2.691   0.000
+
+[2] BARCODES (ripser, maxdim = 1)
+  BOUNDARY side:
+    H0: 8 bars (1 infinite)
+      [0.000000, 3.516371]   persistence 3.516371
+      [0.000000, 2.684030]   persistence 2.684030
+      [0.000000, 2.487656]   persistence 2.487656
+      [0.000000, 2.410780]   persistence 2.410780
+      [0.000000, 2.210627]   persistence 2.210627
+      [0.000000, 1.550665]   persistence 1.550665
+      [0.000000, 1.369329]   persistence 1.369329
+    H1: 1 bars (0 infinite)
+      [3.749323, 4.399868]   persistence 0.650545
+  BULK side (phi = 1):
+    H0: 8 bars (1 infinite)
+      [0.000000, 2.490194]   persistence 2.490194
+      [0.000000, 1.833243]   persistence 1.833243
+      [0.000000, 1.694388]   persistence 1.694388
+      [0.000000, 1.641912]   persistence 1.641912
+      [0.000000, 1.510409]   persistence 1.510409
+      [0.000000, 1.130865]   persistence 1.130865
+      [0.000000, 1.041105]   persistence 1.041105
+    H1: 1 bars (0 infinite)
+      [2.690585, 3.277528]   persistence 0.586943
+
+[3] WASSERSTEIN AT phi = 1
+  W_H0 = 4.887343   W_H1 = 0.875036   sum = 5.762379
+
+[4] JOINT OPTIMUM OVER phi in [0.1, 10.0]
+  phi_opt = 1.412088   (interior optimum)
+  W_H0 = 0.507430   W_H1 = 0.233704   sum = 0.741134
+  improvement over phi = 1: sum 5.762379 -> 0.741134
+
+  BULK barcodes at phi = 1.412088:
+    H0: 8 bars (1 infinite)
+      [0.000000, 3.516371]   persistence 3.516371
+      [0.000000, 2.588699]   persistence 2.588699
+      [0.000000, 2.392625]   persistence 2.392625
+      [0.000000, 2.318524]   persistence 2.318524
+      [0.000000, 2.132830]   persistence 2.132830
+      [0.000000, 1.596880]   persistence 1.596880
+      [0.000000, 1.470131]   persistence 1.470131
+    H1: 1 bars (0 infinite)
+      [3.799342, 4.628157]   persistence 0.828815
+
+[5] IS H1 NON-TRIVIAL ON BOTH SIDES? (bars with persistence > 0.1 * max)
+  boundary: 1 finite H1 bar(s), 1 significant, max persistence 0.650545
+      bulk: 1 finite H1 bar(s), 1 significant, max persistence 0.586943
+  -> non-trivial on BOTH sides: YES
+  -> and neither matrix is circulant, so this H1 is NOT the
+     Adamaszek-Adams artifact that made rung 3's H1 vacuous.
+
+[6] RADIUS SWEEP over r = [0.3, 0.5, 0.7, 0.85, 0.95]
+    (the boundary side is r-independent; only the bulk moves)
+       r    phi_opt  bound?       W_H0       W_H1        sum  H1 bulk
+    0.30   5.374299      no   0.748559   1.577176   2.325735        1
+    0.50   2.618959      no   0.831797   1.002023   1.833820        1
+    0.70   1.412088      no   0.507430   0.233704   0.741134        1
+    0.85   0.845201      no   1.056876   0.386781   1.443657        1
+    0.95   0.468738      no   1.913661   0.675137   2.588798        1
+
+  lowest W_H0 + W_H1 : r = 0.7 (sum 0.741134)
+  lowest W_H0 alone  : r = 0.7 (0.507430)
+  lowest W_H1 alone  : r = 0.7 (0.233704)
+  -> both minimized at the same r = 0.7
+
+  wrote /Users/naman/projects/ER-EPR/rework/rtn/rtn_rung4_barcodes.png
+
+[7] VERDICT
+  Circulant symmetry broken        : YES
+  Both distances monotone in theta : YES
+  H1 non-trivial on both sides     : YES
+  Best joint phi                   : 1.412088 (interior)
+  Residual at that phi             : W_H0 = 0.507430, W_H1 = 0.233704
+
+  THE TAUTOLOGY THAT SURVIVES THE JITTER:
+  Every bulk site shares the boundary's angle and sits at one common
+  radius, so d_bulk is a function of the SAME chord angle that fixes
+  d_boundary.  Two strictly increasing functions of one variable
+  induce the same ordering on all 28 pairs, so the two filtrations
+  share their combinatorial order and the persistence modules are
+  isomorphic BY CONSTRUCTION -- equal bar counts, bars in
+  correspondence -- before any value is compared.  Non-trivial H1 is
+  now genuine rather than an AA artifact, but the isomorphism itself
+  is not a test of ER=EPR: the two sides are not independent
+  computations.  Only the residual above is empirical content, and it
+  measures how far 2*log(sin(theta/2)/eps) is from proportional to
+  arccosh(1 + delta(theta)) -- a statement about two formulas, not
+  about entanglement and geometry.
+==============================================================================

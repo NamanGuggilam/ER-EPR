@@ -1,0 +1,173 @@
+==============================================================================
+RTN RUNG 5 -- explicit random tensor contraction vs AdS2 RT geometry
+==============================================================================
+boundary: random open-chain MPS, 6 sites, bond dim D = 4, state dim D^6 = 4096
+          d = 1/S([i..j]) from SVD, averaged over 50 draws
+bulk    : L_RT = 2*log(sin(theta/2)/eps), eps = 0.1, 6 uniform angles
+seeding : draw d of run s uses np.random.seed(1000*s + d); primary run s = 0
+
+[0] THE BRIEF READ LITERALLY: product of 6 boundary unit vectors
+    max S over all 21 contiguous intervals = 0.000e+00
+    -> zero entanglement everywhere, every d = 1/S = inf: nothing to
+       compare.  The random-MPS interpretation is used instead (see
+       the module docstring for exactly what is contracted).
+
+[1] BOUNDARY DISTANCE MATRIX: mean and std over 50 draws
+
+  mean d_boundary = 1/S([i..j])  (rows/cols = sites 1..6, printed 0-based)
+              0       1       2       3       4       5
+     0    0.000   1.537   1.641   1.695   2.051     inf
+     1    1.537   0.000   0.852   0.844   0.907   1.740
+     2    1.641   0.852   0.000   0.827   0.852   1.537
+     3    1.695   0.844   0.827   0.000   0.909   1.641
+     4    2.051   0.907   0.852   0.909   0.000   1.695
+     5      inf   1.740   1.537   1.641   1.695   0.000
+
+  std d_boundary  (0.000 at an inf entry = S was 0 in EVERY draw)
+              0       1       2       3       4       5
+     0    0.000   0.393   0.629   0.528   0.640   0.000
+     1    0.393   0.000   0.195   0.216   0.217   0.569
+     2    0.629   0.195   0.000   0.157   0.159   0.393
+     3    0.528   0.216   0.157   0.000   0.174   0.629
+     4    0.640   0.217   0.159   0.174   0.000   0.528
+     5    0.000   0.569   0.393   0.629   0.528   0.000
+
+  mean S([i..j]) / log D:
+  
+              0       1       2       3       4       5
+     0    0.000   0.495   0.475   0.456   0.385   0.000
+     1    0.495   0.000   0.880   0.898   0.834   0.449
+     2    0.475   0.880   0.000   0.900   0.874   0.495
+     3    0.456   0.898   0.900   0.000   0.821   0.475
+     4    0.385   0.834   0.874   0.821   0.000   0.456
+     5    0.000   0.449   0.495   0.475   0.456   0.000
+
+  pair (1,6) = the whole chain: S = 0 in every draw (pure state) -> d = inf
+
+[2] BULK DISTANCE MATRIX (AdS2 RT, uniform circle)
+
+  d_bulk = L_RT(i,j)
+              0       1       2       3       4       5
+     0    0.000   3.219   4.317   4.605   4.317   3.219
+     1    3.219   0.000   3.219   4.317   4.605   4.317
+     2    4.317   3.219   0.000   3.219   4.317   4.605
+     3    4.605   4.317   3.219   0.000   3.219   4.317
+     4    4.317   4.605   4.317   3.219   0.000   3.219
+     5    3.219   4.317   4.605   4.317   3.219   0.000
+
+  distinct bulk values : [3.218876, 4.317488, 4.60517]
+  CIRCULANT DIAGNOSTIC:
+    boundary circulant : no (6/6 distinct rows)
+    *** BULK MATRIX IS CIRCULANT -- ITS H1 IS NOT TRUSTWORTHY ***
+    uniform angles make d_bulk depend only on (i-j) mod 6; the
+    repo's Adamaszek-Adams diagnostic shows such a matrix forces
+    its H1.  This is the artifact rung 4 removed, back again.
+
+[3] RANK ORDERING OF THE 15 PAIRWISE DISTANCES
+     pair  mean S/logD     d_bdy    d_bulk  chain min_cut   note
+    (1,2)       0.4954    1.5375    3.2189              1   
+    (1,3)       0.4752    1.6408    4.3175              1   
+    (1,4)       0.4563    1.6946    4.6052              1   
+    (1,5)       0.3854    2.0506    4.3175              1   
+    (1,6)       0.0000       inf    3.2189              0   whole chain on boundary, ADJACENT on bulk circle
+    (2,3)       0.8797    0.8524    3.2189              2   
+    (2,4)       0.8983    0.8442    4.3175              2   
+    (2,5)       0.8338    0.9071    4.6052              2   
+    (2,6)       0.4493    1.7396    4.3175              1   
+    (3,4)       0.9001    0.8273    3.2189              2   
+    (3,5)       0.8743    0.8524    4.3175              2   
+    (3,6)       0.4954    1.5375    4.6052              1   
+    (4,5)       0.8206    0.9086    3.2189              2   
+    (4,6)       0.4752    1.6408    4.3175              1   
+    (5,6)       0.4563    1.6946    3.2189              1   
+
+  same rank ordering on both sides? NO
+
+  KEY DIAGNOSTIC (as specified, 14 finite pairs):
+  Kendall tau = 0.227 (1.0 = forced, <1.0 = real content)
+    p-value 0.286; with the inf pair ranked last, all 15: tau = 0.062
+
+  WHY THAT tau IS NOT 'REAL CONTENT' -- decomposition:
+    (a) inversion: tau(S, L_RT) = -0.203, vs the spec's tau(1/S, L_RT) = +0.227.
+        RT says L_RT is proportional to S, but d_boundary = 1/S, so a
+        dictionary that HOLDS predicts anti-monotone distances.  The
+        sign of tau is set by the 1/S convention, not by the physics.
+        (The two are not exact negatives because d_boundary is the
+        draw-average of 1/S, and mean(1/S) need not rank exactly
+        opposite to mean(S) -- a few near-tied interior pairs swap.)
+    (b) matched-geometry control: tau(S, chain min_cut) = +0.734
+        discordant pairs vs min_cut: 0 of 48 strictly ordered
+        -> the tensor entropies obey RT on the network's OWN geometry
+           (zero discordant = every interior interval out-entangles
+           every end interval).  tau-b sits below 1 only because
+           min_cut has two tied values; the discordant count is the
+           clean test.
+    (c) compare (b) with (a): the SAME entropies give tau = +0.734 against
+        the chain's own min cut and -0.203 against the circle's RT
+        length.  Only the comparator changed, so that gap is the
+        TOPOLOGY MISMATCH: an open-chain entropy compared to a circle's
+        RT length.  Pair (1,6) alone is maximally far on one side and
+        adjacent on the other.  That is an index mismatch -- the class
+        of error this rebuild began by removing -- not content.
+
+[4] BARCODES (ripser, maxdim = 1, primary run)
+  BOUNDARY (mean of draws):
+    H0: 6 bars (1 infinite)
+      [0.000000, 1.537469]   persistence 1.537469
+      [0.000000, 1.537469]   persistence 1.537469
+      [0.000000, 0.852380]   persistence 0.852380
+      [0.000000, 0.844201]   persistence 0.844201
+      [0.000000, 0.827294]   persistence 0.827294
+    H1: (no bars)
+  BULK (phi = 1):
+    H0: 6 bars (1 infinite)
+      [0.000000, 3.218876]   persistence 3.218876
+      [0.000000, 3.218876]   persistence 3.218876
+      [0.000000, 3.218876]   persistence 3.218876
+      [0.000000, 3.218876]   persistence 3.218876
+      [0.000000, 3.218876]   persistence 3.218876
+    H1: 1 bars (0 infinite)
+      [3.218876, 4.317488]   persistence 1.098612
+  significant H1 bars (> 0.1 * max): boundary 0, bulk 1   [bulk H1 is the circulant artifact]
+
+[5] WASSERSTEIN, W(boundary, phi * bulk), phi searched on [0.1, 10]
+  phi = 1       : W_H0 = 10.495566   W_H1 = 0.776836
+  phi = 0.264807: W_H0 = 1.403443   W_H1 = 0.205711   (interior optimum)
+  NOTE: the boundary has NO H1 bars, so W_H1 is only the cost of
+  matching the bulk's single H1 bar to the diagonal -- and that bar
+  is the circulant artifact.  W_H1 compares nothing here; part of the
+  joint optimum's pull on phi is just shrinking that bar.
+
+[6] STABILITY: 10 independent full comparisons (runs s = 1..10, 50 draws each)
+   run    phi_opt  bound?  W_H0(opt)  W_H1(opt)  tau spec  tau ctrl  disc
+     1   0.257369      no   1.513599   0.199934    +0.166    +0.739     0
+     2   0.273778      no   1.469493   0.212681    +0.216    +0.730     0
+     3   0.266059      no   1.640831   0.211145    +0.155    +0.730     0
+     4   0.257433      no   1.550381   0.199983    +0.190    +0.730     0
+     5   0.265687      no   1.337526   0.206396    +0.190    +0.730     0
+     6   0.265928      no   1.425096   0.206583    +0.203    +0.734     0
+     7   0.265731      no   1.475521   0.206430    +0.192    +0.734     0
+     8   0.276322      no   1.481016   0.214657    +0.179    +0.726     0
+     9   0.261600      no   1.299643   0.203220    +0.308    +0.730     0
+    10   0.266563      no   1.567249   0.209359    +0.119    +0.734     0
+
+  phi_opt      : mean 0.265647  std 0.005775
+  W_H0(phi_opt): mean 1.476036  std 0.097661
+  W_H1(phi_opt): mean 0.207039  std 0.004774
+  tau (spec)   : mean +0.192  std 0.047
+  tau (control): mean +0.732  std 0.003
+  control discordant pairs, all runs: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+  wrote /Users/naman/projects/ER-EPR/rework/rtn/rtn_rung5_barcodes.png
+
+[7] VERDICT
+  The boundary side is now a genuinely independent quantum-information
+  computation, and it does obey RT -- on its own open-chain geometry
+  (control: zero discordant pairs in every run).  But the spec pairs
+  it with the wrong comparator: a CIRCLE's RT length, through a 1/S
+  convention that inverts the dictionary.  The low Kendall tau comes
+  from that inversion plus the chain-vs-circle mismatch, not from
+  independent structure; and the bulk H1 is circulant-forced.  Fixing
+  the comparator (open-chain bulk, or a periodic MPS on a ring) and the
+  convention (compare S to L_RT, or 1/S to 1/L_RT) is the next step.
+==============================================================================

@@ -1,0 +1,124 @@
+==========================================================================
+RTN RUNG 1 -- random tensor network, RT as a theorem
+==========================================================================
+chain: 6 boundary sites, 5 bonds, open (not periodic)
+detailed report at D = 4; sweep over D = [2, 4, 8, 16, 32]
+S(A) = min_cut(A) * log(D)  [exact for RTNs, Hayden-Nezami-Qi et al.]
+
+[1] DISTANCE MATRICES at D = 4 (log D = 1.386294)
+
+  D_boundary(i,j) = 1 / S({i..j})
+                 1         2         3         4         5         6
+      1   0.000000  0.721348  0.721348  0.721348  0.721348       inf
+      2   0.721348  0.000000  0.360674  0.360674  0.360674  0.721348
+      3   0.721348  0.360674  0.000000  0.360674  0.360674  0.721348
+      4   0.721348  0.360674  0.360674  0.000000  0.360674  0.721348
+      5   0.721348  0.360674  0.360674  0.360674  0.000000  0.721348
+      6        inf  0.721348  0.721348  0.721348  0.721348  0.000000
+
+  D_bulk(i,j) = |pos(b_i) - pos(b_j)|
+                 1         2         3         4         5         6
+      1   0.000000  1.000000  2.000000  3.000000  4.000000  5.000000
+      2   1.000000  0.000000  1.000000  2.000000  3.000000  4.000000
+      3   2.000000  1.000000  0.000000  1.000000  2.000000  3.000000
+      4   3.000000  2.000000  1.000000  0.000000  1.000000  2.000000
+      5   4.000000  3.000000  2.000000  1.000000  0.000000  1.000000
+      6   5.000000  4.000000  3.000000  2.000000  1.000000  0.000000
+
+  min_cut / S for each contiguous interval [i..j], i <= j:
+                   1           2           3           4           5           6
+      1   1c/ 1.3863  1c/ 1.3863  1c/ 1.3863  1c/ 1.3863  1c/ 1.3863  0c/ 0.0000
+      2            .  2c/ 2.7726  2c/ 2.7726  2c/ 2.7726  2c/ 2.7726  1c/ 1.3863
+      3            .           .  2c/ 2.7726  2c/ 2.7726  2c/ 2.7726  1c/ 1.3863
+      4            .           .           .  2c/ 2.7726  2c/ 2.7726  1c/ 1.3863
+      5            .           .           .           .  2c/ 2.7726  1c/ 1.3863
+      6            .           .           .           .           .  1c/ 1.3863
+
+  cut points per interval (relevant to the bulk definition):
+             1     2     3     4     5     6
+      1      1     1     1     1     1     0
+      2      .     2     2     2     2     1
+      3      .     .     2     2     2     1
+      4      .     .     .     2     2     1
+      5      .     .     .     .     2     1
+      6      .     .     .     .     .     1
+
+[2] METRIC VALIDATION
+  D_boundary:
+    - 2 infinite off-diagonal entries (pairs never joined in the filtration)
+    - INFO: 2 distinct finite off-diagonal value(s): ['0.360674', '0.721348']
+  D_bulk:
+    - INFO: 5 distinct finite off-diagonal value(s): ['1', '2', '3', '4', '5']
+
+[3] BARCODES at D = 4 (ripser, maxdim = 1)
+  BOUNDARY (EPR) side:
+    H0: 6 bars (1 infinite)
+      [0.000000, 0.721348]   persistence 0.721348
+      [0.000000, 0.721348]   persistence 0.721348
+      [0.000000, 0.360674]   persistence 0.360674
+      [0.000000, 0.360674]   persistence 0.360674
+      [0.000000, 0.360674]   persistence 0.360674
+    H1: (no bars)
+  BULK (ER) side:
+    H0: 6 bars (1 infinite)
+      [0.000000, 1.000000]   persistence 1.000000
+      [0.000000, 1.000000]   persistence 1.000000
+      [0.000000, 1.000000]   persistence 1.000000
+      [0.000000, 1.000000]   persistence 1.000000
+      [0.000000, 1.000000]   persistence 1.000000
+    H1: (no bars)
+  BOUNDARY rescaled by phi = log D = 1.386294:
+    H0: 6 bars (1 infinite)
+      [0.000000, 1.000000]   persistence 1.000000
+      [0.000000, 1.000000]   persistence 1.000000
+      [0.000000, 0.500000]   persistence 0.500000
+      [0.000000, 0.500000]   persistence 0.500000
+      [0.000000, 0.500000]   persistence 0.500000
+    H1: (no bars)
+
+[4] WASSERSTEIN DISTANCE (finite bars only; infinite bars dropped)
+  H0: raw        W = 2.475284   
+      after xlogD  W = 1.500000   
+  H1: raw        W = 0.000000   both diagrams empty (no finite bars) -> 0 by definition
+      after xlogD  W = 0.000000   both diagrams empty (no finite bars) -> 0 by definition
+
+[5] ARE THE BARCODES IDENTICAL?
+  boundary (raw) vs bulk: NOT identical
+  boundary (rescaled) vs bulk: NOT identical
+
+[6] THE MAP phi: measured pair by pair as d_bulk / d_boundary
+  phi(i,j)  (0 = pair skipped: infinite or zero distance)
+                 1         2         3         4         5         6
+      1   0.000000  1.386294  2.772589  4.158883  5.545177  0.000000
+      2   1.386294  0.000000  2.772589  5.545177  8.317766  5.545177
+      3   2.772589  2.772589  0.000000  2.772589  5.545177  4.158883
+      4   4.158883  5.545177  2.772589  0.000000  2.772589  2.772589
+      5   5.545177  8.317766  5.545177  2.772589  0.000000  1.386294
+      6   0.000000  5.545177  4.158883  2.772589  1.386294  0.000000
+
+  usable pairs          : 28 of 30 ordered
+  skipped pairs         : 2
+  phi range over pairs  : [1.386294, 8.317766]
+  phi mean +- sd        : 3.960841 +- 1.878792
+  max/min spread        : 6.000000
+  single constant phi?  : NO
+  prediction phi = logD : 1.386294
+
+[7] BOND-DIMENSION SWEEP over D = [2, 4, 8, 16, 32]
+     D     log D    W_H0 raw  W_H0 scaled   W_H1 raw  W_H1 scaled   phi min   phi max  const?
+     2  0.693147    1.721348     1.500000   0.000000     0.000000  0.693147  4.158883      NO
+     4  1.386294    2.475284     1.500000   0.000000     0.000000  1.386294  8.317766      NO
+     8  2.079442    3.316856     1.500000   0.000000     0.000000  2.079442 12.476649      NO
+    16  2.772589    3.737642     1.500000   0.000000     0.000000  2.772589 16.635532      NO
+    32  3.465736    3.850284     1.500000   0.000000     0.000000  3.465736 20.794415      NO
+
+  wrote /Users/naman/projects/ER-EPR/rework/rtn/rtn_rung1_barcodes.png
+  wrote /Users/naman/projects/ER-EPR/rework/rtn/rtn_sweep.png
+
+[8] VERDICT
+  Does phi = log(D) make the barcodes match?  NO
+  Is a single constant phi even available?    NO
+  W_H0 after rescaling, over the whole sweep: [1.5]
+  (one value across all D means the rescaling did remove the D-dependence,
+   even where it did not make the barcodes agree)
+==========================================================================

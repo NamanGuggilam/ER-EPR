@@ -1,0 +1,105 @@
+==============================================================================
+RTN RUNG 8 -- is rung 7's residual deficit set by the tensor ensemble?
+==============================================================================
+same 6-site open chain, two ensembles on PAIRED draws:
+  T   = rung 7's MPS (site tensors x bond matrices T_k), from its cache
+  noT = the same site tensors with T_k omitted
+route A (per-bond deficits)  : D = [16, 32, 64, 128, 256]
+route B (full barcodes)      : D = [16, 24, 32, 40]
+spot check (RT ordering, noT): D = 64, 3 draws
+runs s = [0, 1, 2, 3, 4, 5], 50 draws each; alpha = 1.0
+
+[0] VALIDATION of the noT ensemble's entropies
+    all intervals vs explicit state SVD (D = 2,3,4): max |diff| = 2.0e-15  PASS
+    one-cut vs all-interval route (D = 4,8,16)    : max |diff| = 1.3e-15  PASS
+    noT site tensors identical to rung 7's draw   : PASS (paired comparison)
+
+[1] RANDOM-MATRIX REFERENCE: deficit of psi = G_1 ... G_k, D = 1024, 8 reps
+    k = 1 (Page, equal dimensions): delta = 0.5003 +- 0.0001   (Page's analytic value: 0.5)
+    k = 2 (two factors in a row)  : delta = 0.8334 +- 0.0002   (measured; no closed form asserted)
+    [5.9 s]
+
+[2] PREDICTIONS (fixed here, before this run measures any tensors)
+     ensemble  end bonds 1,5  interior 2-4  mean of 5
+            T         0.8334        0.5000     0.6334
+          noT         0.5000        0.0000     0.2000
+    pass: every fitted delta_inf within 0.02 of its prediction,
+          and delta_inf(noT) < delta_inf(T)
+    (set after a 10-draw probe to D = 128 had been seen: a theory
+     prediction checked at full statistics, not a blind registration)
+
+[3a] ROUTE A, ensemble T: per-bond delta = log D - S
+       D   bond 1   bond 2   bond 3   bond 4   bond 5      end  interior     mean  sd(mean)
+      16   0.8592   0.6021   0.5856   0.5971   0.8572   0.8582    0.5949   0.7002   0.00236  (cache)
+      32   0.8479   0.5529   0.5412   0.5504   0.8487   0.8483    0.5482   0.6682   0.00066  (cache)
+      64   0.8412   0.5263   0.5209   0.5266   0.8404   0.8408    0.5246   0.6511   0.00088  (cache)
+     128   0.8374   0.5131   0.5101   0.5129   0.8370   0.8372    0.5121   0.6421   0.00037  (cache)
+     256   0.8350   0.5062   0.5053   0.5066   0.8354   0.8352    0.5060   0.6377   0.00013  (cache)
+
+[3b] ROUTE A, ensemble noT: per-bond delta = log D - S
+       D   bond 1   bond 2   bond 3   bond 4   bond 5      end  interior     mean  sd(mean)
+      16   0.5163   0.0928   0.0691   0.0924   0.5215   0.5189    0.0848   0.2584   0.00130  [0 s]
+      32   0.5103   0.0469   0.0330   0.0467   0.5088   0.5095    0.0422   0.2291   0.00039  [3 s]
+      64   0.5049   0.0234   0.0161   0.0234   0.5044   0.5046    0.0210   0.2144   0.00026  [22 s]
+     128   0.5025   0.0117   0.0079   0.0117   0.5025   0.5025    0.0105   0.2073   0.00013  [211 s]
+     256   0.5012   0.0059   0.0039   0.0059   0.5014   0.5013    0.0052   0.2036   0.00006  [2056 s]
+
+[4] FITS: delta = delta_inf + c / D, per class, both ensembles
+     ensemble     class  delta_inf       +-      R^2  predicted   |diff|  verdict
+            T       end     0.8344   0.0008   0.9887     0.8334   0.0010     PASS
+            T  interior     0.5005   0.0003   0.9999     0.5000   0.0005     PASS
+            T      mean     0.6340   0.0005   0.9994     0.6334   0.0007     PASS
+          noT       end     0.5001   0.0001   0.9998     0.5000   0.0001     PASS
+          noT  interior    -0.0002   0.0001   1.0000     0.0000   0.0002     PASS
+          noT      mean     0.1999   0.0001   1.0000     0.2000   0.0001     PASS
+    delta_inf(noT) < delta_inf(T): 0.1999 < 0.6340 -> PASS
+    (fit standard errors understate the true uncertainty: 5 points,
+     2 parameters; the tolerance is the operative criterion)
+
+[5] SIDE BY SIDE: delta_inf, rung 7 ensemble vs rung 8 ensemble
+                             T (rung 7)   noT (rung 8)
+            end bonds 1, 5       0.8344         0.5001
+        interior bonds 2-4       0.5005        -0.0002
+           mean of 5 bonds       0.6340         0.1999
+
+[6] ROUTE B: full barcode comparison, D = [16, 24, 32, 40]
+
+    ensemble T (rung 7's cached entropies, re-scored)
+       D            phi_opt  e^(a*d1)       W_H0       W_H1  S/L c1  S/L c2          disc (runs)
+      16   1.79613 (0.00615)   1.93621  2.843e-02  0.000e+00  0.7617  0.7229   [0, 0, 0, 0, 0, 0]
+      24   1.74548 (0.00414)   1.88868  1.195e-02  0.000e+00  0.7999  0.7637   [0, 0, 0, 0, 0, 0]
+      32   1.71806 (0.00284)   1.86491  6.545e-03  0.000e+00  0.8202  0.7856   [0, 0, 0, 0, 0, 0]
+      40   1.70452 (0.00216)   1.84955  4.097e-03  0.000e+00  0.8333  0.8002   [0, 0, 0, 0, 0, 0]
+    pure-state check, max |S(A) - S(A^c)|: 1.3e-15
+
+    ensemble noT
+       D            phi_opt  e^(a*d1)       W_H0       W_H1  S/L c1  S/L c2          disc (runs)
+      16   1.07155 (0.00053)   1.21325  9.396e-03  0.000e+00  0.9303  0.8582   [0, 0, 0, 0, 0, 0]  [20 s]
+      24   1.04549 (0.00044)   1.18564  3.912e-03  0.000e+00  0.9464  0.8811   [0, 0, 0, 0, 0, 0]  [113 s]
+      32   1.03355 (0.00039)   1.17239  2.127e-03  0.000e+00  0.9541  0.8931   [0, 0, 0, 0, 0, 0]  [534 s]
+      40   1.02645 (0.00011)   1.16461  1.334e-03  0.000e+00  0.9587  0.9007   [0, 0, 0, 0, 0, 0]  [1719 s]
+    pure-state check, max |S(A) - S(A^c)|: 1.3e-15
+
+    phi_opt, T vs noT:
+       D         T       noT   noT - 1
+      16   1.79613   1.07155   0.07155
+      24   1.74548   1.04549   0.04549
+      32   1.71806   1.03355   0.03355
+      40   1.70452   1.02645   0.02645
+    noT phi_opt below rung 7's at every D: YES
+
+[7] SPOT CHECK: RT ordering, noT ensemble, D = 64, 3 draws (run s = 0)
+    [391.3 s]
+    Kendall tau = 0.776, p = 4.62e-04, discordant = 0 of 62; per draw [0, 0, 0]
+    S/L_RT: cut 1 = 0.9657, cut 2 = 0.9133
+
+  wrote /Users/naman/projects/ER-EPR/rework/rtn/rtn_rung8_convergence.png
+
+[9] VERDICT
+  predictions met within 0.02 (all classes, both ensembles) and noT < T: YES
+  delta_inf, mean of 5 bonds: T = 0.6340 (predicted 0.6334), noT = 0.1999 (predicted 0.2000)
+  phi_opt at D = 40: T = 1.7045, noT = 1.0265
+  RT ordering, noT, D = 64: discordant = 0
+
+  total runtime 5086 s
+==============================================================================
